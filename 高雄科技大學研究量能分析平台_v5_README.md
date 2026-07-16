@@ -50,6 +50,7 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- 背景文字雲加入 `notranslate`、`translate="no"` 與 `lang="en"` 標記，避免同事瀏覽器自動翻譯時將背景英文關鍵字翻成中文。
 - 釐清 SDGs KPI 口徑：Scholarly Output、FWCI、Top 10%、International Collaboration 來自 `Summary_SDG.xlsx`；Overall 的 SDG Citation Count 來自 Publications by SDG Total，單一年份因無年度 Citation Count 欄位改顯示缺值。
 - SDGs 分析調整為學校、年度、重點 SDG 篩選置頂；重點 SDG 改列所有 SDG 項目，KPI 可依 `Summary_SDG.xlsx` 切換 Overall/2018-2025 年度，SDG 圖表改用聯合國官方色並移除 `SDGs 重點期刊` 圖表。
 - 放大整體介面字級，包含導覽按鈕、篩選器、KPI、摘要卡、表格、說明文字與 Chart.js 圖例/座標/tooltip 文字，提升一般瀏覽器閱讀性。
