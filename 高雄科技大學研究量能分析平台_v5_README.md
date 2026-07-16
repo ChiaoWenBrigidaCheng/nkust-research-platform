@@ -50,6 +50,7 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- 放大整體介面字級，包含導覽按鈕、篩選器、KPI、摘要卡、表格、說明文字與 Chart.js 圖例/座標/tooltip 文字，提升一般瀏覽器閱讀性。
 - 將 General、THE、QS 與 SDGs 圖表中的 line/bar/bubble/radar 視覺色彩調整為較柔和的馬卡龍色系；SDG badge 仍保留官方 SDG 識別色。
 - SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
 - 網站改為優先讀取同目錄 Excel 檔案，支援 GitHub 上傳同名新版 Excel 後自動更新圖表與資料表；.gitignore 同步改為允許正式 Excel 檔上傳。
