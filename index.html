@@ -20,8 +20,8 @@ main{padding:24px 5vw 60px;max-width:1500px;margin:auto}.controls{display:grid;g
 .table-wrap{overflow:auto;max-height:520px;border-radius:12px;border:1px solid rgba(132,205,235,.22);background:rgba(5,14,23,.44)}table{border-collapse:collapse;width:100%;font-size:14px;background:rgba(8,19,31,.70);color:#dcecf7}th,td{padding:12px 13px;border-bottom:1px solid rgba(132,205,235,.13);text-align:right;white-space:nowrap}th{position:sticky;top:0;background:rgba(20,42,61,.96);color:#c9edf7;z-index:2;box-shadow:0 1px 0 rgba(132,205,235,.22)}th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:rgba(13,29,44,.96);z-index:1}tbody tr:hover td{background:rgba(98,214,239,.08)}tbody tr:hover td:first-child{background:rgba(20,48,66,.98)}tr.highlight td{background:rgba(243,201,105,.16);color:#fff2c8}tr.highlight td:first-child{background:rgba(243,201,105,.28);color:#fff4cc;font-weight:800}
 .badge{display:inline-block;padding:4px 9px;border-radius:999px;background:rgba(98,214,239,.14);border:1px solid rgba(98,214,239,.28);color:#bff3ff;font-size:12px}.section{display:none}.section.active{display:block}
 .summary-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:11px;margin-top:12px}.summary-card{background:linear-gradient(145deg,rgba(22,43,62,.78),rgba(8,22,35,.72));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:14px;min-height:106px;box-shadow:0 10px 28px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.05);position:relative;overflow:hidden}.summary-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--accent),var(--accent-2));opacity:.72}.summary-card .summary-label{font-size:14px;font-weight:700;color:#abc0d1}.summary-card .summary-value{font-size:29px;font-weight:800;color:#f5fbff;margin:10px 0 7px}.summary-card .summary-change{font-size:12px;font-weight:700;color:#91a8ba}.summary-card .summary-change.up{color:#65dfb0}.summary-card .summary-change.down{color:#ff9a9a}.summary-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:4px}
-.sdg-focus{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}.sdg-focus .control{grid-column:span 1}.sdg-focus-note{grid-column:span 2;background:linear-gradient(145deg,rgba(22,43,62,.66),rgba(8,22,35,.58));border:1px solid rgba(132,205,235,.17);border-radius:12px;padding:14px;color:#b8ccd9;line-height:1.7;font-size:14px}.insight-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.insight-card{background:linear-gradient(145deg,rgba(22,43,62,.76),rgba(8,22,35,.68));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:15px;min-height:116px}.insight-card .tag{font-size:12px;color:#7bddff;font-weight:800;letter-spacing:.02em}.insight-card .title{font-size:18px;font-weight:800;color:#f4fbff;margin:8px 0}.insight-card .desc{font-size:14px;line-height:1.65;color:#a9bfce}.mini-table-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.mini-table-grid .table-wrap{max-height:360px}.sdg-table td:first-child{font-weight:800;color:#dff7ff}.sdg-badge{display:inline-block;min-width:58px;text-align:center;padding:5px 8px;border-radius:8px;color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.22);text-shadow:0 1px 1px rgba(0,0,0,.32)}
-@media(max-width:1000px){.sdg-focus,.insight-list,.mini-table-grid{grid-template-columns:1fr}.sdg-focus .control,.sdg-focus-note{grid-column:auto}}.indicator-intro{color:var(--muted);line-height:1.75;margin:0 0 16px}.indicator-table td:nth-child(1){text-align:left;font-weight:800;color:#dff7ff;min-width:180px}.indicator-table td:nth-child(2){text-align:left;white-space:normal;line-height:1.65;min-width:520px}.indicator-table a{color:#7bddff;word-break:break-all}.footer{text-align:center;color:#829bb0;padding:32px;font-size:13px}
+.sdg-focus{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:14px;margin-bottom:18px}.sdg-focus .control{grid-column:span 1}.insight-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.insight-card{background:linear-gradient(145deg,rgba(22,43,62,.76),rgba(8,22,35,.68));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:15px;min-height:116px}.insight-card .tag{font-size:12px;color:#7bddff;font-weight:800;letter-spacing:.02em}.insight-card .title{font-size:18px;font-weight:800;color:#f4fbff;margin:8px 0}.insight-card .desc{font-size:14px;line-height:1.65;color:#a9bfce}.mini-table-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.mini-table-grid .table-wrap{max-height:360px}.sdg-table td:first-child{font-weight:800;color:#dff7ff}.sdg-badge{display:inline-block;min-width:58px;text-align:center;padding:5px 8px;border-radius:8px;color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.22);text-shadow:0 1px 1px rgba(0,0,0,.32)}
+@media(max-width:1000px){.sdg-focus,.insight-list,.mini-table-grid{grid-template-columns:1fr}.sdg-focus .control{grid-column:auto}}.indicator-intro{color:var(--muted);line-height:1.75;margin:0 0 16px}.indicator-table td:nth-child(1){text-align:left;font-weight:800;color:#dff7ff;min-width:180px}.indicator-table td:nth-child(2){text-align:left;white-space:normal;line-height:1.65;min-width:520px}.indicator-table a{color:#7bddff;word-break:break-all}.footer{text-align:center;color:#829bb0;padding:32px;font-size:13px}
 @media(max-width:1000px){.controls,.kpis,.summary-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:620px){.controls,.kpis,.summary-grid{grid-template-columns:1fr}.nav-btn{min-width:0;width:calc(50% - 9px);padding:12px 10px;font-size:14px}header,main,nav{padding-left:18px;padding-right:18px}nav{gap:14px;top:6px}}
 header,main,.footer{position:relative;z-index:1}
 .word-cloud{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;display:block;opacity:.52;filter:drop-shadow(0 14px 22px rgba(0,0,0,.24))}.word-cloud:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 18%,rgba(7,15,25,.96) 0 18%,rgba(7,15,25,.86) 19% 34%,rgba(7,15,25,.58) 35% 48%,transparent 65%),radial-gradient(ellipse at 50% 46%,rgba(7,15,25,.58) 0 20%,transparent 56%)}.word-cloud span{position:absolute;font-weight:900;line-height:.9;letter-spacing:.01em;white-space:nowrap;animation:wordDrift var(--dur,26s) ease-in-out infinite alternate;transform:translate3d(0,0,0) rotate(var(--rot,0deg));text-shadow:0 1px 0 rgba(0,0,0,.22),0 0 12px rgba(255,255,255,.08);opacity:var(--op,.68)}.word-cloud .hero{left:-5vw;top:72vh;font-size:clamp(76px,10vw,164px);color:#4aaee8;--dur:31s;--x:12px;--y:-10px;--op:.52}.word-cloud .w1{right:1vw;top:73vh;font-size:clamp(54px,7vw,112px);color:#ff8a2a;--dur:29s;--x:-12px;--y:-8px;--op:.56}.word-cloud .w2{left:3vw;top:34vh;font-size:clamp(34px,4.4vw,70px);color:#48c774;--dur:32s;--x:12px;--y:8px}.word-cloud .w3{right:4vw;top:33vh;font-size:clamp(32px,4.2vw,66px);color:#7fd8ff;--dur:28s;--x:-10px;--y:10px}.word-cloud .w4{left:5vw;top:48vh;font-size:clamp(28px,3.5vw,56px);color:#ffcd5e;--dur:30s;--x:10px;--y:-12px}.word-cloud .w5{right:6vw;top:47vh;font-size:clamp(28px,3.4vw,54px);color:#b18cff;--dur:27s;--x:-14px;--y:10px}.word-cloud .w6{left:12vw;top:88vh;font-size:clamp(24px,3vw,48px);color:#ff6b6b;--dur:34s;--x:10px;--y:-12px}.word-cloud .w7{right:20vw;top:89vh;font-size:clamp(24px,2.8vw,46px);color:#a5e85f;--dur:30s;--x:-12px;--y:-10px}.word-cloud .w8{left:2vw;top:40vh;font-size:clamp(21px,2.4vw,39px);color:#61e4d5;--dur:28s;--x:12px;--y:8px}.word-cloud .w9{right:3vw;top:40vh;font-size:clamp(21px,2.4vw,40px);color:#ff9e4a;--dur:33s;--x:-10px;--y:-8px}.word-cloud .w10{left:5vw;top:62vh;font-size:clamp(18px,2vw,33px);color:#66c7ff;--dur:26s;--x:12px;--y:-10px}.word-cloud .w11{right:8vw;top:62vh;font-size:clamp(18px,2vw,34px);color:#ef7cff;--dur:31s;--x:-12px;--y:8px}.word-cloud .w12{left:16vw;top:31vh;font-size:clamp(16px,1.8vw,30px);color:#f7d36c;--dur:29s;--x:-8px;--y:8px}.word-cloud .w13{right:17vw;top:31vh;font-size:clamp(16px,1.8vw,30px);color:#50d99b;--dur:28s;--x:8px;--y:10px}.word-cloud .w14{left:1vw;top:83vh;font-size:clamp(17px,1.9vw,31px);color:#91a7ff;--dur:27s;--x:10px;--y:-8px}.word-cloud .w15{right:3vw;top:83vh;font-size:clamp(17px,1.9vw,31px);color:#ff7e54;--dur:30s;--x:-10px;--y:-8px}.word-cloud .w16{left:2vw;top:55vh;font-size:clamp(15px,1.6vw,26px);color:#7ee3ff;--dur:31s;--x:12px;--y:8px}.word-cloud .w17{right:2vw;top:55vh;font-size:clamp(15px,1.6vw,26px);color:#ffc15e;--dur:26s;--x:-8px;--y:10px}.word-cloud .w18{left:2vw;top:72vh;font-size:clamp(15px,1.5vw,24px);color:#ff8a2a;--dur:33s;--x:10px;--y:8px}.word-cloud .w19{right:4vw;top:72vh;font-size:clamp(15px,1.5vw,24px);color:#48c774;--dur:24s;--x:-8px;--y:-8px}.word-cloud .w20{left:14vw;top:42vh;font-size:clamp(14px,1.4vw,23px);color:#d0e8ff;--dur:27s;--x:8px;--y:-6px}.word-cloud .w21{right:16vw;top:42vh;font-size:clamp(14px,1.4vw,22px);color:#a5e85f;--dur:32s;--x:-10px;--y:8px}.word-cloud .w22{left:17vw;top:58vh;font-size:clamp(14px,1.4vw,22px);color:#b18cff;--dur:25s;--x:8px;--y:8px}.word-cloud .w23{right:17vw;top:58vh;font-size:clamp(13px,1.3vw,21px);color:#61e4d5;--dur:30s;--x:-8px;--y:-8px}.word-cloud .w24{left:36vw;top:91vh;font-size:clamp(13px,1.3vw,21px);color:#ff6b6b;--dur:31s;--x:8px;--y:-10px}@keyframes wordDrift{to{transform:translate3d(var(--x,8px),var(--y,-8px),0) rotate(calc(var(--rot,0deg) + .35deg))}}@media(max-width:900px){.word-cloud{opacity:.34}.word-cloud:before{background:radial-gradient(ellipse at 50% 20%,rgba(7,15,25,.96) 0 28%,rgba(7,15,25,.76) 29% 48%,transparent 70%)}.word-cloud .hero{left:-12vw;top:77vh;font-size:82px}.word-cloud .w1{right:-10vw;top:72vh;font-size:70px}.word-cloud .w2{left:2vw;top:38vh}.word-cloud .w3{right:2vw;top:35vh}.word-cloud .w11,.word-cloud .w17,.word-cloud .w21,.word-cloud .w23,.word-cloud .w24{display:none}}@media(prefers-reduced-motion:reduce){.word-cloud span{animation:none}}
@@ -91,23 +91,22 @@ header,main,.footer{position:relative;z-index:1}
 
 
   <section id="sdg" class="section">
-    <div id="sdgKpis" class="kpis"></div>
     <div class="sdg-focus">
       <div class="control"><label>SDG 學校</label><select id="sdgSchoolSelect"></select></div>
+      <div class="control"><label>SDG 年度</label><select id="sdgYearSelect"></select></div>
       <div class="control"><label>重點 SDG</label><select id="sdgFocusSelect"></select></div>
-      <div class="sdg-focus-note">依 PDF 架構補入 SDGs 整體表現、SDG 7/9/12 重點項目、研究主題、合作對象與期刊來源。若未來要完整輸出簡報中的 SDG 7/9/12 Top keywords 與 Top journals，需再匯入各 SDG 的分項 SciVal 檔。</div>
     </div>
+    <div id="sdgKpis" class="kpis"></div>
     <div id="sdgFocusCards" class="insight-list"></div>
     <div class="grid summary-first">
-      <div class="panel"><h2>重點 SDG 雷達圖</h2><div class="sub">SDG 7、9、12 依發表數、FWCI 與引用數標準化為 0-100 後比較</div><div class="chart-wrap small"><canvas id="sdgRadarChart"></canvas></div></div>
+      <div class="panel"><h2>SDG 雷達圖</h2><div class="sub">所有 SDG 依發表數、FWCI 與引用數標準化為 0-100 後比較</div><div class="chart-wrap small"><canvas id="sdgRadarChart"></canvas></div></div>
     </div>
     <div class="grid">
-      <div class="panel"><h2>SDGs 發表數比較</h2><div class="sub">依各 SDG Scholarly Output 排序</div><div class="chart-wrap"><canvas id="sdgOutputChart"></canvas></div></div>
+      <div class="panel"><h2>SDGs 發表數比較</h2><div class="sub">依各 SDG Scholarly Output 排序；Publications by SDG 為 2018-2025 累計匯出</div><div class="chart-wrap"><canvas id="sdgOutputChart"></canvas></div></div>
       <div class="panel"><h2>SDGs 影響力定位</h2><div class="sub">橫軸：發表數；縱軸：FWCI；圓點大小代表引用數</div><div class="chart-wrap"><canvas id="sdgBubbleChart"></canvas></div></div>
     </div>
-    <div class="grid">
+    <div class="grid summary-first">
       <div class="panel"><h2>SDGs 學科領域分布</h2><div class="sub">以發表數最多的 subject areas 顯示研究主題基礎</div><div class="chart-wrap"><canvas id="sdgSubjectChart"></canvas></div></div>
-      <div class="panel"><h2>SDGs 重點期刊</h2><div class="sub">Top Scopus sources by scholarly output</div><div class="chart-wrap small"><canvas id="sdgJournalChart"></canvas></div></div>
     </div>
     <div class="panel"><h2>SDGs 指標資料表</h2><div class="table-wrap"><table id="sdgTable" class="sdg-table"></table></div></div>
     <div class="mini-table-grid">
@@ -266,7 +265,9 @@ function sdgSchoolFromEntity(value){
 function parseMultiSdgSummary(wb){
  const ws=wb.Sheets['Data'];
  if(!ws) return {};
- const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null}).slice(1);
+ const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null});
+ const header=rows[0]||[];
+ const yearCols=header.map((v,i)=>({year:String(Math.trunc(Number(v))),index:i})).filter(x=>/^20\d{2}$/.test(x.year));
  const out={};
  const metricMap={
   'Scholarly Output':'output',
@@ -276,21 +277,35 @@ function parseMultiSdgSummary(wb){
   'Publications in Top 10% Journal Percentiles by CiteScore Percentile (%)':'topJournal',
   'International Collaboration (%)':'intlPct'
  };
- rows.forEach(r=>{
+ rows.slice(1).forEach(r=>{
   const school=sdgSchoolFromEntity(r[0]);
   const key=metricMap[String(r[2]||'').trim()];
   if(!school||!key) return;
-  out[school]=out[school]||{};
-  out[school][key]=cleanNum(r[6]);
+  out[school]=out[school]||{overall:{},years:{}};
+  out[school].overall[key]=cleanNum(r[6]);
+  yearCols.forEach(({year,index})=>{
+   out[school].years[year]=out[school].years[year]||{};
+   out[school].years[year][key]=cleanNum(r[index]);
+  });
  });
  return out;
 }
 function sdgSchoolOptions(){return SDG_SCHOOL_ORDER.filter(s=>SDG_BY_SCHOOL[s]);}
 function currentSdgData(){return SDG_BY_SCHOOL[sdgSchoolSelect.value]||SDG_BY_SCHOOL['高科大']||SDG_DATA;}
+function sdgYearOptions(){const data=currentSdgData();return ['Overall',...Object.keys(data.years||{}).sort((a,b)=>Number(a)-Number(b))];}
+function currentSdgSummary(data){
+ const y=sdgYearSelect.value;
+ return y&&y!=='Overall'&&data.years&&data.years[y]?{...(data.summary||{}),...data.years[y]}:(data.summary||{});
+}
+function updateSdgYearOptions(){
+ const years=sdgYearOptions();
+ fillSelect(sdgYearSelect,years,years.includes(sdgYearSelect.value)?sdgYearSelect.value:'Overall');
+}
 function updateSdgFocusOptions(){
  const data=currentSdgData();
- const focus=data.sdgs.filter(x=>['SDG 7','SDG 9','SDG 12'].includes(x.sdg)).map(x=>`${x.sdg}: ${x.name}`);
- fillSelect(sdgFocusSelect,focus,focus.includes(sdgFocusSelect.value)?sdgFocusSelect.value:focus[1]||focus[0]);
+ const focus=(data.sdgs||[]).map(x=>`${x.sdg}: ${x.name}`);
+ const preferred=focus.find(x=>x.startsWith('SDG 9:'))||focus[0];
+ fillSelect(sdgFocusSelect,focus,focus.includes(sdgFocusSelect.value)?sdgFocusSelect.value:preferred);
 }
 async function fetchWorkbook(file){
  const response=await fetch(encodeURI(file)+'?v='+Date.now(),{cache:'no-store'});
@@ -313,15 +328,15 @@ async function loadExcelData(){
   const summaryWb=await fetchWorkbook(EXCEL_FILES.sdgSummaryMulti);
   const summaryBySchool=parseMultiSdgSummary(summaryWb);
   SDG_BY_SCHOOL={};
-  Object.entries(summaryBySchool).forEach(([school,summary])=>{
-   SDG_BY_SCHOOL[school]={summary:{...summary},sdgs:[],subjects:[],keyphrases:[],partners:{institutions:[],countries:[],authors:[],journals:[]}};
+  Object.entries(summaryBySchool).forEach(([school,bundle])=>{
+   SDG_BY_SCHOOL[school]={summary:{...(bundle.overall||{})},years:{...(bundle.years||{})},sdgs:[],subjects:[],keyphrases:[],partners:{institutions:[],countries:[],authors:[],journals:[]}};
   });
   await Promise.all(Object.entries(SDG_PUBLICATION_FILES).map(async ([school,file])=>{
    try{
     const pubWb=await fetchWorkbook(file);
     const parsed=parseSdgPublicationWorkbook(pubWb);
-    const existing=SDG_BY_SCHOOL[school]||{summary:{},sdgs:[],subjects:[],keyphrases:[],partners:{institutions:[],countries:[],authors:[],journals:[]}};
-    SDG_BY_SCHOOL[school]={...existing,summary:{...parsed.summary,...existing.summary},sdgs:parsed.sdgs};
+    const existing=SDG_BY_SCHOOL[school]||{summary:{},years:{},sdgs:[],subjects:[],keyphrases:[],partners:{institutions:[],countries:[],authors:[],journals:[]}};
+    SDG_BY_SCHOOL[school]={...existing,summary:{...parsed.summary,...existing.summary},years:existing.years||{},sdgs:parsed.sdgs};
    }catch(err){console.warn(`Using embedded or summary-only SDG data for ${school}:`,err.message);}
   }));
   if(!SDG_BY_SCHOOL['高科大']) SDG_BY_SCHOOL['高科大']=SDG_DATA;
@@ -339,9 +354,7 @@ const SCHOOL_COLORS = {
  '海大':'#A8D8C8',
  '高大':'#D8B8EA'
 };
-const PASTEL_SDG_COLORS=['#F7B7A3','#F6D38A','#BFE6A8','#A9DDF3','#B9C6F4','#D6B8F2','#F2B6D0','#B7E5DA','#F2C6A0','#C9E7B0','#AFCDF8','#E3C1F1','#F4D7A1','#A6E0C7','#F4AEB1','#A9CFE7','#D9E7A5'];
 const schoolColor = school => SCHOOL_COLORS[school] || '#B8C7D9';
-const sdgChartColor = sdg => PASTEL_SDG_COLORS[(Number(String(sdg).match(/\d+/)?.[0]||1)-1)%PASTEL_SDG_COLORS.length];
 function formatFileUpdated(value){
  const d=new Date(value);
  if(Number.isNaN(d.getTime())) return 'Auto';
@@ -436,6 +449,7 @@ async function init(){
  updateSchoolOptions();
  fillSelect(yearSelect,DATA.years,2024);
  fillSelect(sdgSchoolSelect,sdgSchoolOptions(),'高科大');
+ updateSdgYearOptions();
  updateSdgFocusOptions();
  updateMetricOptions();
  bind();
@@ -451,7 +465,7 @@ function bind(){
    if(page==='general'||page==='the'||page==='qs') updateMetricOptions();
    render();
  });
- [schoolSelect,yearSelect,fieldSelect,generalMetricSelect,subjectMetricSelect,sdgFocusSelect,sdgSchoolSelect].forEach(el=>el.onchange=()=>{if(el===sdgSchoolSelect) updateSdgFocusOptions(); render();});
+ [schoolSelect,yearSelect,fieldSelect,generalMetricSelect,subjectMetricSelect,sdgFocusSelect,sdgSchoolSelect,sdgYearSelect].forEach(el=>el.onchange=()=>{if(el===sdgSchoolSelect){updateSdgYearOptions();updateSdgFocusOptions();} render();});
 }
 function updateMetricOptions(){
  const metrics=page==='general'?generalMetrics:subjectMetrics;
@@ -585,15 +599,12 @@ function renderSdg(){
  setNotice('');
  const data=currentSdgData();
  const school=sdgSchoolSelect.value||'高科大';
- const s=data.summary||{};
- const kpis=[['SDGs Scholarly Output',s.output,'2018-2025'],['FWCI',s.fwci,'world average = 1.00'],['Citation Count',s.citations,'Scopus citations'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','SciVal SDGs']];
+ const s=currentSdgSummary(data);
+ const yearLabel=sdgYearSelect.value==='Overall'?'2018-2025':sdgYearSelect.value;
+ const kpis=[['SDGs Scholarly Output',s.output,yearLabel],['FWCI',s.fwci,'world average = 1.00'],['Citation Count',s.citations,'Publications by SDG cumulative'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','SciVal SDGs']];
  sdgKpis.innerHTML=kpis.map(([label,value,meta])=>`<div class="kpi"><div class="label">${label}</div><div class="value">${fmt(value)}</div><div class="meta">${school}｜${meta}</div></div>`).join('');
- const selected=data.sdgs.find(x=>`${x.sdg}: ${x.name}`===sdgFocusSelect.value)||data.sdgs.find(x=>x.sdg==='SDG 9')||data.sdgs[0];
- const focusNotes={
-  'SDG 7':'能源研究量能是簡報建議的優先主題之一，可用發表數、FWCI 與引用數作為是否持續投入的觀察基準。',
-  'SDG 9':'工業、創新與基礎建設是高科大工科與產業鏈結最直接的 SDG 主軸，適合銜接工程、機械、海洋與商管研究。',
-  'SDG 12':'責任消費與生產在 FWCI 表現突出，可延伸至循環經濟、永續製程與企業永續管理題目。'
- };
+ const selected=data.sdgs.find(x=>`${x.sdg}: ${x.name}`===sdgFocusSelect.value)||data.sdgs[0];
+ const focusNotes={};
  if(!selected){
   sdgFocusCards.innerHTML='<div class="insight-card"><div class="title">尚無 SDG Publications 資料</div><div class="desc">請確認該校 Publications by SDG 檔案是否已放入 SDG 資料夾。</div></div>';
   return;
@@ -601,29 +612,26 @@ function renderSdg(){
  sdgFocusCards.innerHTML=[
   ['Scholarly Output',fmt(selected.output),`SDGs 發表數排名第 ${metricRank(data.sdgs,'output',selected)}。`],
   ['FWCI',fmt(selected.fwci),`FWCI 排名第 ${metricRank(data.sdgs,'fwci',selected)}，高於 1 代表高於世界平均。`],
-  ['Citation Count',fmt(selected.citations),focusNotes[selected.sdg]||'可作為後續專題分析與簡報輸出的重點。']
+  ['Citation Count',fmt(selected.citations),'可作為後續專題分析與簡報輸出的重點。']
  ].map(([tag,title,desc])=>`<div class="insight-card"><div class="tag">${school}｜${selected.sdg}｜${tag}</div><div class="title">${title}</div><div class="desc">${desc}</div></div>`).join('');
  const sdgRank=data.sdgs.slice().sort((a,b)=>(b.output||0)-(a.output||0));
  destroy('sdgOutput');
- charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgChartColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
+ charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
  destroy('sdgBubble');
- charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgChartColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgChartColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
+ charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
  const subjectTop=(data.subjects||[]).slice(0,10).reverse();
  destroy('sdgSubject');
  charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#C9B8F2',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
- const journals=((data.partners&&data.partners.journals)||[]).slice().reverse();
- destroy('sdgJournal');
- charts.sdgJournal=new Chart(sdgJournalChart,{type:'bar',data:{labels:journals.map(x=>x[0]),datasets:[{label:'Total',data:journals.map(x=>x[1]),backgroundColor:'#F6D38A',borderRadius:6}]},options:chartOpts('Total publications',false,true)});
- const radarTargets=data.sdgs.filter(x=>['SDG 7','SDG 9','SDG 12'].includes(x.sdg));
+ const radarTargets=data.sdgs;
  const radarMetrics=[['發表數','output'],['FWCI','fwci'],['引用數','citations']];
  const maxByMetric=Object.fromEntries(radarMetrics.map(([,key])=>[key,Math.max(...data.sdgs.map(x=>x[key]||0),1)]));
  destroy('sdgRadar');
- charts.sdgRadar=new Chart(sdgRadarChart,{type:'radar',data:{labels:radarMetrics.map(x=>x[0]),datasets:radarTargets.map(x=>({label:x.sdg,data:radarMetrics.map(([,key])=>Math.round(((x[key]||0)/(maxByMetric[key]||1))*100)),borderColor:sdgChartColor(x.sdg),backgroundColor:sdgChartColor(x.sdg)+'44',pointBackgroundColor:sdgChartColor(x.sdg),borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}｜${ctx.label}：${ctx.raw}/100`}}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{color:'#d7e9f4',font:{weight:'700'}},grid:{color:'rgba(132,205,235,.20)'},angleLines:{color:'rgba(132,205,235,.18)'}}}}});
- renderSdgTables(data);
+ charts.sdgRadar=new Chart(sdgRadarChart,{type:'radar',data:{labels:radarMetrics.map(x=>x[0]),datasets:radarTargets.map(x=>({label:x.sdg,data:radarMetrics.map(([,key])=>Math.round(((x[key]||0)/(maxByMetric[key]||1))*100)),borderColor:sdgColor(x.sdg),backgroundColor:sdgColor(x.sdg)+'44',pointBackgroundColor:sdgColor(x.sdg),borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}｜${ctx.label}：${ctx.raw}/100`}}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{color:'#d7e9f4',font:{weight:'700'}},grid:{color:'rgba(132,205,235,.20)'},angleLines:{color:'rgba(132,205,235,.18)'}}}}});
+ renderSdgTables(data,selected);
 }
-function renderSdgTables(data){
+function renderSdgTables(data,selected){
  const cols=['SDG','Name','Scholarly Output','FWCI','Citation Count'];
- sdgTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+(data.sdgs||[]).map(r=>`<tr class="${['SDG 7','SDG 9','SDG 12'].includes(r.sdg)?'highlight':''}"><td><span class="sdg-badge" style="background:${sdgColor(r.sdg)}">${r.sdg}</span></td><td>${r.name}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td><td>${fmt(r.citations)}</td></tr>`).join('')+'</tbody>';
+ sdgTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+(data.sdgs||[]).map(r=>`<tr class="${selected&&r.sdg===selected.sdg?'highlight':''}"><td><span class="sdg-badge" style="background:${sdgColor(r.sdg)}">${r.sdg}</span></td><td>${r.name}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td><td>${fmt(r.citations)}</td></tr>`).join('')+'</tbody>';
  const keyphrases=data.keyphrases||[];
  sdgKeyphraseTable.innerHTML='<thead><tr><th>Keyphrase</th><th>Relevance</th><th>Growth %</th></tr></thead><tbody>'+(keyphrases.length?keyphrases.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚未提供 detailed Summary 匯出檔，暫無 keyphrase 資料。</td></tr>')+'</tbody>';
  const partners=data.partners||{institutions:[],countries:[],authors:[],journals:[]};

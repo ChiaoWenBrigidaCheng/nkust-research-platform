@@ -27,8 +27,8 @@
 
 ### SDGs 分析
 - 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校 Publications by SDG 檔案與 `Summary_SDG.xlsx`。
-- 頁面包含 SDG 學校篩選、SDGs 整體 KPI、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、重點 SDG 雷達圖、學科領域分布、Top keyphrases、合作機構/國家/作者與重點期刊摘要。
-- 重點 SDG 下拉選單先聚焦 SDG 7、SDG 9、SDG 12，對應簡報中的「重點 SDGs 專題分析」方向。
+- 頁面最上方提供 SDG 學校、SDG 年度與重點 SDG 篩選；重點 SDG 下拉選單列出所有 SDG 項目。
+- 圖表包含 SDGs 整體 KPI、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、全 SDG 雷達圖、學科領域分布、Top keyphrases 與合作/來源摘要；`SDGs 重點期刊` 圖表已移除。
 - 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；高科大保留內建較完整的 subjects、keyphrases、partners 與 journals 備份資料。其他學校若要呈現 PDF 中更細的 Top keywords、Top journals 與 Top paper 明細，需要再匯入各 SDG 或各校的分項 SciVal 匯出檔。
 
 ## Excel 更新方式
@@ -50,11 +50,12 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- SDGs 分析調整為學校、年度、重點 SDG 篩選置頂；重點 SDG 改列所有 SDG 項目，KPI 可依 `Summary_SDG.xlsx` 切換 Overall/2018-2025 年度，SDG 圖表改用聯合國官方色並移除 `SDGs 重點期刊` 圖表。
 - 放大整體介面字級，包含導覽按鈕、篩選器、KPI、摘要卡、表格、說明文字與 Chart.js 圖例/座標/tooltip 文字，提升一般瀏覽器閱讀性。
-- 將 General、THE、QS 與 SDGs 圖表中的 line/bar/bubble/radar 視覺色彩調整為較柔和的馬卡龍色系；SDG badge 仍保留官方 SDG 識別色。
+- 將 General、THE、QS 圖表中的 line/bar/bubble 視覺色彩調整為較柔和的馬卡龍色系；SDGs 圖表維持聯合國 SDG 目標官方色。
 - SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
 - 網站改為優先讀取同目錄 Excel 檔案，支援 GitHub 上傳同名新版 Excel 後自動更新圖表與資料表；.gitignore 同步改為允許正式 Excel 檔上傳。
-- SDGs 分析新增 SDG 目標官方色系、SDG 7/9/12 標準化雷達圖，並移除頁首主標題陰影。
+- SDGs 分析新增 SDG 目標官方色系與標準化雷達圖，並移除頁首主標題陰影。
 - `主要學校年度摘要` 桌面版改為一行五項指標；General `趨勢指標` 補上國際/產學合著論文數、FWCI、影響力，以及高被引/高品質論文數與 FWCI。
 - 文字雲垂直位置下移，改為從篩選器高度附近開始分布；General 頁的 `主要學校` 與 `年度` 主控恢復兩欄置中，THE/QS 則維持三欄主控。
 - THE/QS 的 `學科領域` 篩選改與 `主要學校`、`年度` 放在最上方同一列，讓主控篩選更集中。
