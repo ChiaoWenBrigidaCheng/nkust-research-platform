@@ -295,7 +295,7 @@ function currentSdgData(){return SDG_BY_SCHOOL[sdgSchoolSelect.value]||SDG_BY_SC
 function sdgYearOptions(){const data=currentSdgData();return ['Overall',...Object.keys(data.years||{}).sort((a,b)=>Number(a)-Number(b))];}
 function currentSdgSummary(data){
  const y=sdgYearSelect.value;
- return y&&y!=='Overall'&&data.years&&data.years[y]?{...(data.summary||{}),...data.years[y]}:(data.summary||{});
+ return y&&y!=='Overall'&&data.years&&data.years[y]?(data.years[y]||{}):(data.summary||{});
 }
 function updateSdgYearOptions(){
  const years=sdgYearOptions();
@@ -600,8 +600,9 @@ function renderSdg(){
  const data=currentSdgData();
  const school=sdgSchoolSelect.value||'高科大';
  const s=currentSdgSummary(data);
- const yearLabel=sdgYearSelect.value==='Overall'?'2018-2025':sdgYearSelect.value;
- const kpis=[['SDGs Scholarly Output',s.output,yearLabel],['FWCI',s.fwci,'world average = 1.00'],['Citation Count',s.citations,'Publications by SDG cumulative'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','SciVal SDGs']];
+ const isOverall=sdgYearSelect.value==='Overall';
+ const yearLabel=isOverall?'2018-2025':sdgYearSelect.value;
+ const kpis=[['SDGs Scholarly Output',s.output,'Summary_SDG｜'+yearLabel],['FWCI (excl. self-citations)',s.fwci,'Summary_SDG｜world average = 1.00'],['SDG Citation Count',isOverall?s.citations:null,'Publications by SDG Total｜2018-2025'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','Summary_SDG｜field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','Summary_SDG｜CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','Summary_SDG']];
  sdgKpis.innerHTML=kpis.map(([label,value,meta])=>`<div class="kpi"><div class="label">${label}</div><div class="value">${fmt(value)}</div><div class="meta">${school}｜${meta}</div></div>`).join('');
  const selected=data.sdgs.find(x=>`${x.sdg}: ${x.name}`===sdgFocusSelect.value)||data.sdgs[0];
  const focusNotes={};
