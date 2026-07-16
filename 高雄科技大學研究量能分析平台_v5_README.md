@@ -7,7 +7,7 @@
 - `index.html`：唯一保留的主要互動式網頁與 GitHub Pages 發布檔；會透過 SheetJS 自動讀取同目錄 Excel。
 - `高雄科技大學研究量能分析平台_v5_README.md`：專案說明與修改紀錄。
 - `研究量能統計 2018-2025.xlsx`：General 資料來源。
-- `Publications_SDG_NKUST.xlsx`、`Summary_NKUST_SDG.xlsx`：SDG/研究相關資料。
+- `SDG/`：SDGs 分析資料夾，包含六校 `Publications by SDG` 檔案與多校 `Summary_SDG.xlsx`。
 - `114 產學研究量能研析 20260112.pdf`：目前網站分析架構的參考簡報。
 - `教1-2.專任教師數-以「校」統計.xlsx`：教研人數資料來源。
 
@@ -26,14 +26,15 @@
 
 
 ### SDGs 分析
-- 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `Publications_SDG_NKUST.xlsx` 與 `Summary_NKUST_SDG.xlsx` 的資料。
-- 頁面包含 SDGs 整體 KPI、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、重點 SDG 雷達圖、學科領域分布、Top keyphrases、合作機構/國家/作者與重點期刊摘要。
+- 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校 Publications by SDG 檔案與 `Summary_SDG.xlsx`。
+- 頁面包含 SDG 學校篩選、SDGs 整體 KPI、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、重點 SDG 雷達圖、學科領域分布、Top keyphrases、合作機構/國家/作者與重點期刊摘要。
 - 重點 SDG 下拉選單先聚焦 SDG 7、SDG 9、SDG 12，對應簡報中的「重點 SDGs 專題分析」方向。
-- 目前資料檔只有整體 SDGs 與各 SDG 彙總資料，尚未包含 SDG 7/9/12 各自的 Top keywords、Top journals 與 Top paper 明細；若未來要完整自動產出 PDF 中的 SDG 專題頁，需要再匯入各 SDG 的分項 SciVal 匯出檔。
+- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；高科大保留內建較完整的 subjects、keyphrases、partners 與 journals 備份資料。其他學校若要呈現 PDF 中更細的 Top keywords、Top journals 與 Top paper 明細，需要再匯入各 SDG 或各校的分項 SciVal 匯出檔。
 
 ## Excel 更新方式
-- GitHub Pages 發布後，網站會自動讀取 repo 根目錄下固定檔名的 Excel：`研究量能統計 2018-2025.xlsx`、`Publications_SDG_NKUST.xlsx`、`Summary_NKUST_SDG.xlsx`。
-- 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料。
+- GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。General 資料放在 repo 根目錄：`研究量能統計 2018-2025.xlsx`。
+- SDGs 資料放在 `SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校 Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`。
+- 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料；`Last updated` 會依瀏覽器取得的 Excel/HTML 最後修改時間更新。
 - `研究量能統計 2018-2025.xlsx` 需維持目前工作表名稱與欄位順序：`General`、`THE`、`QS`。
 - SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；若要新增 SDG 7/9/12 的更細專題頁，需另外提供各 SDG 的分項匯出檔。
 - 若 Excel 暫時讀不到，網站會使用內建備份資料，避免頁面空白。
@@ -49,6 +50,7 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
 - 網站改為優先讀取同目錄 Excel 檔案，支援 GitHub 上傳同名新版 Excel 後自動更新圖表與資料表；.gitignore 同步改為允許正式 Excel 檔上傳。
 - SDGs 分析新增 SDG 目標官方色系、SDG 7/9/12 標準化雷達圖，並移除頁首主標題陰影。
 - `主要學校年度摘要` 桌面版改為一行五項指標；General `趨勢指標` 補上國際/產學合著論文數、FWCI、影響力，以及高被引/高品質論文數與 FWCI。
