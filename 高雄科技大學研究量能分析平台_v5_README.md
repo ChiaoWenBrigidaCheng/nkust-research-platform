@@ -28,15 +28,15 @@
 ### SDGs 分析
 - 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校 Publications by SDG 檔案與 `Summary_SDG.xlsx`。
 - 頁面最上方提供 SDG 學校、SDG 年度與重點 SDG 篩選；重點 SDG 下拉選單列出所有 SDG 項目。
-- 圖表包含 SDGs 整體 KPI、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、全 SDG 雷達圖、學科領域分布、Top keyphrases 與合作/來源摘要；`SDGs 重點期刊` 圖表已移除。
-- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；高科大保留內建較完整的 subjects、keyphrases、partners 與 journals 備份資料。其他學校若要呈現 PDF 中更細的 Top keywords、Top journals 與 Top paper 明細，需要再匯入各 SDG 或各校的分項 SciVal 匯出檔。
+- 圖表包含 SDGs 整體 KPI、篩選年度六校 SDG 發表表現、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、學科領域分布、Top keyphrases 與合作/來源摘要；`SDGs 重點期刊` 與雷達圖已移除。
+- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；高科大保留內建較完整的 subjects、keyphrases、partners 與 journals 備份資料。其他學校若要呈現 `SDGs 學科領域分布`、`Top Keyphrases`、`合作與來源摘要`，需再提供各校 SciVal detailed Summary 匯出檔，至少包含 `Publications by Subject Area`、`Keyphrase analysis`、`Top Institutions/Countries/Authors/Scopus Sources` 等工作表。
 
 ## Excel 更新方式
 - GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。General 資料放在 repo 根目錄：`研究量能統計 2018-2025.xlsx`。
 - SDGs 資料放在 `SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校 Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`。
 - 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料；`Last updated` 會依瀏覽器取得的 Excel/HTML 最後修改時間更新。
 - `研究量能統計 2018-2025.xlsx` 需維持目前工作表名稱與欄位順序：`General`、`THE`、`QS`。
-- SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；若要新增 SDG 7/9/12 的更細專題頁，需另外提供各 SDG 的分項匯出檔。
+- SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；若要補齊學科領域、Keyphrases、合作機構/國家/作者與來源摘要，需提供各校 detailed Summary 匯出檔；若要新增 SDG 7/9/12 的更細專題頁，需另外提供各 SDG 的分項 SciVal 匯出檔。
 - 若 Excel 暫時讀不到，網站會使用內建備份資料，避免頁面空白。
 ## 指標與缺值說明
 - `缺值不視為 0` 的意思是：若某年度或某指標沒有資料，系統會顯示為缺值，不會把它當成 0 參與前後年度比較，以避免造成誤判。
@@ -50,14 +50,15 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- SDGs 分析移除上方 Total Citation Count KPI 與雷達圖，改以篩選年度六校 SDGs Scholarly Output bar chart 呈現；高科大 detailed subject/keyphrase/partner 備份資料恢復顯示，其他學校若無 detailed Summary 匯出檔會顯示缺資料提示。
 - 背景文字雲加入 `notranslate`、`translate="no"` 與 `lang="en"` 標記，避免同事瀏覽器自動翻譯時將背景英文關鍵字翻成中文。
-- 釐清 SDGs KPI 口徑：Scholarly Output、FWCI、Top 10%、International Collaboration 來自 `Summary_SDG.xlsx`；Overall 的 SDG Citation Count 來自 Publications by SDG Total，單一年份因無年度 Citation Count 欄位改顯示缺值。
+- 釐清 SDGs KPI 口徑：Scholarly Output、FWCI、Top 10% 與 International Collaboration 來自 `Summary_SDG.xlsx`；上方 Total Citation Count KPI 已移除，避免與 Publications by SDG 累計引用數混淆。
 - SDGs 分析調整為學校、年度、重點 SDG 篩選置頂；重點 SDG 改列所有 SDG 項目，KPI 可依 `Summary_SDG.xlsx` 切換 Overall/2018-2025 年度，SDG 圖表改用聯合國官方色並移除 `SDGs 重點期刊` 圖表。
 - 放大整體介面字級，包含導覽按鈕、篩選器、KPI、摘要卡、表格、說明文字與 Chart.js 圖例/座標/tooltip 文字，提升一般瀏覽器閱讀性。
 - 將 General、THE、QS 圖表中的 line/bar/bubble 視覺色彩調整為較柔和的馬卡龍色系；SDGs 圖表維持聯合國 SDG 目標官方色。
 - SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
 - 網站改為優先讀取同目錄 Excel 檔案，支援 GitHub 上傳同名新版 Excel 後自動更新圖表與資料表；.gitignore 同步改為允許正式 Excel 檔上傳。
-- SDGs 分析新增 SDG 目標官方色系與標準化雷達圖，並移除頁首主標題陰影。
+- SDGs 分析新增 SDG 目標官方色系，並移除頁首主標題陰影。
 - `主要學校年度摘要` 桌面版改為一行五項指標；General `趨勢指標` 補上國際/產學合著論文數、FWCI、影響力，以及高被引/高品質論文數與 FWCI。
 - 文字雲垂直位置下移，改為從篩選器高度附近開始分布；General 頁的 `主要學校` 與 `年度` 主控恢復兩欄置中，THE/QS 則維持三欄主控。
 - THE/QS 的 `學科領域` 篩選改與 `主要學校`、`年度` 放在最上方同一列，讓主控篩選更集中。

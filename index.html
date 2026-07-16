@@ -99,7 +99,7 @@ header,main,.footer{position:relative;z-index:1}
     <div id="sdgKpis" class="kpis"></div>
     <div id="sdgFocusCards" class="insight-list"></div>
     <div class="grid summary-first">
-      <div class="panel"><h2>SDG 雷達圖</h2><div class="sub">所有 SDG 依發表數、FWCI 與引用數標準化為 0-100 後比較</div><div class="chart-wrap small"><canvas id="sdgRadarChart"></canvas></div></div>
+      <div class="panel"><h2>篩選年度 SDGs 發表表現</h2><div class="sub">依 SDG 年度篩選比較六校 Scholarly Output；Overall 代表 2018-2025 累計</div><div class="chart-wrap small"><canvas id="sdgYearPerformanceChart"></canvas></div></div>
     </div>
     <div class="grid">
       <div class="panel"><h2>SDGs 發表數比較</h2><div class="sub">依各 SDG Scholarly Output 排序；Publications by SDG 為 2018-2025 累計匯出</div><div class="chart-wrap"><canvas id="sdgOutputChart"></canvas></div></div>
@@ -142,6 +142,7 @@ const SDG_PUBLICATION_FILES={
  '虎科大':'SDG/Publications_by_SDG_-_National_Formosa_University.xlsx'
 };
 const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
+const SDG_FALLBACK_DATA=JSON.parse(JSON.stringify(SDG_DATA));
 let SDG_BY_SCHOOL={'高科大':SDG_DATA};const SDG_COLORS={'SDG 1':'#E5243B','SDG 2':'#DDA63A','SDG 3':'#4C9F38','SDG 4':'#C5192D','SDG 5':'#FF3A21','SDG 6':'#26BDE2','SDG 7':'#FCC30B','SDG 8':'#A21942','SDG 9':'#FD6925','SDG 10':'#DD1367','SDG 11':'#FD9D24','SDG 12':'#BF8B2E','SDG 13':'#3F7E44','SDG 14':'#0A97D9','SDG 15':'#56C02B','SDG 16':'#00689D','SDG 17':'#19486A'};
 function sdgColor(sdg){return SDG_COLORS[sdg]||'#62d6ef';}const EXCEL_FILES={research:'研究量能統計 2018-2025.xlsx',sdgSummaryMulti:'SDG/Summary_SDG.xlsx'};
 const EXCEL_LAST_MODIFIED=[];
@@ -336,7 +337,8 @@ async function loadExcelData(){
     const pubWb=await fetchWorkbook(file);
     const parsed=parseSdgPublicationWorkbook(pubWb);
     const existing=SDG_BY_SCHOOL[school]||{summary:{},years:{},sdgs:[],subjects:[],keyphrases:[],partners:{institutions:[],countries:[],authors:[],journals:[]}};
-    SDG_BY_SCHOOL[school]={...existing,summary:{...parsed.summary,...existing.summary},years:existing.years||{},sdgs:parsed.sdgs};
+    const detailFallback=school==='高科大'?SDG_FALLBACK_DATA:null;
+    SDG_BY_SCHOOL[school]={...existing,summary:{...parsed.summary,...existing.summary},years:existing.years||{},sdgs:parsed.sdgs,subjects:(existing.subjects&&existing.subjects.length?existing.subjects:(detailFallback?detailFallback.subjects:[])),keyphrases:(existing.keyphrases&&existing.keyphrases.length?existing.keyphrases:(detailFallback?detailFallback.keyphrases:[])),partners:(existing.partners&&Object.values(existing.partners).some(x=>x&&x.length)?existing.partners:(detailFallback?detailFallback.partners:{institutions:[],countries:[],authors:[],journals:[]}))};
    }catch(err){console.warn(`Using embedded or summary-only SDG data for ${school}:`,err.message);}
   }));
   if(!SDG_BY_SCHOOL['高科大']) SDG_BY_SCHOOL['高科大']=SDG_DATA;
@@ -602,7 +604,7 @@ function renderSdg(){
  const s=currentSdgSummary(data);
  const isOverall=sdgYearSelect.value==='Overall';
  const yearLabel=isOverall?'2018-2025':sdgYearSelect.value;
- const kpis=[['SDGs Scholarly Output',s.output,'Summary_SDG｜'+yearLabel],['FWCI (excl. self-citations)',s.fwci,'Summary_SDG｜world average = 1.00'],['SDG Citation Count',isOverall?s.citations:null,'Publications by SDG Total｜2018-2025'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','Summary_SDG｜field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','Summary_SDG｜CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','Summary_SDG']];
+ const kpis=[['SDGs Scholarly Output',s.output,'Summary_SDG｜'+yearLabel],['FWCI (excl. self-citations)',s.fwci,'Summary_SDG｜world average = 1.00'],['Top 10% Cited',s.topCited!==null&&s.topCited!==undefined?s.topCited+'%':'—','Summary_SDG｜field-weighted'],['Top 10% Journals',s.topJournal!==null&&s.topJournal!==undefined?s.topJournal+'%':'—','Summary_SDG｜CiteScore percentile'],['International Collaboration',s.intlPct!==null&&s.intlPct!==undefined?s.intlPct+'%':'—','Summary_SDG']];
  sdgKpis.innerHTML=kpis.map(([label,value,meta])=>`<div class="kpi"><div class="label">${label}</div><div class="value">${fmt(value)}</div><div class="meta">${school}｜${meta}</div></div>`).join('');
  const selected=data.sdgs.find(x=>`${x.sdg}: ${x.name}`===sdgFocusSelect.value)||data.sdgs[0];
  const focusNotes={};
@@ -622,12 +624,23 @@ function renderSdg(){
  charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
  const subjectTop=(data.subjects||[]).slice(0,10).reverse();
  destroy('sdgSubject');
- charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#C9B8F2',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
- const radarTargets=data.sdgs;
- const radarMetrics=[['發表數','output'],['FWCI','fwci'],['引用數','citations']];
- const maxByMetric=Object.fromEntries(radarMetrics.map(([,key])=>[key,Math.max(...data.sdgs.map(x=>x[key]||0),1)]));
- destroy('sdgRadar');
- charts.sdgRadar=new Chart(sdgRadarChart,{type:'radar',data:{labels:radarMetrics.map(x=>x[0]),datasets:radarTargets.map(x=>({label:x.sdg,data:radarMetrics.map(([,key])=>Math.round(((x[key]||0)/(maxByMetric[key]||1))*100)),borderColor:sdgColor(x.sdg),backgroundColor:sdgColor(x.sdg)+'44',pointBackgroundColor:sdgColor(x.sdg),borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}｜${ctx.label}：${ctx.raw}/100`}}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{color:'#d7e9f4',font:{weight:'700'}},grid:{color:'rgba(132,205,235,.20)'},angleLines:{color:'rgba(132,205,235,.18)'}}}}});
+ if(subjectTop.length){
+  charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#C9B8F2',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
+ }else{
+  const ctx=sdgSubjectChart.getContext('2d');
+  ctx.clearRect(0,0,sdgSubjectChart.width,sdgSubjectChart.height);
+  ctx.fillStyle='#a9bfce';
+  ctx.font='14px Microsoft JhengHei, Arial';
+  ctx.textAlign='center';
+  ctx.fillText('此校尚未提供 Publications by Subject Area detailed export',sdgSubjectChart.width/2,sdgSubjectChart.height/2);
+ }
+ const yearRows=SDG_SCHOOL_ORDER.map(u=>{
+  const d=SDG_BY_SCHOOL[u];
+  const summary=isOverall?(d&&d.summary):(d&&d.years&&d.years[sdgYearSelect.value]);
+  return {u,v:summary&&typeof summary.output==='number'?summary.output:null,c:schoolColor(u)};
+ }).filter(x=>x.v!==null).sort((a,b)=>b.v-a.v);
+ destroy('sdgYearPerformance');
+ charts.sdgYearPerformance=new Chart(sdgYearPerformanceChart,{type:'bar',data:{labels:yearRows.map(x=>x.u),datasets:[{label:'SDGs Scholarly Output',data:yearRows.map(x=>x.v),backgroundColor:yearRows.map(x=>x.c),borderRadius:6}]},options:chartOpts('SDGs Scholarly Output',false,false)});
  renderSdgTables(data,selected);
 }
 function renderSdgTables(data,selected){
