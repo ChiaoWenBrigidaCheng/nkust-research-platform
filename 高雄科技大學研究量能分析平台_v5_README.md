@@ -50,6 +50,7 @@
 
 ## 修改紀錄
 ### 2026-07-16
+- 將 General、THE、QS 與 SDGs 圖表中的 line/bar/bubble/radar 視覺色彩調整為較柔和的馬卡龍色系；SDG badge 仍保留官方 SDG 識別色。
 - SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
 - 網站改為優先讀取同目錄 Excel 檔案，支援 GitHub 上傳同名新版 Excel 後自動更新圖表與資料表；.gitignore 同步改為允許正式 Excel 檔上傳。
 - SDGs 分析新增 SDG 目標官方色系、SDG 7/9/12 標準化雷達圖，並移除頁首主標題陰影。

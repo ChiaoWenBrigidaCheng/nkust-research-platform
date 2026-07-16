@@ -329,17 +329,19 @@ async function loadExcelData(){
  }catch(err){console.warn('Using embedded SDG data:',err.message);SDG_BY_SCHOOL={'高科大':SDG_DATA};}
 }
 const SCHOOL_COLORS = {
- '高科大':'#E53935',
- '臺科大':'#8E44D7',
- '北科大':'#2D6CDF',
- '雲科大':'#67C44A',
- '屏科大':'#32AFA4',
- '虎科大':'#D56CAB',
- '中原':'#5D8AA8',
- '海大':'#4A9D8F',
- '高大':'#A178B8'
+ '高科大':'#F4A7A3',
+ '臺科大':'#C9B8F2',
+ '北科大':'#9DC9F5',
+ '雲科大':'#BFE3A4',
+ '屏科大':'#8EDDD4',
+ '虎科大':'#F0B8D2',
+ '中原':'#B8D7E8',
+ '海大':'#A8D8C8',
+ '高大':'#D8B8EA'
 };
-const schoolColor = school => SCHOOL_COLORS[school] || '#7a8c9d';
+const PASTEL_SDG_COLORS=['#F7B7A3','#F6D38A','#BFE6A8','#A9DDF3','#B9C6F4','#D6B8F2','#F2B6D0','#B7E5DA','#F2C6A0','#C9E7B0','#AFCDF8','#E3C1F1','#F4D7A1','#A6E0C7','#F4AEB1','#A9CFE7','#D9E7A5'];
+const schoolColor = school => SCHOOL_COLORS[school] || '#B8C7D9';
+const sdgChartColor = sdg => PASTEL_SDG_COLORS[(Number(String(sdg).match(/\d+/)?.[0]||1)-1)%PASTEL_SDG_COLORS.length];
 function formatFileUpdated(value){
  const d=new Date(value);
  if(Number.isNaN(d.getTime())) return 'Auto';
@@ -589,20 +591,20 @@ function renderSdg(){
  ].map(([tag,title,desc])=>`<div class="insight-card"><div class="tag">${school}｜${selected.sdg}｜${tag}</div><div class="title">${title}</div><div class="desc">${desc}</div></div>`).join('');
  const sdgRank=data.sdgs.slice().sort((a,b)=>(b.output||0)-(a.output||0));
  destroy('sdgOutput');
- charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
+ charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgChartColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
  destroy('sdgBubble');
- charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
+ charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgChartColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgChartColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
  const subjectTop=(data.subjects||[]).slice(0,10).reverse();
  destroy('sdgSubject');
- charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#a894ff',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
+ charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#C9B8F2',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
  const journals=((data.partners&&data.partners.journals)||[]).slice().reverse();
  destroy('sdgJournal');
- charts.sdgJournal=new Chart(sdgJournalChart,{type:'bar',data:{labels:journals.map(x=>x[0]),datasets:[{label:'Total',data:journals.map(x=>x[1]),backgroundColor:'#f3c969',borderRadius:6}]},options:chartOpts('Total publications',false,true)});
+ charts.sdgJournal=new Chart(sdgJournalChart,{type:'bar',data:{labels:journals.map(x=>x[0]),datasets:[{label:'Total',data:journals.map(x=>x[1]),backgroundColor:'#F6D38A',borderRadius:6}]},options:chartOpts('Total publications',false,true)});
  const radarTargets=data.sdgs.filter(x=>['SDG 7','SDG 9','SDG 12'].includes(x.sdg));
  const radarMetrics=[['發表數','output'],['FWCI','fwci'],['引用數','citations']];
  const maxByMetric=Object.fromEntries(radarMetrics.map(([,key])=>[key,Math.max(...data.sdgs.map(x=>x[key]||0),1)]));
  destroy('sdgRadar');
- charts.sdgRadar=new Chart(sdgRadarChart,{type:'radar',data:{labels:radarMetrics.map(x=>x[0]),datasets:radarTargets.map(x=>({label:x.sdg,data:radarMetrics.map(([,key])=>Math.round(((x[key]||0)/(maxByMetric[key]||1))*100)),borderColor:sdgColor(x.sdg),backgroundColor:sdgColor(x.sdg)+'33',pointBackgroundColor:sdgColor(x.sdg),borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}｜${ctx.label}：${ctx.raw}/100`}}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{color:'#d7e9f4',font:{weight:'700'}},grid:{color:'rgba(132,205,235,.20)'},angleLines:{color:'rgba(132,205,235,.18)'}}}}});
+ charts.sdgRadar=new Chart(sdgRadarChart,{type:'radar',data:{labels:radarMetrics.map(x=>x[0]),datasets:radarTargets.map(x=>({label:x.sdg,data:radarMetrics.map(([,key])=>Math.round(((x[key]||0)/(maxByMetric[key]||1))*100)),borderColor:sdgChartColor(x.sdg),backgroundColor:sdgChartColor(x.sdg)+'44',pointBackgroundColor:sdgChartColor(x.sdg),borderWidth:2}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{label:(ctx)=>`${ctx.dataset.label}｜${ctx.label}：${ctx.raw}/100`}}},scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},pointLabels:{color:'#d7e9f4',font:{weight:'700'}},grid:{color:'rgba(132,205,235,.20)'},angleLines:{color:'rgba(132,205,235,.18)'}}}}});
  renderSdgTables(data);
 }
 function renderSdgTables(data){
