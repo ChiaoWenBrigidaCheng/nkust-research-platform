@@ -18,7 +18,7 @@
 - `主要學校年度摘要` 移至 General 的第一個區塊，桌面版摘要卡以一行五項指標呈現。
 - `趨勢指標` 選單移至 `主要學校年度摘要` 之後、年度趨勢圖之前，並納入各項論文數、FWCI 與影響力指標。
 - 原本 General 最上方的 8 個 KPI 指標卡已移除，避免與年度摘要重複。
-- 下方保留合作分析摘要、六校年度趨勢、當年度六校比較、研究產出與研究影響力泡泡圖、六校研究量能資料表；資料表包含國際合著、產學合著、高被引論文與高品質期刊論文相關影響力欄位。
+- 下方保留六校年度趨勢、當年度六校比較、研究產出與研究影響力泡泡圖、六校研究量能資料表，合作分析摘要移至 General 分頁最下方；資料表包含國際合著、產學合著、高被引論文與高品質期刊論文相關影響力欄位。
 
 ### THE / QS 學科分析
 - 保留主要學校、年度、學科領域與趨勢指標篩選。
@@ -28,9 +28,9 @@
 
 ### SDGs 分析
 - 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校 Publications by SDG 檔案與 `Summary_SDG.xlsx`。
-- 頁面最上方提供 SDG 學校、SDG 年度與重點 SDG 篩選；重點 SDG 下拉選單列出所有 SDG 項目。
-- 圖表包含 SDGs 整體 KPI、篩選年度校際 SDGs 發表、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、SDGs目標分布與 SDGs 指標資料表；`SDGs 重點期刊`、雷達圖、Top Keyphrases 與合作/來源摘要已移除。
-- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；`SDGs目標分布` 直接使用各校 Publications by SDG 檔案呈現各 SDG 目標發表占比。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不放入網站畫面。
+- 頁面最上方提供 SDG 學校、SDG 年度與 SDG項目 篩選；SDG項目下拉選單列出所有 SDG 項目，預設為 SDG 1。
+- 圖表包含 SDGs 整體 KPI、篩選年度校際 SDGs 發表、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、目標學校最有潛力的 SDG 與 SDGs 指標資料表；`SDGs目標分布`、`SDGs 重點期刊`、雷達圖、Top Keyphrases 與合作/來源摘要已移除。
+- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；`目標學校最有潛力的 SDG` 直接使用各校 Publications by SDG 的 Scholarly Output、FWCI 與 Citation Count 計算綜合分數。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不放入 SDGs 分頁畫面。
 
 ## Excel 更新方式
 - GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。General 資料放在 repo 根目錄：`研究量能統計 2018-2025.xlsx`。
@@ -51,6 +51,8 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- 強化合作分析摘要篩選：合作類型下拉選單改為直接重畫合作摘要，避免切換國際合著/產學合著時畫面未更新。
+- 修正預設與篩選：主要學校預設高科大，年度與 SDG 年度預設最新年度；合作分析摘要的合作類型篩選正常初始化；SDG 篩選標籤改為 `SDG項目` 並預設 SDG 1。
 - 將學校代表色調深並降低亮度，使 General、THE、QS 與 SDGs 校際比較圖表更貼合深色科技感背景。
 - SDG 重點卡片的排名說明改為明確標示「在該校各 SDG 目標中」依 Scholarly Output 或 FWCI 排名，避免誤解為校際排名。
 - 合作分析摘要新增學科領域分布，依 Scholarly Output 由多到少上下排序；SDG detailed Summary 的 subject area 資料也同步改為由多到少排序。
@@ -61,7 +63,7 @@
 - SDGs 分析移除上方 Total Citation Count KPI 與雷達圖，改以篩選年度六校 SDGs Scholarly Output bar chart 呈現；高科大 detailed subject/keyphrase/partner 備份資料恢復顯示，其他學校若無 detailed Summary 匯出檔會顯示缺資料提示。
 - 背景文字雲加入 `notranslate`、`translate="no"` 與 `lang="en"` 標記，避免同事瀏覽器自動翻譯時將背景英文關鍵字翻成中文。
 - 釐清 SDGs KPI 口徑：Scholarly Output、FWCI、Top 10% 與 International Collaboration 來自 `Summary_SDG.xlsx`；上方 Total Citation Count KPI 已移除，避免與 Publications by SDG 累計引用數混淆。
-- SDGs 分析調整為學校、年度、重點 SDG 篩選置頂；重點 SDG 改列所有 SDG 項目，KPI 可依 `Summary_SDG.xlsx` 切換 Overall/2018-2025 年度，SDG 圖表改用聯合國官方色並移除 `SDGs 重點期刊` 圖表。
+- SDGs 分析調整為學校、年度、SDG項目 篩選置頂；SDG項目 改列所有 SDG 項目，KPI 可依 `Summary_SDG.xlsx` 切換 Overall/2018-2025 年度，SDG 圖表改用聯合國官方色並移除 `SDGs 重點期刊` 圖表。
 - 放大整體介面字級，包含導覽按鈕、篩選器、KPI、摘要卡、表格、說明文字與 Chart.js 圖例/座標/tooltip 文字，提升一般瀏覽器閱讀性。
 - 將 General、THE、QS 圖表中的 line/bar/bubble 視覺色彩調整為較柔和的馬卡龍色系；SDGs 圖表維持聯合國 SDG 目標官方色。
 - SDGs 分析改為讀取 `SDG/` 子資料夾的多校資料，新增 `SDG 學校` 篩選，並補入 NKUST Publications by SDG 正式檔名；舊的根目錄 NKUST SDG 檔將不再作為網站讀取來源。
