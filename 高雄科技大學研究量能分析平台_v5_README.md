@@ -18,6 +18,7 @@
 ## 目前版面結構
 ### General 總體分析
 - 頁首保留「主要學校」與「年度」篩選。
+- General 年度預設為目前資料中的最新年度，新增年度資料後會自動以最大年度作為預設。
 - `主要學校年度摘要` 移至 General 的第一個區塊，桌面版摘要卡以一行五項指標呈現。
 - `趨勢指標` 選單移至 `主要學校年度摘要` 之後、年度趨勢圖之前，並納入各項論文數、FWCI 與影響力指標。
 - 原本 General 最上方的 8 個 KPI 指標卡已移除，避免與年度摘要重複。
@@ -56,6 +57,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- General 總體分析年度預設改為依 `研究量能統計 2018-2025.xlsx` 讀入資料自動選取最大年度，避免新增年度後仍停在舊年度。
 - 移除不需置入網站的 Taiwan 單獨 SciVal Summary 匯出檔；SDGs Taiwan 基準僅保留 `Summary_SDG.xlsx` 中 Taiwan rows 與 `Publications_by_SDG_-_Taiwan.xlsx`。
 - SDGs 分析 KPI 新增 `Citations per Publication`，放置於 `International Collaboration` 旁邊，資料來源同為 `Summary_SDG.xlsx`。
 - General「研究產出 × 研究影響力」與「六校年度趨勢」交換位置；六校年度趨勢改為滿版寬度 line chart，提升年度變化閱讀性。

@@ -483,6 +483,10 @@ function enableTableSort(table){
  });
 }
 function fillSelect(el,items,selected){el.innerHTML=items.map(x=>`<option value="${x}" ${x==selected?'selected':''}>${x}</option>`).join('');}
+function latestYearOption(years){
+ const numeric=years.map(Number).filter(Number.isFinite);
+ return numeric.length?Math.max(...numeric):years[years.length-1];
+}
 function fillCollabTypeSelect(selected='international'){
  const el=document.getElementById('collabTypeSelect');
  if(!el) return;
@@ -537,7 +541,7 @@ async function init(){
  addUpdatedLabels();
  placeControls();
  updateSchoolOptions();
- fillSelect(yearSelect,DATA.years,DATA.years[DATA.years.length-1]);
+ fillSelect(yearSelect,DATA.years,latestYearOption(DATA.years));
  fillSelect(sdgSchoolSelect,sdgSchoolOptions(),'高科大');
  fillCollabTypeSelect('international');
  updateSdgYearOptions();
