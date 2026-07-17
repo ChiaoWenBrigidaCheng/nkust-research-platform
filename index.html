@@ -56,6 +56,7 @@ header,main,.footer{position:relative;z-index:1}
     <div class="grid summary-first">
       <div class="panel"><h2>主要學校年度摘要</h2><div class="sub">與前一年度比較；缺值會顯示為「目前缺值」，不會當作 0 計算</div><div id="summaryBox"></div></div>
     </div>
+        <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis"></div><div class="mini-table-grid"><div><h3>學科領域分布</h3><div class="table-wrap compact"><table id="collabSubjectTable"></table></div></div><div><h3>Top Keyphrases</h3><div class="table-wrap compact"><table id="collabKeyphraseTable"></table></div></div><div><h3>合作與來源摘要</h3><div class="table-wrap compact"><table id="collabPartnerTable"></table></div></div></div></div>
     <div class="metric-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div></div>
     <div class="grid">
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
@@ -99,19 +100,17 @@ header,main,.footer{position:relative;z-index:1}
     <div id="sdgKpis" class="kpis"></div>
     <div id="sdgFocusCards" class="insight-list"></div>
     <div class="grid summary-first">
-      <div class="panel"><h2>篩選年度 SDGs 發表表現</h2><div class="sub">依 SDG 年度篩選比較六校 Scholarly Output；Overall 代表 2018-2025 累計</div><div class="chart-wrap small"><canvas id="sdgYearPerformanceChart"></canvas></div></div>
+      <div class="panel"><h2>篩選年度校際 SDGs 發表</h2><div class="sub">依 SDG 年度篩選比較六校 Scholarly Output；Overall 代表 2018-2025 累計</div><div class="chart-wrap small"><canvas id="sdgYearPerformanceChart"></canvas></div></div>
     </div>
     <div class="grid">
       <div class="panel"><h2>SDGs 發表數比較</h2><div class="sub">依各 SDG Scholarly Output 排序；Publications by SDG 為 2018-2025 累計匯出</div><div class="chart-wrap"><canvas id="sdgOutputChart"></canvas></div></div>
       <div class="panel"><h2>SDGs 影響力定位</h2><div class="sub">橫軸：發表數；縱軸：FWCI；圓點大小代表引用數</div><div class="chart-wrap"><canvas id="sdgBubbleChart"></canvas></div></div>
     </div>
     <div class="grid summary-first">
-      <div class="panel"><h2>SDGs 學科領域分布</h2><div class="sub">以發表數最多的 subject areas 顯示研究主題基礎</div><div class="chart-wrap"><canvas id="sdgSubjectChart"></canvas></div></div>
+      <div class="panel"><h2>SDGs目標分布</h2><div class="sub">依各校 Publications by SDG 檔案呈現 SDG 目標發表占比</div><div class="chart-wrap"><canvas id="sdgSubjectChart"></canvas></div></div>
     </div>
     <div class="panel"><h2>SDGs 指標資料表</h2><div class="table-wrap"><table id="sdgTable" class="sdg-table"></table></div></div>
     <div class="mini-table-grid">
-      <div class="panel"><h2>Top Keyphrases</h2><div class="table-wrap"><table id="sdgKeyphraseTable"></table></div></div>
-      <div class="panel"><h2>合作與來源摘要</h2><div class="table-wrap"><table id="sdgPartnerTable"></table></div></div>
     </div>
   </section>
   <section id="indicators" class="section">
@@ -121,7 +120,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="table-wrap" style="max-height:none">
         <table class="indicator-table">
           <thead><tr><th>指標</th><th>指標說明</th></tr></thead>
-          <tbody><tr><td>教研人數</td><td>大專校院資訊公開平台<br><a href="https://udb.moe.edu.tw/udata/DetailReportList/%E6%95%99%E8%81%B7%E9%A1%9E/StatUniversityRegularTeacher/Index" target="_blank" rel="noopener">資料來源連結</a></td></tr><tr><td>Scopus發表數</td><td>The number of publications of a selected entity.</td></tr><tr><td>FWCI</td><td>The ratio of citations received relative to the expected world average for the subject field, publication type and publication year. The world average FWCI is 1.00. (Mean)</td></tr><tr><td>國際合著論文比</td><td>The extent of international, national and institutional co-authorship. (%)</td></tr><tr><td>國際合著論文數</td><td>The extent of international, national and institutional co-authorship.</td></tr><tr><td>國際合著論文FWCI</td><td>Geographical collaboration → Yearly breakdown → Metric 改為 Field-Weighted Citation Impact。<br><a href="https://www.scival.com/collaboration/collabMetrics/geographicView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>國際合著論文影響力</td><td>The average number of citations received by publications that have international, national or institutional co-authorship.</td></tr><tr><td>產學合著論文比</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of another sector (corporate, government, medical or other). (%)</td></tr><tr><td>產學合著論文數</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of another sector (corporate, government, medical or other).</td></tr><tr><td>產學合著論文FWCI</td><td>Sector collaboration → Yearly breakdown → Metric 改為 Field-Weighted Citation Impact。<br><a href="https://www.scival.com/collaboration/collabMetrics/sectorView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>產學合著論文影響力</td><td>Citations per publication received by those publications that have authors with an academic affiliation as well as authors of affiliation(s) of another sector (corporate, government, medical or other).</td></tr><tr><td>h5-index</td><td>A measure of both the productivity and citation impact of an entity, based on the number of publications as well as the number of citations they have received. h5-index is h-index for the past 5 years.</td></tr><tr><td>高被引論文占比</td><td>Output in Top 10% Citation Percentiles (%). The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文數</td><td>The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文FWCI</td><td>僅可取得 2020–2025 整合資料。</td></tr><tr><td>高品質期刊占比</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals. (%)</td></tr><tr><td>高品質期刊論文數</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals.</td></tr><tr><td>高品質期刊FWCI</td><td>僅可取得 2020–2025 整合資料。</td></tr></tbody>
+          <tbody><tr><td>教研人數</td><td>大專校院資訊公開平台<br><a href="https://udb.moe.edu.tw/udata/DetailReportList/%E6%95%99%E8%81%B7%E9%A1%9E/StatUniversityRegularTeacher/Index" target="_blank" rel="noopener">資料來源連結</a></td></tr><tr><td>Scopus發表數</td><td>The number of publications of a selected entity.</td></tr><tr><td>FWCI</td><td>The ratio of citations received relative to the expected world average for the subject field, publication type and publication year. The world average FWCI is 1.00. (Mean)</td></tr><tr><td>國際合著論文比</td><td>The extent of international co-authorship. (%)</td></tr><tr><td>國際合著論文數</td><td>The extent of international co-authorship.</td></tr><tr><td>國際合著論文FWCI</td><td>FWCI of publications with international co-authorship.<br><a href="https://www.scival.com/collaboration/collabMetrics/geographicView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>國際合著論文影響力</td><td>The average number of citations received by publications that have international co-authorship.</td></tr><tr><td>產學合著論文比</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector. (%)</td></tr><tr><td>產學合著論文數</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector.</td></tr><tr><td>產學合著論文FWCI</td><td>FWCI of publications with academic-corporate collaboration.<br><a href="https://www.scival.com/collaboration/collabMetrics/sectorView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>產學合著論文影響力</td><td>Citations per publication received by publications that have authors with an academic affiliation as well as authors with affiliation(s) of another sector (corporate, government, medical or other).</td></tr><tr><td>h5-index</td><td>A measure of both the productivity and citation impact of an entity, based on the number of publications as well as the number of citations they have received. h5-index is h-index for the past 5 years.</td></tr><tr><td>高被引論文占比</td><td>Output in Top 10% Citation Percentiles (%). The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文數</td><td>The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文FWCI</td><td>FWCI of publications that are highly cited, having reached a particular threshold of citations received. 目前資料僅可取得 2020–2025 整合資料。</td></tr><tr><td>高品質期刊占比</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals. (%)</td></tr><tr><td>高品質期刊論文數</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals.</td></tr><tr><td>高品質期刊FWCI</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). FWCI of publications that have been published in the world's top journals. 目前資料僅可取得 2020–2025 整合資料。</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -141,7 +140,24 @@ const SDG_PUBLICATION_FILES={
  '屏科大':'SDG/Publications_by_SDG_-_National_Pingtung_University_of_Science_and_Technology.xlsx',
  '虎科大':'SDG/Publications_by_SDG_-_National_Formosa_University.xlsx'
 };
-const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
+const COLLAB_FILES={
+ '高科大':{international:'Collaboration/Summary+for+NKUST_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NKUST_產學合著+_+2018+-+2025.xlsx'},
+ '臺科大':{international:'Collaboration/Summary+for+NTUST_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NTUST_產學合著+_+2018+-+2025.xlsx'},
+ '北科大':{international:'Collaboration/Summary+for+NTUT_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NTUT_產學合著+_+2018+-+2025.xlsx'},
+ '雲科大':{international:'Collaboration/Summary+for+YUNTECH_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+YUNTECH_產學合著+_+2018+-+2025.xlsx'},
+ '屏科大':{international:'Collaboration/Summary+for+NPUST_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NPUST_產學合著+_+2018+-+2025.xlsx'},
+ '虎科大':{international:'Collaboration/Summary+for+NFU_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NFU_產學合著+_+2018+-+2025.xlsx'}
+};
+const COLLAB_TYPE_LABELS={international:'國際合著',industry:'產學合著'};
+let COLLAB_BY_SCHOOL={};
+const SELF_INSTITUTIONS={
+ '高科大':'National Kaohsiung University of Science and Technology',
+ '臺科大':'National Taiwan University of Science and Technology',
+ '北科大':'National Taipei University of Technology',
+ '雲科大':'National Yunlin University of Science and Technology',
+ '屏科大':'National Pingtung University of Science and Technology',
+ '虎科大':'National Formosa University'
+};const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
 const SDG_FALLBACK_DATA=JSON.parse(JSON.stringify(SDG_DATA));
 let SDG_BY_SCHOOL={'高科大':SDG_DATA};const SDG_COLORS={'SDG 1':'#E5243B','SDG 2':'#DDA63A','SDG 3':'#4C9F38','SDG 4':'#C5192D','SDG 5':'#FF3A21','SDG 6':'#26BDE2','SDG 7':'#FCC30B','SDG 8':'#A21942','SDG 9':'#FD6925','SDG 10':'#DD1367','SDG 11':'#FD9D24','SDG 12':'#BF8B2E','SDG 13':'#3F7E44','SDG 14':'#0A97D9','SDG 15':'#56C02B','SDG 16':'#00689D','SDG 17':'#19486A'};
 function sdgColor(sdg){return SDG_COLORS[sdg]||'#62d6ef';}const EXCEL_FILES={research:'研究量能統計 2018-2025.xlsx',sdgSummaryMulti:'SDG/Summary_SDG.xlsx'};
@@ -229,7 +245,7 @@ function parseSdgData(pubWb,summaryWb){
  const metric=name=>{const r=summaryRows.find(x=>String(x[0]||'').trim()===name);return r?cleanNum(r[1]):null;};
  const subjectRows=rowsBySheet('Publications by Subject Area');
  const subjectHeader=findHeaderIndex(subjectRows,'Subject Area');
- const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({area:r[0],output:cleanNum(r[2]),citations:cleanNum(r[3]),fwci:cleanNum(r[6])})):SDG_DATA.subjects;
+ const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({area:r[0],output:cleanNum(r[2]),citations:cleanNum(r[3]),fwci:cleanNum(r[6])})).sort((a,b)=>(b.output||0)-(a.output||0)):SDG_DATA.subjects.slice().sort((a,b)=>(b.output||0)-(a.output||0));
  const keyRows=rowsBySheet('Keyphrase analysis');
  const keyHeader=findHeaderIndex(keyRows,'Keyphrase');
  const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).slice(0,24).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):SDG_DATA.keyphrases;
@@ -241,7 +257,25 @@ function parseSdgData(pubWb,summaryWb){
  };
  return {summary:{output:metric('Scholarly Output'),openAccess:metric('Scholarly Output (Open Access %)'),authors:metric('Authors'),fwci:metric('Field-Weighted Citation Impact'),international:metric('International Collaboration'),citations:metric('Citation Count'),cpp:metric('Citations per Publication'),topCited:parseSingleMetric(summaryWb,'Outputs in Top Citation Per...'),topJournal:parseSingleMetric(summaryWb,'Publications in Top Journal...'),intlPct:parseSingleMetric(summaryWb,'International Collaboration (%)'),corpPct:parseSingleMetric(summaryWb,'Academic-Corporate Collabor...')},sdgs,subjects,keyphrases,partners};
 }
-function parseSdgPublicationWorkbook(wb){
+function parseCollaborationWorkbook(wb,school){
+ const rowsBySheet=name=>wb.Sheets[name]?XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,defval:null}):[];
+ const summaryRows=rowsBySheet('Summary metrics');
+ const metric=name=>{const r=summaryRows.find(x=>String(x[0]||'').replace('\ufeff','').trim()===name);return r?cleanNum(r[1]):null;};
+ const subjectRows=rowsBySheet('Publications by Subject Area');
+ const subjectHeader=findHeaderIndex(subjectRows,'Subject Area');
+ const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({area:r[0],output:cleanNum(r[2]),citations:cleanNum(r[3]),fwci:cleanNum(r[6])})).sort((a,b)=>(b.output||0)-(a.output||0)).slice(0,12):[];
+ const keyRows=rowsBySheet('Keyphrase analysis');
+ const keyHeader=findHeaderIndex(keyRows,'Keyphrase');
+ const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).slice(0,12).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):[];
+ const self=SELF_INSTITUTIONS[school]||'';
+ const partners={
+  institutions:parseMatrix(rowsBySheet('Top 5 Institutions by Schol...'),'Institutions').filter(x=>!self||!String(x[0]).includes(self)),
+  countries:parseMatrix(rowsBySheet('Top 5 Countries or Regions by .'),'Countries/Regions').filter(x=>x[0]!=='Taiwan'),
+  authors:parseMatrix(rowsBySheet('Top 5 Authors by Scholarly ...'),'Authors'),
+  journals:parseMatrix(rowsBySheet('Top 5 Scopus Sources by Sch...'),'Journals')
+ };
+ return {summary:{output:metric('Scholarly Output'),openAccess:metric('Scholarly Output (Open Access %)'),authors:metric('Authors'),fwci:metric('Field-Weighted Citation Impact'),collaboration:metric('International Collaboration'),citations:metric('Citation Count'),cpp:metric('Citations per Publication')},subjects,keyphrases,partners};
+}function parseSdgPublicationWorkbook(wb){
  const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:null});
  const sdgs=[];
  let total={};
@@ -344,19 +378,28 @@ async function loadExcelData(){
   if(!SDG_BY_SCHOOL['高科大']) SDG_BY_SCHOOL['高科大']=SDG_DATA;
   SDG_DATA=SDG_BY_SCHOOL['高科大'];
  }catch(err){console.warn('Using embedded SDG data:',err.message);SDG_BY_SCHOOL={'高科大':SDG_DATA};}
-}
+ try{
+  COLLAB_BY_SCHOOL={};
+  await Promise.all(Object.entries(COLLAB_FILES).flatMap(([school,types])=>Object.entries(types).map(async ([type,file])=>{
+   try{
+    const wb=await fetchWorkbook(file);
+    COLLAB_BY_SCHOOL[school]=COLLAB_BY_SCHOOL[school]||{};
+    COLLAB_BY_SCHOOL[school][type]=parseCollaborationWorkbook(wb,school);
+   }catch(err){console.warn(`Collaboration data unavailable for ${school} ${type}:`,err.message);}
+  })));
+ }catch(err){console.warn('Using no collaboration data:',err.message);}}
 const SCHOOL_COLORS = {
- '高科大':'#F4A7A3',
- '臺科大':'#C9B8F2',
- '北科大':'#9DC9F5',
- '雲科大':'#BFE3A4',
- '屏科大':'#8EDDD4',
- '虎科大':'#F0B8D2',
- '中原':'#B8D7E8',
- '海大':'#A8D8C8',
- '高大':'#D8B8EA'
+ '高科大':'#C96F72',
+ '臺科大':'#8E77C8',
+ '北科大':'#5C91C9',
+ '雲科大':'#7FAE6A',
+ '屏科大':'#4CA9A3',
+ '虎科大':'#B86A8B',
+ '中原':'#6F9DB6',
+ '海大':'#5C9A86',
+ '高大':'#9470B4'
 };
-const schoolColor = school => SCHOOL_COLORS[school] || '#B8C7D9';
+const schoolColor = school => SCHOOL_COLORS[school] || '#7F93A5';
 function formatFileUpdated(value){
  const d=new Date(value);
  if(Number.isNaN(d.getTime())) return 'Auto';
@@ -400,6 +443,7 @@ function fmt(v,d=2){
 }
 function destroy(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function fillSelect(el,items,selected){el.innerHTML=items.map(x=>`<option value="${x}" ${x==selected?'selected':''}>${x}</option>`).join('');}
+function fillCollabTypeSelect(selected='international'){collabTypeSelect.innerHTML=Object.entries(COLLAB_TYPE_LABELS).map(([value,label])=>`<option value="${value}" ${value===selected?'selected':''}>${label}</option>`).join('');}
 function record(dataset,school,year,field=null){
  return dataset.find(r=>r['學校']===school && r['年度']===Number(year) && (field===null||r['領域別']===field));
 }
@@ -467,7 +511,7 @@ function bind(){
    if(page==='general'||page==='the'||page==='qs') updateMetricOptions();
    render();
  });
- [schoolSelect,yearSelect,fieldSelect,generalMetricSelect,subjectMetricSelect,sdgFocusSelect,sdgSchoolSelect,sdgYearSelect].forEach(el=>el.onchange=()=>{if(el===sdgSchoolSelect){updateSdgYearOptions();updateSdgFocusOptions();} render();});
+ [schoolSelect,yearSelect,fieldSelect,generalMetricSelect,subjectMetricSelect,collabTypeSelect,sdgFocusSelect,sdgSchoolSelect,sdgYearSelect].forEach(el=>el.onchange=()=>{if(el===sdgSchoolSelect){updateSdgYearOptions();updateSdgFocusOptions();} render();});
 }
 function updateMetricOptions(){
  const metrics=page==='general'?generalMetrics:subjectMetrics;
@@ -525,6 +569,7 @@ function renderGeneral(){
  scales:{x:{title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
  y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}}}}});
 
+ renderCollaboration(school);
  renderGeneralTable(year);
  renderSummary(row,record(DATA.general,school,year-1),school,year);
 }
@@ -551,7 +596,28 @@ function renderSummary(row,prev,school,year){
  }).join('');
  summaryBox.innerHTML=`<div class="summary-heading"><div class="badge">${school}｜${year}</div><span style="font-size:13px;color:#9fb5c9">與前一年比較</span></div><div class="summary-grid">${cards}</div>`;
 }
-function renderGeneralTable(year){
+function renderCollaboration(school){
+ const type=collabTypeSelect.value||'international';
+ const data=COLLAB_BY_SCHOOL[school]&&COLLAB_BY_SCHOOL[school][type];
+ const label=COLLAB_TYPE_LABELS[type]||type;
+ if(!data){
+  collabKpis.innerHTML=`<div class="kpi"><div class="label">${label}</div><div class="value">—</div><div class="meta">尚未讀取 Collaboration 資料</div></div>`;
+  collabSubjectTable.innerHTML='<tbody><tr><td>尚無學科領域分布資料。</td></tr></tbody>';
+  collabKeyphraseTable.innerHTML='<tbody><tr><td>尚無 Top Keyphrases 資料。</td></tr></tbody>';
+  collabPartnerTable.innerHTML='<tbody><tr><td>尚無合作與來源摘要資料。</td></tr></tbody>';
+  return;
+ }
+ const s=data.summary||{};
+ const kpis=[['Scholarly Output',s.output],['FWCI',s.fwci],['Citation Count',s.citations],['Citations per Publication',s.cpp]];
+ collabKpis.innerHTML=kpis.map(([k,v])=>`<div class="kpi"><div class="label">${k}</div><div class="value">${fmt(v)}</div><div class="meta">${school}｜${label}｜2018-2025</div></div>`).join('');
+ const subjects=data.subjects||[];
+ collabSubjectTable.innerHTML='<thead><tr><th>Subject Area</th><th>Scholarly Output</th><th>FWCI</th></tr></thead><tbody>'+(subjects.length?subjects.map(r=>`<tr><td>${r.area}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無學科領域分布資料。</td></tr>')+'</tbody>';
+ const keys=data.keyphrases||[];
+ collabKeyphraseTable.innerHTML='<thead><tr><th>Keyphrase</th><th>Relevance</th><th>Growth %</th></tr></thead><tbody>'+(keys.length?keys.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無 Top Keyphrases 資料。</td></tr>')+'</tbody>';
+ const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
+ const rows=[['Institution',...p.institutions],['Country/Region',...p.countries],['Author',...p.authors],['Source',...p.journals]].flatMap(group=>group.slice(1).map(x=>[group[0],x[0],x[1]]));
+ collabPartnerTable.innerHTML='<thead><tr><th>Type</th><th>Name</th><th>Total</th></tr></thead><tbody>'+(rows.length?rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無合作與來源摘要資料。</td></tr>')+'</tbody>';
+}function renderGeneralTable(year){
  const cols=['學校','Scopus發表數','Scopus每師平均','h5-index','FWCI','國際合著論文比 %','國際合著論文影響力','產學合著論文比 %','產學合著論文影響力','高被引論文占比 %','高被引論文FWCI','高品質期刊論文占比 %','高品質期刊論文FWCI'];
  const rows=DATA.universities.map(u=>record(DATA.general,u,year)||{'學校':u});
  generalTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+
@@ -613,8 +679,8 @@ function renderSdg(){
   return;
  }
  sdgFocusCards.innerHTML=[
-  ['Scholarly Output',fmt(selected.output),`SDGs 發表數排名第 ${metricRank(data.sdgs,'output',selected)}。`],
-  ['FWCI',fmt(selected.fwci),`FWCI 排名第 ${metricRank(data.sdgs,'fwci',selected)}，高於 1 代表高於世界平均。`],
+  ['Scholarly Output',fmt(selected.output),`在 ${school} 的各 SDG 目標中，依 Scholarly Output 由多到少排名第 ${metricRank(data.sdgs,'output',selected)}。`],
+  ['FWCI',fmt(selected.fwci),`在 ${school} 的各 SDG 目標中，依 FWCI 由高到低排名第 ${metricRank(data.sdgs,'fwci',selected)}；高於 1 代表高於世界平均。`],
   ['Citation Count',fmt(selected.citations),'可作為後續專題分析與簡報輸出的重點。']
  ].map(([tag,title,desc])=>`<div class="insight-card"><div class="tag">${school}｜${selected.sdg}｜${tag}</div><div class="title">${title}</div><div class="desc">${desc}</div></div>`).join('');
  const sdgRank=data.sdgs.slice().sort((a,b)=>(b.output||0)-(a.output||0));
@@ -622,17 +688,18 @@ function renderSdg(){
  charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
  destroy('sdgBubble');
  charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
- const subjectTop=(data.subjects||[]).slice(0,10).reverse();
+ const sdgDistribution=(data.sdgs||[]).filter(x=>typeof x.output==='number'&&x.output>0).sort((a,b)=>(b.output||0)-(a.output||0));
  destroy('sdgSubject');
- if(subjectTop.length){
-  charts.sdgSubject=new Chart(sdgSubjectChart,{type:'bar',data:{labels:subjectTop.map(x=>x.area),datasets:[{label:'Scholarly Output',data:subjectTop.map(x=>x.output),backgroundColor:'#C9B8F2',borderRadius:6}]},options:chartOpts('Scholarly Output',false,true)});
+ if(sdgDistribution.length){
+  const total=sdgDistribution.reduce((sum,x)=>sum+(x.output||0),0);
+  charts.sdgSubject=new Chart(sdgSubjectChart,{type:'doughnut',data:{labels:sdgDistribution.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgDistribution.map(x=>x.output),backgroundColor:sdgDistribution.map(x=>sdgColor(x.sdg)),borderColor:'rgba(9,22,36,.9)',borderWidth:2,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'right',labels:{color:'#b8d0df',boxWidth:14,padding:14}},tooltip:{callbacks:{label:(ctx)=>{const item=sdgDistribution[ctx.dataIndex];const value=item.output||0;const pct=total?value/total*100:0;return `${item.sdg} ${item.name}｜${fmt(value)}｜${pct.toFixed(1)}%`;}}}}}});
  }else{
   const ctx=sdgSubjectChart.getContext('2d');
   ctx.clearRect(0,0,sdgSubjectChart.width,sdgSubjectChart.height);
   ctx.fillStyle='#a9bfce';
   ctx.font='14px Microsoft JhengHei, Arial';
   ctx.textAlign='center';
-  ctx.fillText('此校尚未提供 Publications by Subject Area detailed export',sdgSubjectChart.width/2,sdgSubjectChart.height/2);
+  ctx.fillText('此校尚無 Publications by SDG 資料',sdgSubjectChart.width/2,sdgSubjectChart.height/2);
  }
  const yearRows=SDG_SCHOOL_ORDER.map(u=>{
   const d=SDG_BY_SCHOOL[u];
@@ -646,11 +713,6 @@ function renderSdg(){
 function renderSdgTables(data,selected){
  const cols=['SDG','Name','Scholarly Output','FWCI','Citation Count'];
  sdgTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+(data.sdgs||[]).map(r=>`<tr class="${selected&&r.sdg===selected.sdg?'highlight':''}"><td><span class="sdg-badge" style="background:${sdgColor(r.sdg)}">${r.sdg}</span></td><td>${r.name}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td><td>${fmt(r.citations)}</td></tr>`).join('')+'</tbody>';
- const keyphrases=data.keyphrases||[];
- sdgKeyphraseTable.innerHTML='<thead><tr><th>Keyphrase</th><th>Relevance</th><th>Growth %</th></tr></thead><tbody>'+(keyphrases.length?keyphrases.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚未提供 detailed Summary 匯出檔，暫無 keyphrase 資料。</td></tr>')+'</tbody>';
- const partners=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
- const partnerRows=[['Institution',...partners.institutions],['Country/Region',...partners.countries],['Author',...partners.authors],['Journal',...partners.journals]].flatMap(group=>group.slice(1).map(x=>[group[0],x[0],x[1]]));
- sdgPartnerTable.innerHTML='<thead><tr><th>Type</th><th>Name</th><th>Total</th></tr></thead><tbody>'+(partnerRows.length?partnerRows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚未提供 detailed Summary 匯出檔，暫無合作與來源摘要。</td></tr>')+'</tbody>';
 }function chartOpts(title,legend=true,horizontal=false){
  return {responsive:true,maintainAspectRatio:false,indexAxis:horizontal?'y':'x',
  plugins:{legend:{display:legend,labels:{color:'#b8d0df'}},title:{display:false,text:title}},

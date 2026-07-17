@@ -8,6 +8,7 @@
 - `高雄科技大學研究量能分析平台_v5_README.md`：專案說明與修改紀錄。
 - `研究量能統計 2018-2025.xlsx`：General 資料來源。
 - `SDG/`：SDGs 分析資料夾，包含六校 `Publications by SDG` 檔案與多校 `Summary_SDG.xlsx`。
+- `Collaboration/`：合作分析資料夾，包含六校國際合著與產學合著 SciVal detailed Summary 匯出檔。
 - `114 產學研究量能研析 20260112.pdf`：目前網站分析架構的參考簡報。
 - `教1-2.專任教師數-以「校」統計.xlsx`：教研人數資料來源。
 
@@ -17,7 +18,7 @@
 - `主要學校年度摘要` 移至 General 的第一個區塊，桌面版摘要卡以一行五項指標呈現。
 - `趨勢指標` 選單移至 `主要學校年度摘要` 之後、年度趨勢圖之前，並納入各項論文數、FWCI 與影響力指標。
 - 原本 General 最上方的 8 個 KPI 指標卡已移除，避免與年度摘要重複。
-- 下方保留六校年度趨勢、當年度六校比較、研究產出與研究影響力泡泡圖、六校研究量能資料表；資料表包含國際合著、產學合著、高被引論文與高品質期刊論文相關影響力欄位。
+- 下方保留合作分析摘要、六校年度趨勢、當年度六校比較、研究產出與研究影響力泡泡圖、六校研究量能資料表；資料表包含國際合著、產學合著、高被引論文與高品質期刊論文相關影響力欄位。
 
 ### THE / QS 學科分析
 - 保留主要學校、年度、學科領域與趨勢指標篩選。
@@ -28,15 +29,16 @@
 ### SDGs 分析
 - 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校 Publications by SDG 檔案與 `Summary_SDG.xlsx`。
 - 頁面最上方提供 SDG 學校、SDG 年度與重點 SDG 篩選；重點 SDG 下拉選單列出所有 SDG 項目。
-- 圖表包含 SDGs 整體 KPI、篩選年度六校 SDG 發表表現、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、學科領域分布、Top keyphrases 與合作/來源摘要；`SDGs 重點期刊` 與雷達圖已移除。
-- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；高科大保留內建較完整的 subjects、keyphrases、partners 與 journals 備份資料。其他學校若要呈現 `SDGs 學科領域分布`、`Top Keyphrases`、`合作與來源摘要`，需再提供各校 SciVal detailed Summary 匯出檔，至少包含 `Publications by Subject Area`、`Keyphrase analysis`、`Top Institutions/Countries/Authors/Scopus Sources` 等工作表。
+- 圖表包含 SDGs 整體 KPI、篩選年度校際 SDGs 發表、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、SDGs目標分布與 SDGs 指標資料表；`SDGs 重點期刊`、雷達圖、Top Keyphrases 與合作/來源摘要已移除。
+- 目前多校資料包含 `Summary_SDG.xlsx` 與各校 Publications by SDG；`SDGs目標分布` 直接使用各校 Publications by SDG 檔案呈現各 SDG 目標發表占比。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不放入網站畫面。
 
 ## Excel 更新方式
 - GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。General 資料放在 repo 根目錄：`研究量能統計 2018-2025.xlsx`。
 - SDGs 資料放在 `SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校 Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`。
 - 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料；`Last updated` 會依瀏覽器取得的 Excel/HTML 最後修改時間更新。
+- 合作分析資料需放在 `Collaboration/` 子資料夾並維持目前固定檔名；網站會讀取六校國際合著與產學合著 detailed Summary 的 Summary metrics、Keyphrase analysis 與 Top 5 合作/來源工作表。
 - `研究量能統計 2018-2025.xlsx` 需維持目前工作表名稱與欄位順序：`General`、`THE`、`QS`。
-- SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；若要補齊學科領域、Keyphrases、合作機構/國家/作者與來源摘要，需提供各校 detailed Summary 匯出檔；若要新增 SDG 7/9/12 的更細專題頁，需另外提供各 SDG 的分項 SciVal 匯出檔。
+- SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；目前網站以 `Summary_SDG.xlsx` 與各校 Publications by SDG 更新 KPI、年度校際比較、SDG 目標分布與資料表。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不作為網站自動更新內容。
 - 若 Excel 暫時讀不到，網站會使用內建備份資料，避免頁面空白。
 ## 指標與缺值說明
 - `缺值不視為 0` 的意思是：若某年度或某指標沒有資料，系統會顯示為缺值，不會把它當成 0 參與前後年度比較，以避免造成誤判。
@@ -49,6 +51,12 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- 將學校代表色調深並降低亮度，使 General、THE、QS 與 SDGs 校際比較圖表更貼合深色科技感背景。
+- SDG 重點卡片的排名說明改為明確標示「在該校各 SDG 目標中」依 Scholarly Output 或 FWCI 排名，避免誤解為校際排名。
+- 合作分析摘要新增學科領域分布，依 Scholarly Output 由多到少上下排序；SDG detailed Summary 的 subject area 資料也同步改為由多到少排序。
+- General 總體分析新增「合作分析摘要」，自動讀取 `Collaboration/` 內六校國際合著與產學合著 SciVal detailed Summary，呈現 KPI、學科領域分布、Top Keyphrases 與合作/來源摘要；學科領域分布依 Scholarly Output 由多到少排列。
+- SDGs 分析將「篩選年度 SDGs 發表表現」改名為「篩選年度校際 SDGs 發表」；「SDGs 學科領域分布」改為使用 Publications by SDG 的「SDGs目標分布」doughnut chart，並先移除 Top Keyphrases 與合作/來源摘要面板。
+- 依 研究量能統計 2018-2025.xlsx 的 Scource 工作表更新指標說明：國際合著改為 international co-authorship，產學合著明確標示 corporate sector，並補充高被引/高品質期刊 FWCI 定義。
 ### 2026-07-16
 - SDGs 分析移除上方 Total Citation Count KPI 與雷達圖，改以篩選年度六校 SDGs Scholarly Output bar chart 呈現；高科大 detailed subject/keyphrase/partner 備份資料恢復顯示，其他學校若無 detailed Summary 匯出檔會顯示缺資料提示。
 - 背景文字雲加入 `notranslate`、`translate="no"` 與 `lang="en"` 標記，避免同事瀏覽器自動翻譯時將背景英文關鍵字翻成中文。
