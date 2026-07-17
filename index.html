@@ -61,10 +61,10 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
       <div class="panel"><h2>當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar"><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="mini-table-grid"><div><h3>學科領域分布</h3><div class="table-wrap compact"><table id="collabSubjectTable"></table></div></div><div><h3>Top Keyphrases</h3><div class="table-wrap compact"><table id="collabKeyphraseTable"></table></div></div><div><h3>合作與來源摘要</h3><div class="table-wrap compact"><table id="collabPartnerTable"></table></div></div></div></div>
     <div class="grid">
       <div class="panel"><h2>研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
     </div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="mini-table-grid"><div><h3>學科領域分布</h3><div class="table-wrap compact"><table id="collabSubjectTable"></table></div></div><div><h3>Top Keyphrases</h3><div class="table-wrap compact"><table id="collabKeyphraseTable"></table></div></div><div><h3>合作與來源摘要</h3><div class="table-wrap compact"><table id="collabPartnerTable"></table></div></div></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sub">高科大預設醒目顯示，可依年度切換</div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -138,7 +138,8 @@ const SDG_PUBLICATION_FILES={
  '北科大':'SDG/Publications_by_SDG_-_National_Taipei_University_of_Technology.xlsx',
  '雲科大':'SDG/Publications_by_SDG_-_National_Yunlin_University_of_Science_and_Technology.xlsx',
  '屏科大':'SDG/Publications_by_SDG_-_National_Pingtung_University_of_Science_and_Technology.xlsx',
- '虎科大':'SDG/Publications_by_SDG_-_National_Formosa_University.xlsx'
+ '虎科大':'SDG/Publications_by_SDG_-_National_Formosa_University.xlsx',
+ 'Taiwan':'SDG/Publications_by_SDG_-_Taiwan.xlsx'
 };
 const COLLAB_FILES={
  '高科大':{international:'Collaboration/Summary+for+NKUST_國際合著+_+2018+-+2025.xlsx',industry:'Collaboration/Summary+for+NKUST_產學合著+_+2018+-+2025.xlsx'},
@@ -157,7 +158,7 @@ const SELF_INSTITUTIONS={
  '雲科大':'National Yunlin University of Science and Technology',
  '屏科大':'National Pingtung University of Science and Technology',
  '虎科大':'National Formosa University'
-};const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
+};const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大','Taiwan'];
 const SDG_FALLBACK_DATA=JSON.parse(JSON.stringify(SDG_DATA));
 let SDG_BY_SCHOOL={'高科大':SDG_DATA};const SDG_COLORS={'SDG 1':'#E5243B','SDG 2':'#DDA63A','SDG 3':'#4C9F38','SDG 4':'#C5192D','SDG 5':'#FF3A21','SDG 6':'#26BDE2','SDG 7':'#FCC30B','SDG 8':'#A21942','SDG 9':'#FD6925','SDG 10':'#DD1367','SDG 11':'#FD9D24','SDG 12':'#BF8B2E','SDG 13':'#3F7E44','SDG 14':'#0A97D9','SDG 15':'#56C02B','SDG 16':'#00689D','SDG 17':'#19486A'};
 function sdgColor(sdg){return SDG_COLORS[sdg]||'#62d6ef';}const EXCEL_FILES={research:'研究量能統計 2018-2025.xlsx',sdgSummaryMulti:'SDG/Summary_SDG.xlsx'};
@@ -289,6 +290,7 @@ function parseCollaborationWorkbook(wb,school){
 }
 function sdgSchoolFromEntity(value){
  const s=String(value||'');
+ if(s.trim()==='Taiwan') return 'Taiwan';
  if(s.includes('NKUST')) return '高科大';
  if(s.includes('NTUST')) return '臺科大';
  if(s.includes('NTUT')) return '北科大';
@@ -396,6 +398,7 @@ const SCHOOL_COLORS = {
  '雲科大':'#7FAE6A',
  '屏科大':'#4CA9A3',
  '虎科大':'#B86A8B',
+ 'Taiwan':'#7F93A5',
  '中原':'#6F9DB6',
  '海大':'#5C9A86',
  '高大':'#9470B4'
