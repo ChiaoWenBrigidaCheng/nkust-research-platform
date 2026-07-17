@@ -158,7 +158,8 @@ const SELF_INSTITUTIONS={
  '雲科大':'National Yunlin University of Science and Technology',
  '屏科大':'National Pingtung University of Science and Technology',
  '虎科大':'National Formosa University'
-};const SDG_SCHOOL_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大','Taiwan'];
+};const SDG_UNIVERSITY_ORDER=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
+const SDG_SCHOOL_ORDER=[...SDG_UNIVERSITY_ORDER,'Taiwan'];
 const SDG_FALLBACK_DATA=JSON.parse(JSON.stringify(SDG_DATA));
 let SDG_BY_SCHOOL={'高科大':SDG_DATA};const SDG_COLORS={'SDG 1':'#E5243B','SDG 2':'#DDA63A','SDG 3':'#4C9F38','SDG 4':'#C5192D','SDG 5':'#FF3A21','SDG 6':'#26BDE2','SDG 7':'#FCC30B','SDG 8':'#A21942','SDG 9':'#FD6925','SDG 10':'#DD1367','SDG 11':'#FD9D24','SDG 12':'#BF8B2E','SDG 13':'#3F7E44','SDG 14':'#0A97D9','SDG 15':'#56C02B','SDG 16':'#00689D','SDG 17':'#19486A'};
 function sdgColor(sdg){return SDG_COLORS[sdg]||'#62d6ef';}const EXCEL_FILES={research:'研究量能統計 2018-2025.xlsx',sdgSummaryMulti:'SDG/Summary_SDG.xlsx'};
@@ -749,7 +750,7 @@ function renderSdg(){
  destroy('sdgBubble');
  charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
  renderSdgPotential(data,school);
- const yearRows=SDG_SCHOOL_ORDER.map(u=>{
+ const yearRows=SDG_UNIVERSITY_ORDER.map(u=>{
   const d=SDG_BY_SCHOOL[u];
   const summary=isOverall?(d&&d.summary):(d&&d.years&&d.years[sdgYearSelect.value]);
   return {u,v:summary&&typeof summary.output==='number'?summary.output:null,c:schoolColor(u)};

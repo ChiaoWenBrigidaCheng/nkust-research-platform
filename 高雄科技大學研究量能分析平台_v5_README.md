@@ -35,7 +35,7 @@
 ### SDGs 分析
 - 依 PDF 第 3、4 章架構新增 `SDGs 分析` 分頁，使用 `SDG/` 資料夾內的六校與 Taiwan 全國基準 Publications by SDG 檔案，以及 `Summary_SDG.xlsx`。
 - 頁面最上方提供 SDG 學校與 SDG 年度篩選；SDG項目下拉選單位於 SDGs KPI 後、重點卡片前方，列出所有 SDG 項目，預設為 SDG 1。
-- 圖表包含 SDGs 整體 KPI、篩選年度校際 SDGs 發表、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、目標學校最有潛力的 SDG 與 SDGs 指標資料表；SDGs KPI 顯示 Scholarly Output、FWCI、Top 10% Cited、Top 10% Journals、International Collaboration 與 Citations per Publication；`SDGs目標分布`、`SDGs 重點期刊`、雷達圖、Top Keyphrases 與合作/來源摘要已移除。
+- 圖表包含 SDGs 整體 KPI、篩選年度校際 SDGs 發表、SDG 發表數排序、SDGs 發表數 × FWCI 影響力定位泡泡圖、目標學校最有潛力的 SDG 與 SDGs 指標資料表；`篩選年度校際 SDGs 發表` 僅比較六校，不納入 Taiwan；SDGs KPI 顯示 Scholarly Output、FWCI、Top 10% Cited、Top 10% Journals、International Collaboration 與 Citations per Publication；`SDGs目標分布`、`SDGs 重點期刊`、雷達圖、Top Keyphrases 與合作/來源摘要已移除。
 - 目前多校資料包含 `Summary_SDG.xlsx` 與各校/Taiwan Publications by SDG；`目標學校最有潛力的 SDG` 直接使用 Publications by SDG 的 Scholarly Output、FWCI 與 Citation Count 計算綜合分數。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不放入 SDGs 分頁畫面。
 
 ## Excel 更新方式
@@ -57,6 +57,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- SDGs「篩選年度校際 SDGs 發表」bar chart 改為只比較六校，不納入 Taiwan 全國基準。
 - General 總體分析年度預設改為依 `研究量能統計 2018-2025.xlsx` 讀入資料自動選取最大年度，避免新增年度後仍停在舊年度。
 - 移除不需置入網站的 Taiwan 單獨 SciVal Summary 匯出檔；SDGs Taiwan 基準僅保留 `Summary_SDG.xlsx` 中 Taiwan rows 與 `Publications_by_SDG_-_Taiwan.xlsx`。
 - SDGs 分析 KPI 新增 `Citations per Publication`，放置於 `International Collaboration` 旁邊，資料來源同為 `Summary_SDG.xlsx`。
