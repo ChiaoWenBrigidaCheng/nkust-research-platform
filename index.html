@@ -67,7 +67,7 @@ header,main,.footer{position:relative;z-index:1}
     <div class="grid wide">
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾與 General 年度資料，依主要學校、年度與合作類型切換</div><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-note">桑基圖流帶寬度為各類 Top 5 內相對權重，用於呈現同類項目強弱；不同類別不可直接比較。原始數值請見下方 Top 5 卡片或滑鼠提示。</div><div id="collabSankey" class="sankey-wrap"></div><div id="collabTopSummaries" class="collab-top-grid"></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾與 General 年度資料，依主要學校、年度與合作類型切換</div><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-note">桑基圖流帶寬度為各類 Top 5 內相對權重，用於呈現同類項目強弱；不同類別不可直接比較。原始數值請移到節點或流帶上查看。</div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -1019,19 +1019,6 @@ function collabSankeyGroups(data){
  ];
  return groupRows.filter(g=>g.items.length);
 }
-function renderCollabTopSummaries(data){
- const host=document.getElementById('collabTopSummaries');
- if(!host) return;
- const top=topCollabSummaries(data);
- const card=(title,basis,rows,valueLabel)=>`<div class="collab-top-card"><h3>${title}</h3><div class="basis">${basis}</div><ol>`+
-  (rows.length?rows.map(r=>`<li><strong>${shortLabel(r.label,42)}</strong><br><span>${valueLabel} ${fmt(r.value)}${r.detail?'｜'+r.detail:''}</span></li>`).join(''):'<li><span>尚無資料</span></li>')+
-  '</ol></div>';
- host.innerHTML=[
-  card('Top 5 學科領域','依 Scholarly Output 排序',top.subjects,'Output'),
-  card('Top 5 Keyphrases','依 Relevance 排序',top.keyphrases,'Relevance'),
-  card('Top 5 合作來源','依 Total 排序',top.sources,'Total')
- ].join('');
-}
 function renderCollabSankey(data,school,label,period){
  const host=document.getElementById('collabSankey');
  const meta=document.getElementById('collabSankeyMeta');
@@ -1070,8 +1057,13 @@ function renderCollabSankey(data,school,label,period){
   parent.appendChild(t);
   return t;
  };
- const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30)=>{
+ const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30,titleText='')=>{
   const g=svgEl('g',{class:'sankey-node'});
+  if(titleText){
+   const tip=svgEl('title');
+   tip.textContent=titleText;
+   g.appendChild(tip);
+  }
   g.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:7,fill:color}));
   parent.appendChild(g);
   const labelY=sub&&h>48?y+h/2-10:y+h/2;
@@ -1098,7 +1090,7 @@ function renderCollabSankey(data,school,label,period){
   const minCatH=g.items.length*minItemH+Math.max(0,g.items.length-1)*itemGap;
   const catH=Math.max(minCatH,total*scale);
   const catY0=catCursor, catY1=catCursor+catH;
-  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,`項目數 ${g.items.length}`,22);
+  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,`項目數 ${g.items.length}`,22,`${g.label}｜項目數 ${g.items.length}`);
   let catOut=catY0;
   const itemAvailable=Math.max(20,catH-itemGap*(g.items.length-1));
   const itemScale=itemAvailable/total;
@@ -1108,7 +1100,7 @@ function renderCollabSankey(data,school,label,period){
    const catLinkY0=catOut, catLinkY1=catOut+linkH;
    const itemNodeY0=itemY, itemNodeY1=itemY+linkH;
    drawRibbon(groupLinks,catX+catW,catLinkY0,catLinkY1,itemX,itemNodeY0,itemNodeY1,`url(#collabGrad${i})`,`${g.label} → ${item.label}｜${item.detail}`);
-   drawNode(groupNodes,itemX,itemNodeY0,itemW,linkH,g.color,item.label,'',40);
+   drawNode(groupNodes,itemX,itemNodeY0,itemW,linkH,g.color,item.label,'',40,`${item.label}｜${item.detail}`);
    catOut+=linkH;
    itemY+=linkH+itemGap;
   });
@@ -1116,7 +1108,6 @@ function renderCollabSankey(data,school,label,period){
   catCursor+=catH+gap;
  });
  host.appendChild(svg);
- renderCollabTopSummaries(data);
 }
 function collabKpiRows(data,school,type,period){
  if(period&&period!=='2018-2025'){
@@ -1140,8 +1131,6 @@ function renderCollaboration(school,selectedYear){
   if(meta) meta.textContent=`${school}｜${label}｜${period}`;
   const host=document.getElementById('collabSankey');
   if(host) host.innerHTML='<div class="sankey-empty">尚未讀取 Collaboration 資料。</div>';
-  const topHost=document.getElementById('collabTopSummaries');
-  if(topHost) topHost.innerHTML='';
   return;
  }
  const kpis=collabKpiRows(data,school,type,period);
