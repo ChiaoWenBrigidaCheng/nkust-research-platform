@@ -65,7 +65,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
     <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span>合作來源桑基圖</span><span id="collabSankeyMeta"></span></div><div id="collabSankey" class="sankey-wrap"></div><div id="collabTopSummaries" class="collab-top-grid"></div></div>
-    <div class="panel"><h2>六校研究量能資料表</h2><div class="sub">高科大預設醒目顯示，可依年度切換</div><div class="table-wrap"><table id="generalTable"></table></div></div>
+    <div class="panel"><h2>六校研究量能資料表</h2><div class="sub">高科大預設醒目顯示，可依年度切換，並與上方年度篩選同步</div><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
   <section id="the" class="section">
@@ -194,6 +194,25 @@ function cleanNum(v){
  const n=Number(s);
  return Number.isFinite(n)?n:v;
 }
+function cleanYear(v){
+ if(v===null||v===undefined||v==='') return null;
+ if(typeof v==='number') return Number.isFinite(v)?v:null;
+ const s=String(v).trim();
+ if(!s) return null;
+ const n=Number(s);
+ return Number.isFinite(n)?n:s;
+}
+function compareYearOptions(a,b){
+ const an=Number(a),bn=Number(b),aNum=Number.isFinite(an),bNum=Number.isFinite(bn);
+ if(aNum&&bNum) return an-bn;
+ if(aNum!==bNum) return aNum?-1:1;
+ return String(a).localeCompare(String(b),'zh-Hant');
+}
+function sameYearOption(a,b){
+ const an=Number(a),bn=Number(b);
+ if(Number.isFinite(an)&&Number.isFinite(bn)) return an===bn;
+ return String(a)===String(b);
+}
 function normalizeSchoolName(value,duplicateIndex=0){
  const s=String(value||'').trim();
  const direct={'高科大':'高科大','臺科大':'臺科大','台科大':'臺科大','北科大':'北科大','雲科大':'雲科大','屏科大':'屏科大','虎科大':'虎科大','�_��j':'北科大','���j':'虎科大','�̬�j':'屏科大','�O��j':'臺科大'};
@@ -228,7 +247,7 @@ function parseResearchWorkbook(wb){
   return rows.map(r=>{
    const school=mapSchool(r[0]);
    if(!school||!preferred.includes(school)) return null;
-   const item={'學校':school,'年度':cleanNum(r[1])};
+   const item={'學校':school,'年度':cleanYear(r[1])};
    keys.forEach(([key,idx])=>item[key]=cleanNum(r[idx]));
    return item;
   }).filter(r=>r&&r['年度']);
@@ -239,12 +258,12 @@ function parseResearchWorkbook(wb){
  const parseSubject=sheet=>parseRows(sheet,subjectKeys).map(r=>({...r,'領域別':r['領域別']})).filter(r=>r['領域別']);
  const the=parseSubject('THE');
  const qs=parseSubject('QS').filter(r=>String(r['學校']).includes('科大'));
- const years=[...new Set([...general,...the,...qs].map(r=>r['年度']).filter(Boolean))].sort((a,b)=>a-b);
+ const years=[...new Set([...general,...the,...qs].map(r=>r['年度']).filter(Boolean))].sort(compareYearOptions);
  const universities=preferred.filter(u=>general.some(r=>r['學校']===u));
  return {universities,years,general,the,qs};
 }
 function refreshDataYears(){
- DATA.years=[...new Set([...(DATA.general||[]),...(DATA.the||[]),...(DATA.qs||[])].map(r=>r['年度']).filter(Boolean))].sort((a,b)=>a-b);
+ DATA.years=[...new Set([...(DATA.general||[]),...(DATA.the||[]),...(DATA.qs||[])].map(r=>r['年度']).filter(Boolean))].sort(compareYearOptions);
 }
 function parseSubjectRawWorkbook(wb,field){
  const ws=wb.Sheets['Data']||wb.Sheets[wb.SheetNames[0]];
@@ -676,7 +695,7 @@ function fillCollabTypeSelect(selected='international'){
  el.innerHTML=Object.entries(COLLAB_TYPE_LABELS).map(([value,label])=>`<option value="${value}" ${value===selected?'selected':''}>${label}</option>`).join('');
 }
 function record(dataset,school,year,field=null){
- return dataset.find(r=>r['學校']===school && r['年度']===Number(year) && (field===null||r['領域別']===field));
+ return dataset.find(r=>r['學校']===school && sameYearOption(r['年度'],year) && (field===null||r['領域別']===field));
 }
 function availableFields(dataset){
  return [...new Set(dataset.map(r=>r['領域別']))].filter(Boolean).sort();
@@ -693,10 +712,14 @@ function currentSchoolList(){
 function datasetYears(dataset){
  return [...new Set((dataset||[]).map(r=>Number(r['年度'])).filter(Number.isFinite))].sort((a,b)=>a-b);
 }
+function datasetYearOptions(dataset){
+ return [...new Set((dataset||[]).map(r=>r['年度']).filter(v=>v!==null&&v!==undefined&&v!==''))].sort(compareYearOptions);
+}
 function currentYearList(){
  if(page==='the') return datasetYears(DATA.the);
  if(page==='qs') return datasetYears(DATA.qs);
- return datasetYears(DATA.general).length?datasetYears(DATA.general):DATA.years.filter(y=>Number.isFinite(Number(y))).map(Number);
+ const years=datasetYearOptions(DATA.general);
+ return years.length?years:DATA.years;
 }
 function updateSchoolOptions(){
  const schools=currentSchoolList();
@@ -706,9 +729,11 @@ function updateSchoolOptions(){
 }
 function updateYearOptions(){
  const years=currentYearList();
- const current=Number(yearSelect.value);
- const selected=years.includes(current)?current:latestYearOption(years);
+ const current=yearSelect.value;
+ const selected=years.find(y=>sameYearOption(y,current))??latestYearOption(years);
  fillSelect(yearSelect,years,selected);
+ const tableYearSelect=document.getElementById('generalTableYearSelect');
+ if(page==='general'&&tableYearSelect) fillSelect(tableYearSelect,years,selected);
 }
 
 function addUpdatedLabels(){
@@ -759,7 +784,10 @@ function bind(){
    if(page==='general'||page==='the'||page==='qs') updateMetricOptions();
    render();
  });
- [schoolSelect,yearSelect,fieldSelect,generalMetricSelect,subjectMetricSelect,generalRankSort,theRankSort,qsRankSort,sdgYearSort,sdgOutputSort,sdgFocusSelect,sdgSchoolSelect,sdgYearSelect].filter(Boolean).forEach(el=>el.onchange=()=>{
+ [schoolSelect,yearSelect,document.getElementById('generalTableYearSelect'),fieldSelect,generalMetricSelect,subjectMetricSelect,generalRankSort,theRankSort,qsRankSort,sdgYearSort,sdgOutputSort,sdgFocusSelect,sdgSchoolSelect,sdgYearSelect].filter(Boolean).forEach(el=>el.onchange=()=>{
+  const tableYearSelect=document.getElementById('generalTableYearSelect');
+  if(el===yearSelect&&tableYearSelect&&page==='general') tableYearSelect.value=yearSelect.value;
+  if(el===tableYearSelect&&page==='general') yearSelect.value=tableYearSelect.value;
   if(el===sdgSchoolSelect){updateSdgYearOptions();updateSdgFocusOptions();}
   render();
   if(el===schoolSelect&&page==='general') syncCollaboration();
@@ -800,7 +828,8 @@ function render(){
 }
 
 function renderGeneral(){
- const school=schoolSelect.value, year=Number(yearSelect.value), metric=generalMetricSelect.value;
+ const school=schoolSelect.value, year=yearSelect.value, metric=generalMetricSelect.value;
+ const trendYears=datasetYears(DATA.general);
  const row=record(DATA.general,school,year);
  setNotice(!row?`${school} ${year} 年 General 資料尚未補齊。`:'');
 
@@ -810,11 +839,11 @@ function renderGeneral(){
    return {
    label:u,borderColor:schoolColor(u),backgroundColor:schoolColor(u),tension:.25,spanGaps:true,
    borderWidth:selected?4:2,pointRadius:selected?4:2,pointHoverRadius:selected?6:4,order:selected?0:1,
-   data:DATA.years.map(y=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null})
+   data:trendYears.map(y=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null})
    };
  });
  destroy('trend');
- charts.trend=new Chart(trendChart,{type:'line',data:{labels:DATA.years,datasets},
+ charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
  options:chartOpts(generalMetrics[metric],true)});
 
  const rank=sortItems(DATA.universities.map((u,i)=>{const r=record(DATA.general,u,year);return {u,v:r&&typeof r[metric]==='number'?r[metric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),generalRankSort.value,'v');
@@ -838,10 +867,12 @@ function renderGeneral(){
 
  renderCollaboration(school);
  renderGeneralTable(year);
- renderSummary(row,record(DATA.general,school,year-1),school,year);
+ const previousYear=Number.isFinite(Number(year))?Number(year)-1:null;
+ renderSummary(row,previousYear!==null?record(DATA.general,school,previousYear):null,school,year);
 }
 function summarySparkline(school,key){
- const values=DATA.years.map(y=>{
+ const trendYears=datasetYears(DATA.general);
+ const values=trendYears.map(y=>{
    const r=record(DATA.general,school,y);
    return r&&typeof r[key]==='number'?r[key]:null;
  });
@@ -851,7 +882,7 @@ function summarySparkline(school,key){
  const min=Math.min(...nums),max=Math.max(...nums),range=max-min||1;
  const points=values.map((v,i)=>{
    if(typeof v!=='number') return null;
-   const x=pad+(DATA.years.length<=1?0:(i/(DATA.years.length-1))*(w-pad*2));
+   const x=pad+(trendYears.length<=1?0:(i/(trendYears.length-1))*(w-pad*2));
    const y=h-pad-((v-min)/range)*(h-pad*2);
    return {x,y};
  }).filter(Boolean);
