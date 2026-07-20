@@ -977,7 +977,7 @@ function shortLabel(text,max=28){
 }
 function topCollabSummaries(data){
  const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.area,value:r.output,detail:`FWCI ${fmt(r.fwci)}`}));
- const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1]),growth:r[2]})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`Growth ${fmt(r.growth)}`}));
+ const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1])})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:''}));
  const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
  const sources=[
   ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
