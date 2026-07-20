@@ -9,8 +9,8 @@
 - `00 Raw data/`：新版主要資料來源資料夾；網站會優先讀取此資料夾中的正式資料檔。
 - `研究量能統計 2018-2025.xlsx`：General/THE/QS 整理後資料來源；若未放入 `00 Raw data/`，網站會 fallback 讀取 repo 根目錄同名檔。
 - `00 Raw data/THE/`、`00 Raw data/QS/`：THE/QS 學科分析 SciVal raw data 資料夾；網站會依固定檔名清單讀取各學科 raw Excel，並轉成圖表所需格式。
-- `00 Raw data/SDG/`：SDGs 分析資料夾，包含六校與 Taiwan 全國基準的 `Publications by SDG` 檔案，以及多校 `Summary_SDG.xlsx`。舊版 `SDG/` 路徑仍作為 fallback。
-- `00 Raw data/Collaboration/`：合作分析資料夾，放置六校國際合著與產學合著 SciVal detailed Summary 匯出檔；舊版 `Collaboration/` 路徑仍作為 fallback。
+- `00 Raw data/SDG/`：SDGs 分析資料夾，包含六校與 Taiwan 全國基準的 `Publications by SDG` 檔案，以及多校 `Summary_SDG.xlsx`。
+- `00 Raw data/Collaboration/`：合作分析資料夾，放置六校國際合著與產學合著 SciVal detailed Summary 匯出檔；北科大檔名目前使用 `NTUT北科`。
 - `114 產學研究量能研析 20260112.pdf`：目前網站分析架構的參考簡報。
 - `教1-2.專任教師數-以「校」統計.xlsx`：教研人數資料來源。
 
@@ -45,9 +45,9 @@
 - GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。新版資料統一優先放在 `00 Raw data/`。
 - General/THE/QS 整理後資料建議放在 `00 Raw data/研究量能統計 2018-2025.xlsx`；若此檔不存在，網站會 fallback 讀取 repo 根目錄 `研究量能統計 2018-2025.xlsx`。
 - THE/QS raw data 可分別放在 `00 Raw data/THE/`、`00 Raw data/QS/`；目前網站使用固定檔名清單讀取，若未來新增或更名學科檔案，需同步更新 `index.html` 的 `THE_RAW_FILES` / `QS_RAW_FILES`。
-- SDGs 資料放在 `00 Raw data/SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校/Taiwan Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`，Taiwan 檔名為 `Publications_by_SDG_-_Taiwan.xlsx`；Taiwan 不需另外上傳單獨的 SciVal Summary 匯出檔。舊版 `SDG/` 子資料夾仍作為 fallback。
+- SDGs 資料放在 `00 Raw data/SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校/Taiwan Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`，Taiwan 檔名為 `Publications_by_SDG_-_Taiwan.xlsx`；Taiwan 不需另外上傳單獨的 SciVal Summary 匯出檔。
 - 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料；`Last updated` 會依瀏覽器取得的 Excel/HTML 最後修改時間更新。
-- 合作分析資料需放在 `00 Raw data/Collaboration/` 子資料夾並維持目前固定檔名；網站會讀取六校國際合著與產學合著 detailed Summary 的 Summary metrics、Keyphrase analysis 與 Top 5 合作/來源工作表。舊版 `Collaboration/` 子資料夾仍作為 fallback。
+- 合作分析資料需放在 `00 Raw data/Collaboration/` 子資料夾並維持目前固定檔名；網站會讀取六校國際合著與產學合著 detailed Summary 的 Summary metrics、Keyphrase analysis 與 Top 5 合作/來源工作表。北科大可讀取 `Summary+for+NTUT北科_...` 檔名。
 - `研究量能統計 2018-2025.xlsx` 需維持目前工作表名稱與欄位順序：`General`、`THE`、`QS`。
 - SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；目前網站以 `Summary_SDG.xlsx` 與各校/Taiwan Publications by SDG 更新 KPI、年度校際比較、SDG 目標分布與資料表。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不作為網站自動更新內容。
 - `00 Raw data/General 2018-2025.xlsx`、`00 Raw data/FWCI_標竿學校國際合著_產學合著_高品質_高被引.xlsx` 可作為整理來源保存；目前 General 分頁仍以整理後的 `研究量能統計 2018-2025.xlsx` 為正式讀取檔，THE/QS 分頁則可直接讀取 raw folder。
@@ -63,6 +63,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- 將合作分析正式資料移至 `00 Raw data/Collaboration/`，並支援北科大 `NTUT北科` 檔名；外層舊 `SDG/` 與 `Collaboration/` 資料夾可移除。
 - THE/QS 學科分析新增 `00 Raw data/THE/` 與 `00 Raw data/QS/` raw folder parser，可從各學科 SciVal raw Excel 自動轉出網站圖表資料；主 Excel 的 THE/QS sheets 轉為 fallback。
 - 網站資料讀取路徑改為優先使用 `00 Raw data/`，並保留 repo 根目錄、`SDG/`、`Collaboration/` 舊路徑 fallback；主資料檔仍需使用整理後的 `研究量能統計 2018-2025.xlsx` 格式。
 - SDGs「篩選年度校際 SDGs 發表」bar chart 改為只比較六校，不納入 Taiwan 全國基準。
