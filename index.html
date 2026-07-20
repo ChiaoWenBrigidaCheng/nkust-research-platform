@@ -895,7 +895,7 @@ function renderGeneral(){
  });
  destroy('trend');
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
- options:chartOpts(generalMetrics[metric],true)});
+ options:dynamicLineChartOpts(generalMetrics[metric],datasets)});
 
  const rank=sortItems(DATA.universities.map((u,i)=>{const r=record(DATA.general,u,year);return {u,v:r&&typeof r[metric]==='number'?r[metric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),generalRankSort.value,'v');
  destroy('rank');
@@ -1225,7 +1225,19 @@ function renderSdgTables(data,selected){
  const cols=['SDG','Name','Scholarly Output','FWCI','Citation Count'];
  sdgTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+(data.sdgs||[]).map(r=>`<tr class="${selected&&r.sdg===selected.sdg?'highlight':''}"><td><span class="sdg-badge" style="background:${sdgColor(r.sdg)}">${r.sdg}</span></td><td>${r.name}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td><td>${fmt(r.citations)}</td></tr>`).join('')+'</tbody>';
  enableTableSort(sdgTable);
-}function chartOpts(title,legend=true,horizontal=false){
+}
+function dynamicLineChartOpts(title,datasets){
+ const opts=chartOpts(title,true,false);
+ const values=(datasets||[]).flatMap(ds=>ds.data||[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
+ if(values.length){
+  const min=Math.min(...values),max=Math.max(...values),range=max-min;
+  const pad=range>0?range*.12:Math.max(Math.abs(max)*.08,1);
+  opts.scales.y.min=min-pad>0?min-pad:0;
+  opts.scales.y.max=max+pad;
+ }
+ return opts;
+}
+function chartOpts(title,legend=true,horizontal=false){
  return {responsive:true,maintainAspectRatio:false,indexAxis:horizontal?'y':'x',
  plugins:{legend:{display:legend,labels:{color:'#b8d0df'}},title:{display:false,text:title}},
  scales:{x:{ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}};
