@@ -530,6 +530,7 @@ let DATA_LAST_UPDATED = formatFileUpdated(document.lastModified);
 let page='general';
 let charts={};
 if(window.Chart){
+ Chart.register({id:'selectedLineGlow',beforeDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow){chart.ctx.save();chart.ctx.shadowColor=ds.borderColor||'#62d6ef';chart.ctx.shadowBlur=16;chart.ctx.shadowOffsetX=0;chart.ctx.shadowOffsetY=0;}},afterDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow) chart.ctx.restore();}});
  Chart.defaults.font.family='Microsoft JhengHei, Noto Sans TC, Arial, sans-serif';
  Chart.defaults.font.size=14;
  Chart.defaults.color='#b8d0df';
@@ -900,16 +901,14 @@ function renderGeneral(){
  setNotice(!row?`${school} ${year} 年 General 資料尚未補齊。`:'');
 
 
- const datasets=DATA.universities.flatMap((u,i)=>{
+ const datasets=DATA.universities.map((u,i)=>{
    const selected=u===school;
    const data=trendYears.map(y=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null});
-   const line={
+   return {
    label:u,borderColor:schoolColor(u),backgroundColor:schoolColor(u),tension:.25,spanGaps:true,
-   borderWidth:selected?5.5:2.4,pointRadius:selected?5:2.8,pointHoverRadius:selected?7:4.5,pointBorderColor:selected?'#f7fbff':schoolColor(u),pointBorderWidth:selected?2:0,order:selected?0:1,
+   borderWidth:selected?5.8:2.4,pointRadius:selected?5.5:2.8,pointHoverRadius:selected?7.5:4.5,pointBackgroundColor:selected?'#f3c969':schoolColor(u),pointBorderColor:selected?'#f7fbff':schoolColor(u),pointBorderWidth:selected?1.6:0,order:selected?0:1,selectedGlow:selected,
    data
    };
-   if(!selected) return [line];
-   return [{label:`${u} focus outline`,borderColor:'rgba(247,251,255,.78)',backgroundColor:'rgba(247,251,255,.78)',tension:.25,spanGaps:true,borderWidth:10,pointRadius:0,pointHoverRadius:0,borderCapStyle:'round',borderJoinStyle:'round',order:.2,data,isTrendOutline:true},line];
  });
  destroy('trend');
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
@@ -1260,8 +1259,6 @@ function renderSdgTables(data,selected){
 }
 function dynamicLineChartOpts(title,datasets){
  const opts=chartOpts(title,true,false);
- opts.plugins.legend.labels.filter=(item,data)=>!data.datasets[item.datasetIndex].isTrendOutline;
- opts.plugins.tooltip={filter:ctx=>!ctx.dataset.isTrendOutline};
  const values=(datasets||[]).flatMap(ds=>ds.data||[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
  if(values.length){
   const min=Math.min(...values),max=Math.max(...values),range=max-min;
