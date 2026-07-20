@@ -1048,7 +1048,9 @@ function renderSdg(){
  ].map(([tag,title,desc])=>`<div class="insight-card"><div class="tag">${school}｜${selected.sdg}｜${tag}</div><div class="title">${title}</div><div class="desc">${desc}</div></div>`).join('');
  const sdgRank=sortItems((data.sdgs||[]).map(x=>({...x,label:x.sdg,v:x.output})),sdgOutputSort.value,'v');
  destroy('sdgOutput');
- charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgColor(x.sdg)),borderRadius:6}]},options:chartOpts('Scholarly Output',false,false)});
+ const sdgOutputOptions=chartOpts('Scholarly Output',false,false);
+ sdgOutputOptions.scales.y.title={display:true,text:'發表數',color:'#a8c0d2'};
+ charts.sdgOutput=new Chart(sdgOutputChart,{type:'bar',data:{labels:sdgRank.map(x=>x.sdg),datasets:[{label:'Scholarly Output',data:sdgRank.map(x=>x.output),backgroundColor:sdgRank.map(x=>sdgColor(x.sdg)),borderRadius:6}]},options:sdgOutputOptions});
  destroy('sdgBubble');
  charts.sdgBubble=new Chart(sdgBubbleChart,{type:'bubble',data:{datasets:[{label:school,data:data.sdgs.map(x=>({x:x.output,y:x.fwci,r:Math.max(6,Math.sqrt(x.citations||1)/11),sdg:x.sdg,name:x.name,citations:x.citations})),backgroundColor:data.sdgs.map(x=>sdgColor(x.sdg)),borderColor:data.sdgs.map(x=>sdgColor(x.sdg))}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>{const p=ctx.raw;return `${p.sdg} ${p.name}｜Output ${fmt(p.x)}｜FWCI ${fmt(p.y)}｜Citations ${fmt(p.citations)}`;}}}},scales:{x:{title:{display:true,text:'Scholarly Output',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}},y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2'},grid:{color:'rgba(132,205,235,.14)'}}}}});
  renderSdgPotential(data,school);
