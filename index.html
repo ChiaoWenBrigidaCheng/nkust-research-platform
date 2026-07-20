@@ -940,8 +940,9 @@ function renderGeneral(){
  const previousYear=Number.isFinite(Number(year))?Number(year)-1:null;
  renderSummary(row,previousYear!==null?record(DATA.general,school,previousYear):null,school,year);
 }
-function summarySparkline(school,key){
- const trendYears=datasetYears(DATA.general);
+function summarySparkline(school,key,selectedYear){
+ const selectedNum=Number(selectedYear);
+ const trendYears=datasetYears(DATA.general).filter(y=>!Number.isFinite(selectedNum)||Number(y)<=selectedNum);
  const values=trendYears.map(y=>{
    const r=record(DATA.general,school,y);
    return r&&typeof r[key]==='number'?r[key]:null;
@@ -981,7 +982,7 @@ function renderSummary(row,prev,school,year){
    }else if(typeof v!=='number'){
      text='目前缺值';
    }
-   return `<div class="summary-card"><div class="summary-label">${label}</div><div class="summary-value">${fmt(v)}</div><div class="summary-change ${cls}">${text}</div>${summarySparkline(school,k)}</div>`;
+   return `<div class="summary-card"><div class="summary-label">${label}</div><div class="summary-value">${fmt(v)}</div><div class="summary-change ${cls}">${text}</div>${summarySparkline(school,k,year)}</div>`;
  }).join('');
  summaryBox.innerHTML=`<div class="summary-heading"><div class="badge">${school}｜${year}</div><span style="font-size:13px;color:#9fb5c9">與前一年比較</span></div><div class="summary-grid">${cards}</div>`;
 }
