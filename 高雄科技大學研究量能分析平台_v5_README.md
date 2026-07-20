@@ -6,9 +6,11 @@
 ## 主要檔案
 - `index.html`：唯一保留的主要互動式網頁與 GitHub Pages 發布檔；會透過 SheetJS 自動讀取同目錄 Excel。
 - `高雄科技大學研究量能分析平台_v5_README.md`：專案說明與修改紀錄。
-- `研究量能統計 2018-2025.xlsx`：General 資料來源。
-- `SDG/`：SDGs 分析資料夾，包含六校與 Taiwan 全國基準的 `Publications by SDG` 檔案，以及多校 `Summary_SDG.xlsx`。
-- `Collaboration/`：合作分析資料夾，包含六校國際合著與產學合著 SciVal detailed Summary 匯出檔。
+- `00 Raw data/`：新版主要資料來源資料夾；網站會優先讀取此資料夾中的正式資料檔。
+- `研究量能統計 2018-2025.xlsx`：General/THE/QS 整理後資料來源；若未放入 `00 Raw data/`，網站會 fallback 讀取 repo 根目錄同名檔。
+- `00 Raw data/THE/`、`00 Raw data/QS/`：THE/QS 學科分析 SciVal raw data 資料夾；網站會依固定檔名清單讀取各學科 raw Excel，並轉成圖表所需格式。
+- `00 Raw data/SDG/`：SDGs 分析資料夾，包含六校與 Taiwan 全國基準的 `Publications by SDG` 檔案，以及多校 `Summary_SDG.xlsx`。舊版 `SDG/` 路徑仍作為 fallback。
+- `00 Raw data/Collaboration/`：合作分析資料夾，放置六校國際合著與產學合著 SciVal detailed Summary 匯出檔；舊版 `Collaboration/` 路徑仍作為 fallback。
 - `114 產學研究量能研析 20260112.pdf`：目前網站分析架構的參考簡報。
 - `教1-2.專任教師數-以「校」統計.xlsx`：教研人數資料來源。
 
@@ -28,6 +30,7 @@
 ### THE / QS 學科分析
 - 保留主要學校、年度、學科領域與趨勢指標篩選。
 - THE/QS 頁面的 `主要學校`、`年度`、`學科領域` 會顯示在頁面最上方同一列；`趨勢指標` 保留於 KPI 後、圖表前。
+- THE/QS 會優先讀取 `00 Raw data/THE/` 與 `00 Raw data/QS/` 中的 SciVal raw Excel，從檔名取得學科領域，並從 `Metric Name` 轉出 Scopus 發表數、FWCI、國際合著與產學合著相關指標；若 raw 資料夾讀不到，才使用 `研究量能統計 2018-2025.xlsx` 內的 THE/QS sheets。
 - THE/QS 學校清單改為依各自資料集動態產生；QS 目前只保留 Excel QS 工作表中校名包含「科大」的 6 校資料。
 - 手機版會將上述三個主篩選器改為單欄排列，避免固定三欄在窄螢幕產生水平溢位。
 
@@ -39,12 +42,15 @@
 - 目前多校資料包含 `Summary_SDG.xlsx` 與各校/Taiwan Publications by SDG；`目標學校最有潛力的 SDG` 直接使用 Publications by SDG 的 Scholarly Output、FWCI 與 Citation Count 計算綜合分數。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不放入 SDGs 分頁畫面。
 
 ## Excel 更新方式
-- GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。General 資料放在 repo 根目錄：`研究量能統計 2018-2025.xlsx`。
-- SDGs 資料放在 `SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校/Taiwan Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`，Taiwan 檔名為 `Publications_by_SDG_-_Taiwan.xlsx`；Taiwan 不需另外上傳單獨的 SciVal Summary 匯出檔。
+- GitHub Pages 發布後，網站會自動讀取固定檔名的 Excel。新版資料統一優先放在 `00 Raw data/`。
+- General/THE/QS 整理後資料建議放在 `00 Raw data/研究量能統計 2018-2025.xlsx`；若此檔不存在，網站會 fallback 讀取 repo 根目錄 `研究量能統計 2018-2025.xlsx`。
+- THE/QS raw data 可分別放在 `00 Raw data/THE/`、`00 Raw data/QS/`；目前網站使用固定檔名清單讀取，若未來新增或更名學科檔案，需同步更新 `index.html` 的 `THE_RAW_FILES` / `QS_RAW_FILES`。
+- SDGs 資料放在 `00 Raw data/SDG/` 子資料夾：`Summary_SDG.xlsx` 與六校/Taiwan Publications by SDG 檔案。高科大檔名為 `Publications_by_SDG_-_National_Kaohsiung_University_of_Science_and_Technology.xlsx`，Taiwan 檔名為 `Publications_by_SDG_-_Taiwan.xlsx`；Taiwan 不需另外上傳單獨的 SciVal Summary 匯出檔。舊版 `SDG/` 子資料夾仍作為 fallback。
 - 日後更新資料時，只要在 GitHub 上傳同名新版 Excel 覆蓋舊檔，網站重新整理後會自動讀取新版資料；`Last updated` 會依瀏覽器取得的 Excel/HTML 最後修改時間更新。
-- 合作分析資料需放在 `Collaboration/` 子資料夾並維持目前固定檔名；網站會讀取六校國際合著與產學合著 detailed Summary 的 Summary metrics、Keyphrase analysis 與 Top 5 合作/來源工作表。
+- 合作分析資料需放在 `00 Raw data/Collaboration/` 子資料夾並維持目前固定檔名；網站會讀取六校國際合著與產學合著 detailed Summary 的 Summary metrics、Keyphrase analysis 與 Top 5 合作/來源工作表。舊版 `Collaboration/` 子資料夾仍作為 fallback。
 - `研究量能統計 2018-2025.xlsx` 需維持目前工作表名稱與欄位順序：`General`、`THE`、`QS`。
 - SDGs 相關 Excel 需維持 SciVal 匯出格式與目前工作表名稱；目前網站以 `Summary_SDG.xlsx` 與各校/Taiwan Publications by SDG 更新 KPI、年度校際比較、SDG 目標分布與資料表。Top Keyphrases 與合作/來源摘要需至 SciVal 手動取得，暫不作為網站自動更新內容。
+- `00 Raw data/General 2018-2025.xlsx`、`00 Raw data/FWCI_標竿學校國際合著_產學合著_高品質_高被引.xlsx` 可作為整理來源保存；目前 General 分頁仍以整理後的 `研究量能統計 2018-2025.xlsx` 為正式讀取檔，THE/QS 分頁則可直接讀取 raw folder。
 - 若 Excel 暫時讀不到，網站會使用內建備份資料，避免頁面空白。
 ## 指標與缺值說明
 - `缺值不視為 0` 的意思是：若某年度或某指標沒有資料，系統會顯示為缺值，不會把它當成 0 參與前後年度比較，以避免造成誤判。
@@ -57,6 +63,8 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- THE/QS 學科分析新增 `00 Raw data/THE/` 與 `00 Raw data/QS/` raw folder parser，可從各學科 SciVal raw Excel 自動轉出網站圖表資料；主 Excel 的 THE/QS sheets 轉為 fallback。
+- 網站資料讀取路徑改為優先使用 `00 Raw data/`，並保留 repo 根目錄、`SDG/`、`Collaboration/` 舊路徑 fallback；主資料檔仍需使用整理後的 `研究量能統計 2018-2025.xlsx` 格式。
 - SDGs「篩選年度校際 SDGs 發表」bar chart 改為只比較六校，不納入 Taiwan 全國基準。
 - General 總體分析年度預設改為依 `研究量能統計 2018-2025.xlsx` 讀入資料自動選取最大年度，避免新增年度後仍停在舊年度。
 - 移除不需置入網站的 Taiwan 單獨 SciVal Summary 匯出檔；SDGs Taiwan 基準僅保留 `Summary_SDG.xlsx` 中 Taiwan rows 與 `Publications_by_SDG_-_Taiwan.xlsx`。
