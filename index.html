@@ -1098,7 +1098,7 @@ function renderCollabSankey(data,school,label,period){
   const minCatH=g.items.length*minItemH+Math.max(0,g.items.length-1)*itemGap;
   const catH=Math.max(minCatH,total*scale);
   const catY0=catCursor, catY1=catCursor+catH;
-  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,`Total ${fmt(total)}`,22);
+  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,`${g.items.length} 項`,22);
   let catOut=catY0;
   const itemAvailable=Math.max(20,catH-itemGap*(g.items.length-1));
   const itemScale=itemAvailable/total;
