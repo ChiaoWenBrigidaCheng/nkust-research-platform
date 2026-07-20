@@ -25,7 +25,7 @@
 - `趨勢指標` 選單移至 `主要學校年度摘要` 之後、年度趨勢圖之前，並納入各項論文數、FWCI 與影響力指標。
 - 原本 General 最上方的 8 個 KPI 指標卡已移除，避免與年度摘要重複。
 - 下方保留研究產出與研究影響力泡泡圖、當年度六校比較、滿版寬度的六校年度趨勢、合作分析摘要、六校研究量能資料表；合作分析摘要位於六校年度趨勢之後，可切換國際合著與產學合著。資料表包含國際合著、產學合著、高被引論文與高品質期刊論文相關影響力欄位。
-- 合作分析摘要已由三張資料表改為「合作研究結構桑基圖」，整合同一份 detailed Summary 中的學科領域、Top Keyphrases 與合作來源/作者/期刊資料；左側為主要學校與合作類型，中間為資料類別，右側顯示各類前幾名項目。桑基圖會跟隨 General 上方 `主要學校` 篩選與合作類型同步重畫。
+- 合作分析摘要已改為符合 flow 邏輯的「合作來源桑基圖」：流向為 `主要學校/合作類型 → 來源類型 → Top 5 來源項目`，線寬使用同一口徑的 `Total` 數值。學科領域與 Keyphrases 不再硬接入桑基圖，而是以 Top 5 摘要卡呈現；桑基圖會跟隨 General 上方 `主要學校` 篩選與合作類型同步重畫。
 - 合作分析摘要的四張 KPI 卡在桌面與平板均固定為兩欄兩列：Scholarly Output、FWCI 為第一列；Citation Count、Citations per Publication 為第二列。手機版則改為單欄，避免文字與數值擁擠。
 
 ### THE / QS 學科分析
@@ -69,8 +69,8 @@
 - SDGs 分析中的 `SDGs 發表數比較` bar chart 補上 y 軸標題 `發表數`，讓 Scholarly Output 數值口徑更清楚。
 - 網頁頁尾改為 `POWERED BY` 與 `校務大數據分析組` 兩行呈現，符合發布頁面的單位署名需求。
 - THE/QS 年度篩選改為依各自資料集產生單一年份清單，排除 `2018-2025` 整合期間；THE/QS 年度趨勢圖 x 軸同步改用各自數字年份。
-- 合作分析摘要改為 SVG 桑基圖，將學科領域分布、Top Keyphrases 與合作/來源摘要整合為同一張視覺化圖表；保留國際合著/產學合著切換與四張 KPI 卡。
-- 調整合作研究結構桑基圖互動：取消整個圖表區塊 hover 放大，改為滑鼠移入學科領域、Top Keyphrases 或合作來源群組時，只放大該資料群；各群摘要改為 Top 4，以避免項目標題與 Scholarly Output/FWCI 等說明文字重疊。
+- 合作分析摘要改為符合桑基圖邏輯的合作來源 flow：使用 `Total` 作為唯一流量口徑，呈現 `主要學校/合作類型 → Institution/Country/Author/Source → Top 5 來源項目`；學科領域改以 Scholarly Output Top 5、Keyphrases 改以 Relevance Top 5 摘要卡呈現。
+- 調整合作來源桑基圖互動：取消不自然的放大動畫，改為滑鼠移入來源類型時高亮該流向、淡化其他流向。
 - 指標說明新增 Scopus 每師平均、Scholarly Output、Citation Count、Citations per Publication、International Collaboration、Top 10% Cited 與 Top 10% Journals，並加入 hover tooltip，讓使用者在 KPI、摘要卡與表格欄位上可直接查看定義。
 - 將合作分析正式資料移至 `00 Raw data/Collaboration/`，並支援北科大 `NTUT北科` 檔名；外層舊 `SDG/` 與 `Collaboration/` 資料夾可移除。
 - THE/QS 學科分析新增 `00 Raw data/THE/` 與 `00 Raw data/QS/` raw folder parser，可從各學科 SciVal raw Excel 自動轉出網站圖表資料；主 Excel 的 THE/QS sheets 轉為 fallback。
