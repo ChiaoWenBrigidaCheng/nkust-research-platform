@@ -766,26 +766,46 @@ function initWordCloudMotion(){
    const isHero=word.classList.contains('hero')||word.classList.contains('w1');
    return isHero?0.42:0.18+(i%6)*0.045;
  });
- let targetX=0,targetY=0,currentX=0,currentY=0,raf=null;
+ let centers=[],pointerX=window.innerWidth/2,pointerY=window.innerHeight/2,pointerActive=false,targetX=0,targetY=0,currentX=0,currentY=0,raf=null;
+ const measure=()=>{
+   centers=words.map(word=>{
+     const rect=word.getBoundingClientRect();
+     return {x:rect.left+rect.width/2,y:rect.top+rect.height/2};
+   });
+ };
+ measure();
  const renderMotion=()=>{
    currentX+=(targetX-currentX)*0.08;
    currentY+=(targetY-currentY)*0.08;
    words.forEach((word,i)=>{
      const d=depths[i];
-     word.style.setProperty('--mx',`${(currentX*d).toFixed(2)}px`);
-     word.style.setProperty('--my',`${(currentY*d).toFixed(2)}px`);
+     const center=centers[i]||{x:window.innerWidth/2,y:window.innerHeight/2};
+     const dx=pointerX-center.x;
+     const dy=pointerY-center.y;
+     const dist=Math.hypot(dx,dy)||1;
+     const radius=word.classList.contains('hero')||word.classList.contains('w1')?420:300;
+     const pull=pointerActive?Math.max(0,1-dist/radius):0;
+     const attraction=pull*pull*(word.classList.contains('hero')||word.classList.contains('w1')?86:58);
+     const followX=(dx/dist)*attraction;
+     const followY=(dy/dist)*attraction;
+     word.style.setProperty('--mx',`${(currentX*d+followX).toFixed(2)}px`);
+     word.style.setProperty('--my',`${(currentY*d+followY).toFixed(2)}px`);
    });
    if(Math.abs(targetX-currentX)>.05||Math.abs(targetY-currentY)>.05) raf=requestAnimationFrame(renderMotion);
    else raf=null;
  };
  const queue=()=>{if(!raf) raf=requestAnimationFrame(renderMotion);};
  window.addEventListener('pointermove',event=>{
+   pointerActive=true;
+   pointerX=event.clientX;
+   pointerY=event.clientY;
    targetX=((event.clientX/window.innerWidth)-.5)*34;
    targetY=((event.clientY/window.innerHeight)-.5)*24;
    queue();
  },{passive:true});
+ window.addEventListener('resize',measure,{passive:true});
  window.addEventListener('pointerleave',()=>{
-   targetX=0;targetY=0;queue();
+   pointerActive=false;targetX=0;targetY=0;queue();
  },{passive:true});
 }
 async function init(){
