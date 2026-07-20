@@ -20,8 +20,8 @@ main{padding:24px 5vw 60px;max-width:1500px;margin:auto}.controls{display:grid;g
 .table-wrap{overflow:auto;max-height:520px;border-radius:12px;border:1px solid rgba(132,205,235,.22);background:rgba(5,14,23,.44)}table{border-collapse:collapse;width:100%;font-size:14px;background:rgba(8,19,31,.70);color:#dcecf7}th,td{padding:12px 13px;border-bottom:1px solid rgba(132,205,235,.13);text-align:right;white-space:nowrap}th{position:sticky;top:0;background:rgba(20,42,61,.96);color:#c9edf7;z-index:2;box-shadow:0 1px 0 rgba(132,205,235,.22)}th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:rgba(13,29,44,.96);z-index:1}tbody tr:hover td{background:rgba(98,214,239,.08)}tbody tr:hover td:first-child{background:rgba(20,48,66,.98)}tr.highlight td{background:rgba(243,201,105,.16);color:#fff2c8}tr.highlight td:first-child{background:rgba(243,201,105,.28);color:#fff4cc;font-weight:800}th.sortable{cursor:pointer;user-select:none}th.sortable:after{content:" ⇅";font-size:11px;color:#7bddff}th.sorted-asc:after{content:" ▲"}th.sorted-desc:after{content:" ▼"}
 .badge{display:inline-block;padding:4px 9px;border-radius:999px;background:rgba(98,214,239,.14);border:1px solid rgba(98,214,239,.28);color:#bff3ff;font-size:12px}.section{display:none}.section.active{display:block}
 .summary-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:11px;margin-top:12px}.summary-card{background:linear-gradient(145deg,rgba(22,43,62,.78),rgba(8,22,35,.72));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:14px;min-height:106px;box-shadow:0 10px 28px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.05);position:relative;overflow:hidden}.summary-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--accent),var(--accent-2));opacity:.72}.summary-card .summary-label{font-size:14px;font-weight:700;color:#abc0d1}.summary-card .summary-value{font-size:29px;font-weight:800;color:#f5fbff;margin:10px 0 7px}.summary-card .summary-change{font-size:12px;font-weight:700;color:#91a8ba}.summary-card .summary-change.up{color:#65dfb0}.summary-card .summary-change.down{color:#ff9a9a}.summary-heading{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:4px}
-.sdg-focus{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:14px;margin-bottom:18px}.sdg-focus .control{grid-column:span 1}.insight-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.insight-card{background:linear-gradient(145deg,rgba(22,43,62,.76),rgba(8,22,35,.68));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:15px;min-height:116px}.insight-card .tag{font-size:12px;color:#7bddff;font-weight:800;letter-spacing:.02em}.insight-card .title{font-size:18px;font-weight:800;color:#f4fbff;margin:8px 0}.insight-card .desc{font-size:14px;line-height:1.65;color:#a9bfce}.mini-table-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.mini-table-grid .table-wrap{max-height:360px}.sdg-table td:first-child{font-weight:800;color:#dff7ff}.sdg-badge{display:inline-block;min-width:58px;text-align:center;padding:5px 8px;border-radius:8px;color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.22);text-shadow:0 1px 1px rgba(0,0,0,.32)}
-@media(max-width:1000px){.sdg-focus,.insight-list,.mini-table-grid{grid-template-columns:1fr}.sdg-focus .control{grid-column:auto}}.indicator-intro{color:var(--muted);line-height:1.75;margin:0 0 16px}.indicator-table td:nth-child(1){text-align:left;font-weight:800;color:#dff7ff;min-width:180px}.indicator-table td:nth-child(2){text-align:left;white-space:normal;line-height:1.65;min-width:520px}.indicator-table a{color:#7bddff;word-break:break-all}.footer{text-align:center;color:#829bb0;padding:32px;font-size:13px}
+.sdg-focus{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:14px;margin-bottom:18px}.sdg-focus .control{grid-column:span 1}.insight-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}.insight-card{background:linear-gradient(145deg,rgba(22,43,62,.76),rgba(8,22,35,.68));border:1px solid rgba(132,205,235,.18);border-radius:12px;padding:15px;min-height:116px}.insight-card .tag{font-size:12px;color:#7bddff;font-weight:800;letter-spacing:.02em}.insight-card .title{font-size:18px;font-weight:800;color:#f4fbff;margin:8px 0}.insight-card .desc{font-size:14px;line-height:1.65;color:#a9bfce}.mini-table-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.mini-table-grid .table-wrap{max-height:360px}.sankey-wrap{height:560px;border-radius:14px;border:1px solid rgba(132,205,235,.22);background:linear-gradient(145deg,rgba(5,16,27,.66),rgba(10,26,40,.46));box-shadow:inset 0 1px 0 rgba(255,255,255,.055);overflow:hidden;position:relative}.sankey-wrap svg{width:100%;height:100%;display:block}.sankey-title{display:flex;justify-content:space-between;gap:12px;align-items:center;margin:2px 0 12px;color:#c9edf7;font-weight:800}.sankey-title span:last-child{font-size:13px;color:#93aabd;font-weight:700}.sankey-empty{display:flex;align-items:center;justify-content:center;height:100%;color:#9fb5c9;font-weight:700}.sankey-link{fill:none;stroke-linecap:round;opacity:.58;mix-blend-mode:screen}.sankey-node{filter:drop-shadow(0 10px 18px rgba(0,0,0,.26))}.sankey-node rect{stroke:rgba(255,255,255,.18);stroke-width:1}.sankey-label{font-size:15px;font-weight:800;fill:#eaf6ff}.sankey-sub{font-size:12px;font-weight:700;fill:#9fb5c9}.sdg-table td:first-child{font-weight:800;color:#dff7ff}.sdg-badge{display:inline-block;min-width:58px;text-align:center;padding:5px 8px;border-radius:8px;color:#fff;font-size:12px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.22);text-shadow:0 1px 1px rgba(0,0,0,.32)}
+@media(max-width:1000px){.sdg-focus,.insight-list,.mini-table-grid{grid-template-columns:1fr}.sdg-focus .control{grid-column:auto}.sankey-wrap{height:680px}}.indicator-intro{color:var(--muted);line-height:1.75;margin:0 0 16px}.indicator-table td:nth-child(1){text-align:left;font-weight:800;color:#dff7ff;min-width:180px}.indicator-table td:nth-child(2){text-align:left;white-space:normal;line-height:1.65;min-width:520px}.indicator-table a{color:#7bddff;word-break:break-all}.has-metric-tip{position:relative;text-decoration:underline dotted rgba(125,221,255,.58);text-underline-offset:4px;cursor:help}.metric-popover{position:fixed;z-index:9999;display:none;max-width:min(360px,80vw);padding:10px 12px;border-radius:10px;background:rgba(4,13,22,.98);border:1px solid rgba(132,205,235,.35);box-shadow:0 14px 30px rgba(0,0,0,.42);color:#e9f3fb;font-size:12px;font-weight:600;line-height:1.55;pointer-events:none}.footer{text-align:center;color:#829bb0;padding:32px;font-size:13px}
 @media(max-width:1000px){.controls,.kpis,.summary-grid{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:620px){.controls,.kpis,.summary-grid,.primary-controls.subject-mode{grid-template-columns:1fr}.nav-btn{min-width:0;width:calc(50% - 9px);padding:12px 10px;font-size:14px}header,main,nav{padding-left:18px;padding-right:18px}nav{gap:14px;top:6px}}
 header,main,.footer{position:relative;z-index:1}
 .word-cloud{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;display:block;opacity:.52;filter:drop-shadow(0 14px 22px rgba(0,0,0,.24))}.word-cloud:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 18%,rgba(7,15,25,.96) 0 18%,rgba(7,15,25,.86) 19% 34%,rgba(7,15,25,.58) 35% 48%,transparent 65%),radial-gradient(ellipse at 50% 46%,rgba(7,15,25,.58) 0 20%,transparent 56%)}.word-cloud span{position:absolute;font-weight:900;line-height:.9;letter-spacing:.01em;white-space:nowrap;animation:wordDrift var(--dur,26s) ease-in-out infinite alternate;transform:translate3d(0,0,0) rotate(var(--rot,0deg));text-shadow:0 1px 0 rgba(0,0,0,.22),0 0 12px rgba(255,255,255,.08);opacity:var(--op,.68)}.word-cloud .hero{left:-5vw;top:72vh;font-size:clamp(76px,10vw,164px);color:#4aaee8;--dur:31s;--x:12px;--y:-10px;--op:.52}.word-cloud .w1{right:1vw;top:73vh;font-size:clamp(54px,7vw,112px);color:#ff8a2a;--dur:29s;--x:-12px;--y:-8px;--op:.56}.word-cloud .w2{left:3vw;top:34vh;font-size:clamp(34px,4.4vw,70px);color:#48c774;--dur:32s;--x:12px;--y:8px}.word-cloud .w3{right:4vw;top:33vh;font-size:clamp(32px,4.2vw,66px);color:#7fd8ff;--dur:28s;--x:-10px;--y:10px}.word-cloud .w4{left:5vw;top:48vh;font-size:clamp(28px,3.5vw,56px);color:#ffcd5e;--dur:30s;--x:10px;--y:-12px}.word-cloud .w5{right:6vw;top:47vh;font-size:clamp(28px,3.4vw,54px);color:#b18cff;--dur:27s;--x:-14px;--y:10px}.word-cloud .w6{left:12vw;top:88vh;font-size:clamp(24px,3vw,48px);color:#ff6b6b;--dur:34s;--x:10px;--y:-12px}.word-cloud .w7{right:20vw;top:89vh;font-size:clamp(24px,2.8vw,46px);color:#a5e85f;--dur:30s;--x:-12px;--y:-10px}.word-cloud .w8{left:2vw;top:40vh;font-size:clamp(21px,2.4vw,39px);color:#61e4d5;--dur:28s;--x:12px;--y:8px}.word-cloud .w9{right:3vw;top:40vh;font-size:clamp(21px,2.4vw,40px);color:#ff9e4a;--dur:33s;--x:-10px;--y:-8px}.word-cloud .w10{left:5vw;top:62vh;font-size:clamp(18px,2vw,33px);color:#66c7ff;--dur:26s;--x:12px;--y:-10px}.word-cloud .w11{right:8vw;top:62vh;font-size:clamp(18px,2vw,34px);color:#ef7cff;--dur:31s;--x:-12px;--y:8px}.word-cloud .w12{left:16vw;top:31vh;font-size:clamp(16px,1.8vw,30px);color:#f7d36c;--dur:29s;--x:-8px;--y:8px}.word-cloud .w13{right:17vw;top:31vh;font-size:clamp(16px,1.8vw,30px);color:#50d99b;--dur:28s;--x:8px;--y:10px}.word-cloud .w14{left:1vw;top:83vh;font-size:clamp(17px,1.9vw,31px);color:#91a7ff;--dur:27s;--x:10px;--y:-8px}.word-cloud .w15{right:3vw;top:83vh;font-size:clamp(17px,1.9vw,31px);color:#ff7e54;--dur:30s;--x:-10px;--y:-8px}.word-cloud .w16{left:2vw;top:55vh;font-size:clamp(15px,1.6vw,26px);color:#7ee3ff;--dur:31s;--x:12px;--y:8px}.word-cloud .w17{right:2vw;top:55vh;font-size:clamp(15px,1.6vw,26px);color:#ffc15e;--dur:26s;--x:-8px;--y:10px}.word-cloud .w18{left:2vw;top:72vh;font-size:clamp(15px,1.5vw,24px);color:#ff8a2a;--dur:33s;--x:10px;--y:8px}.word-cloud .w19{right:4vw;top:72vh;font-size:clamp(15px,1.5vw,24px);color:#48c774;--dur:24s;--x:-8px;--y:-8px}.word-cloud .w20{left:14vw;top:42vh;font-size:clamp(14px,1.4vw,23px);color:#d0e8ff;--dur:27s;--x:8px;--y:-6px}.word-cloud .w21{right:16vw;top:42vh;font-size:clamp(14px,1.4vw,22px);color:#a5e85f;--dur:32s;--x:-10px;--y:8px}.word-cloud .w22{left:17vw;top:58vh;font-size:clamp(14px,1.4vw,22px);color:#b18cff;--dur:25s;--x:8px;--y:8px}.word-cloud .w23{right:17vw;top:58vh;font-size:clamp(13px,1.3vw,21px);color:#61e4d5;--dur:30s;--x:-8px;--y:-8px}.word-cloud .w24{left:36vw;top:91vh;font-size:clamp(13px,1.3vw,21px);color:#ff6b6b;--dur:31s;--x:8px;--y:-10px}@keyframes wordDrift{to{transform:translate3d(var(--x,8px),var(--y,-8px),0) rotate(calc(var(--rot,0deg) + .35deg))}}@media(max-width:900px){.word-cloud{opacity:.34}.word-cloud:before{background:radial-gradient(ellipse at 50% 20%,rgba(7,15,25,.96) 0 28%,rgba(7,15,25,.76) 29% 48%,transparent 70%)}.word-cloud .hero{left:-12vw;top:77vh;font-size:82px}.word-cloud .w1{right:-10vw;top:72vh;font-size:70px}.word-cloud .w2{left:2vw;top:38vh}.word-cloud .w3{right:2vw;top:35vh}.word-cloud .w11,.word-cloud .w17,.word-cloud .w21,.word-cloud .w23,.word-cloud .w24{display:none}}@media(prefers-reduced-motion:reduce){.word-cloud span{animation:none}}
@@ -64,7 +64,7 @@ header,main,.footer{position:relative;z-index:1}
     <div class="grid wide">
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="mini-table-grid"><div><h3>學科領域分布</h3><div class="table-wrap compact"><table id="collabSubjectTable"></table></div></div><div><h3>Top Keyphrases</h3><div class="table-wrap compact"><table id="collabKeyphraseTable"></table></div></div><div><h3>合作與來源摘要</h3><div class="table-wrap compact"><table id="collabPartnerTable"></table></div></div></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="sub">讀取 Collaboration 資料夾之 2018-2025 SciVal detailed Summary，依主要學校與合作類型切換</div><div class="metric-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span>合作研究結構桑基圖</span><span id="collabSankeyMeta"></span></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sub">高科大預設醒目顯示，可依年度切換</div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -120,7 +120,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="table-wrap" style="max-height:none">
         <table class="indicator-table">
           <thead><tr><th>指標</th><th>指標說明</th></tr></thead>
-          <tbody><tr><td>教研人數</td><td>大專校院資訊公開平台<br><a href="https://udb.moe.edu.tw/udata/DetailReportList/%E6%95%99%E8%81%B7%E9%A1%9E/StatUniversityRegularTeacher/Index" target="_blank" rel="noopener">資料來源連結</a></td></tr><tr><td>Scopus發表數</td><td>The number of publications of a selected entity.</td></tr><tr><td>FWCI</td><td>The ratio of citations received relative to the expected world average for the subject field, publication type and publication year. The world average FWCI is 1.00. (Mean)</td></tr><tr><td>國際合著論文比</td><td>The extent of international co-authorship. (%)</td></tr><tr><td>國際合著論文數</td><td>The extent of international co-authorship.</td></tr><tr><td>國際合著論文FWCI</td><td>FWCI of publications with international co-authorship.<br><a href="https://www.scival.com/collaboration/collabMetrics/geographicView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>國際合著論文影響力</td><td>The average number of citations received by publications that have international co-authorship.</td></tr><tr><td>產學合著論文比</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector. (%)</td></tr><tr><td>產學合著論文數</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector.</td></tr><tr><td>產學合著論文FWCI</td><td>FWCI of publications with academic-corporate collaboration.<br><a href="https://www.scival.com/collaboration/collabMetrics/sectorView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>產學合著論文影響力</td><td>Citations per publication received by publications that have authors with an academic affiliation as well as authors with affiliation(s) of another sector (corporate, government, medical or other).</td></tr><tr><td>h5-index</td><td>A measure of both the productivity and citation impact of an entity, based on the number of publications as well as the number of citations they have received. h5-index is h-index for the past 5 years.</td></tr><tr><td>高被引論文占比</td><td>Output in Top 10% Citation Percentiles (%). The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文數</td><td>The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文FWCI</td><td>FWCI of publications that are highly cited, having reached a particular threshold of citations received. 目前資料僅可取得 2020–2025 整合資料。</td></tr><tr><td>高品質期刊占比</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals. (%)</td></tr><tr><td>高品質期刊論文數</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals.</td></tr><tr><td>高品質期刊FWCI</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). FWCI of publications that have been published in the world's top journals. 目前資料僅可取得 2020–2025 整合資料。</td></tr></tbody>
+          <tbody><tr><td>教研人數</td><td>大專校院資訊公開平台<br><a href="https://udb.moe.edu.tw/udata/DetailReportList/%E6%95%99%E8%81%B7%E9%A1%9E/StatUniversityRegularTeacher/Index" target="_blank" rel="noopener">資料來源連結</a></td></tr><tr><td>Scopus發表數</td><td>The number of publications of a selected entity.</td></tr><tr><td>Scopus每師平均</td><td>Scopus 發表數除以教研人數，用於觀察不同規模學校的平均研究產出。</td></tr><tr><td>Scholarly Output</td><td>The number of publications of a selected entity.</td></tr><tr><td>Citation Count</td><td>The total number of citations received by the publications of a selected entity.</td></tr><tr><td>Citations per Publication</td><td>The average number of citations received per publication.</td></tr><tr><td>FWCI</td><td>The ratio of citations received relative to the expected world average for the subject field, publication type and publication year. The world average FWCI is 1.00. (Mean)</td></tr><tr><td>國際合著論文比</td><td>The extent of international co-authorship. (%)</td></tr><tr><td>國際合著論文數</td><td>The extent of international co-authorship.</td></tr><tr><td>國際合著論文FWCI</td><td>FWCI of publications with international co-authorship.<br><a href="https://www.scival.com/collaboration/collabMetrics/geographicView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>國際合著論文影響力</td><td>The average number of citations received by publications that have international co-authorship.</td></tr><tr><td>International Collaboration</td><td>The extent of international co-authorship. (%)</td></tr><tr><td>產學合著論文比</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector. (%)</td></tr><tr><td>產學合著論文數</td><td>Collaboration between author(s) with an academic affiliation and author(s) with affiliation(s) of the corporate sector.</td></tr><tr><td>產學合著論文FWCI</td><td>FWCI of publications with academic-corporate collaboration.<br><a href="https://www.scival.com/collaboration/collabMetrics/sectorView?uri=Institution/715462" target="_blank" rel="noopener">SciVal 資料頁面</a></td></tr><tr><td>產學合著論文影響力</td><td>Citations per publication received by publications that have authors with an academic affiliation as well as authors with affiliation(s) of another sector (corporate, government, medical or other).</td></tr><tr><td>h5-index</td><td>A measure of both the productivity and citation impact of an entity, based on the number of publications as well as the number of citations they have received. h5-index is h-index for the past 5 years.</td></tr><tr><td>高被引論文占比</td><td>Output in Top 10% Citation Percentiles (%). The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文數</td><td>The number of publications of a selected entity that are highly cited, having reached a particular threshold of citations received.</td></tr><tr><td>高被引論文FWCI</td><td>FWCI of publications that are highly cited, having reached a particular threshold of citations received. 目前資料僅可取得 2020–2025 整合資料。</td></tr><tr><td>Top 10% Cited</td><td>Output in Top 10% Citation Percentiles (%). The number of publications of a selected entity that are highly cited.</td></tr><tr><td>高品質期刊占比</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals. (%)</td></tr><tr><td>高品質期刊論文數</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals.</td></tr><tr><td>高品質期刊FWCI</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). FWCI of publications that have been published in the world's top journals. 目前資料僅可取得 2020–2025 整合資料。</td></tr><tr><td>Top 10% Journals</td><td>Publications in Top 10 Journal Percentiles (CiteScore Percentile). The number of publications of a selected entity that have been published in the world's top journals. (%)</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -532,11 +532,101 @@ const subjectMetrics={
  '國際合著論文影響力':'國際合著論文影響力','產學合著論文比':'產學合著論文比 (%)',
  '產學合著論文影響力':'產學合著論文影響力'
 };
+const METRIC_TOOLTIP_ALIASES={
+ 'Scopus 發表數':'Scopus發表數','Scopus每師平均':'Scopus每師平均','Scopus 每師平均':'Scopus每師平均',
+ '整體 FWCI':'FWCI','FWCI (excl. self-citations)':'FWCI',
+ '國際合著論文比 (%)':'國際合著論文比','國際合著比':'國際合著論文比','國際合作影響力':'國際合著論文影響力',
+ '產學合著論文比 (%)':'產學合著論文比','產學合著比':'產學合著論文比','產學合作影響力':'產學合著論文影響力',
+ '高被引論文占比 (%)':'高被引論文占比','高品質期刊論文占比 (%)':'高品質期刊占比','高品質期刊論文 FWCI':'高品質期刊FWCI',
+ 'SDGs Scholarly Output':'Scholarly Output','Top 10% Cited':'Top 10% Cited','Top 10% Journals':'Top 10% Journals',
+ 'Scholarly Output':'Scholarly Output','Citation Count':'Citation Count','Citations per Publication':'Citations per Publication',
+ 'International Collaboration':'International Collaboration'
+};
+let METRIC_TOOLTIP_DEFS=null;
 
 function fmt(v,d=2){
  if(v===null||v===undefined||v==='') return '—';
  if(typeof v==='number') return Number.isInteger(v)?v.toLocaleString():v.toLocaleString(undefined,{maximumFractionDigits:d});
  return v;
+}
+function normMetricName(value){
+ return String(value||'').replace(/[%％()（）\s]/g,'').replace(/[|｜:：]/g,'').toLowerCase();
+}
+function readMetricTooltipDefs(){
+ if(METRIC_TOOLTIP_DEFS) return METRIC_TOOLTIP_DEFS;
+ const defs={};
+ document.querySelectorAll('.indicator-table tbody tr').forEach(row=>{
+  const cells=row.cells;
+  if(cells.length<2) return;
+  const name=String(cells[0].textContent||'').trim();
+  const desc=String(cells[1].textContent||'').replace(/\s+/g,' ').trim();
+  if(name&&desc) defs[normMetricName(name)]=desc;
+ });
+ Object.entries(METRIC_TOOLTIP_ALIASES).forEach(([alias,target])=>{
+  const desc=defs[normMetricName(target)];
+  if(desc) defs[normMetricName(alias)]=desc;
+ });
+ METRIC_TOOLTIP_DEFS=defs;
+ return defs;
+}
+function metricTooltipText(label){
+ const defs=readMetricTooltipDefs();
+ const raw=String(label||'').replace(/[⇅▲▼]/g,'').trim();
+ const candidates=[raw,raw.replace(/\s*%$/,''),raw.replace(/\s*\(.*?\)\s*/g,''),METRIC_TOOLTIP_ALIASES[raw]].filter(Boolean);
+ for(const candidate of candidates){
+  const desc=defs[normMetricName(candidate)];
+  if(desc) return desc;
+ }
+ return '';
+}
+function metricPopover(){
+ let pop=document.getElementById('metricPopover');
+ if(!pop){
+  pop=document.createElement('div');
+  pop.id='metricPopover';
+  pop.className='metric-popover';
+  document.body.appendChild(pop);
+ }
+ return pop;
+}
+function moveMetricPopover(event){
+ const pop=metricPopover();
+ if(!pop.dataset.active) return;
+ const margin=14;
+ const w=pop.offsetWidth||320, h=pop.offsetHeight||80;
+ let x=event.clientX+margin, y=event.clientY+margin;
+ if(x+w>window.innerWidth-8) x=event.clientX-w-margin;
+ if(y+h>window.innerHeight-8) y=event.clientY-h-margin;
+ pop.style.left=Math.max(8,x)+'px';
+ pop.style.top=Math.max(8,y)+'px';
+}
+function showMetricPopover(text,event){
+ const pop=metricPopover();
+ pop.textContent=text;
+ pop.dataset.active='1';
+ pop.style.display='block';
+ moveMetricPopover(event);
+}
+function hideMetricPopover(){
+ const pop=document.getElementById('metricPopover');
+ if(!pop) return;
+ pop.style.display='none';
+ delete pop.dataset.active;
+}
+function applyMetricTooltips(){
+ const selectors='.kpi .label,.summary-label,th,.insight-card .tag';
+ document.querySelectorAll(selectors).forEach(el=>{
+  const text=String(el.textContent||'').split('｜').pop().replace(/[⇅▲▼]/g,'').trim();
+  const desc=metricTooltipText(text);
+  if(!desc) return;
+  el.classList.add('has-metric-tip');
+  el.dataset.tooltip=desc;
+  el.title=desc;
+  el.onmouseenter=event=>showMetricPopover(desc,event);
+  el.onmousemove=moveMetricPopover;
+  el.onmouseleave=hideMetricPopover;
+  el.onblur=hideMetricPopover;
+ });
 }
 function destroy(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
 function sortItems(items,mode='desc',key='v'){
@@ -614,6 +704,7 @@ function addUpdatedLabels(){
    if(existing) existing.textContent=label;
    else block.insertAdjacentHTML('beforeend',`<div class="updated-footer">${label}</div>`);
  });
+ applyMetricTooltips();
 }
 function placeControls(){
  const isSubjectPage=page==='the'||page==='qs';
@@ -744,6 +835,99 @@ function renderSummary(row,prev,school,year){
  }).join('');
  summaryBox.innerHTML=`<div class="summary-heading"><div class="badge">${school}｜${year}</div><span style="font-size:13px;color:#9fb5c9">與前一年比較</span></div><div class="summary-grid">${cards}</div>`;
 }
+function svgEl(name,attrs={}){
+ const el=document.createElementNS('http://www.w3.org/2000/svg',name);
+ Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+ return el;
+}
+function shortLabel(text,max=28){
+ const value=String(text||'');
+ return value.length>max?value.slice(0,max-1)+'…':value;
+}
+function collabSankeyGroups(data){
+ const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,7).map(r=>({label:r.area,value:r.output,detail:`Scholarly Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`}));
+ const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1]),growth:r[2]})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,7).map(r=>({label:r.label,value:r.value,detail:`Relevance ${fmt(r.value)}｜Growth ${fmt(r.growth)}`}));
+ const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
+ const partnerRows=[
+  ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
+  ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
+  ...(p.authors||[]).map(x=>({type:'Author',label:x[0],value:cleanNum(x[1])})),
+  ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
+ ].filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,9).map(r=>({label:`${r.type}: ${r.label}`,value:r.value,detail:`${r.type}｜Total ${fmt(r.value)}`}));
+ return [
+  {label:'學科領域',color:'#62d6ef',items:subjects},
+  {label:'Top Keyphrases',color:'#a894ff',items:keyphrases},
+  {label:'合作來源',color:'#f3c969',items:partnerRows}
+ ].filter(g=>g.items.length);
+}
+function renderCollabSankey(data,school,label){
+ const host=document.getElementById('collabSankey');
+ const meta=document.getElementById('collabSankeyMeta');
+ if(meta) meta.textContent=`${school}｜${label}｜2018-2025`;
+ if(!host) return;
+ host.innerHTML='';
+ const groups=collabSankeyGroups(data);
+ if(!groups.length){
+  host.innerHTML='<div class="sankey-empty">此校尚無可繪製的合作分析資料。</div>';
+  return;
+ }
+ const width=1120, height=Math.max(560,groups.reduce((sum,g)=>sum+Math.max(118,g.items.length*34+38),70));
+ const svg=svgEl('svg',{viewBox:`0 0 ${width} ${height}`,role:'img','aria-label':`${school} ${label} 合作研究結構桑基圖`});
+ const defs=svgEl('defs');
+ groups.forEach((g,i)=>{
+  const grad=svgEl('linearGradient',{id:`collabGrad${i}`,x1:'0%',x2:'100%',y1:'0%',y2:'0%'});
+  grad.appendChild(svgEl('stop',{offset:'0%','stop-color':'#62d6ef','stop-opacity':'.74'}));
+  grad.appendChild(svgEl('stop',{offset:'100%','stop-color':g.color,'stop-opacity':'.78'}));
+  defs.appendChild(grad);
+ });
+ svg.appendChild(defs);
+ const linkLayer=svgEl('g');
+ const nodeLayer=svgEl('g');
+ svg.appendChild(linkLayer);
+ svg.appendChild(nodeLayer);
+ const source={x:44,y:height/2,w:20,h:132,label:`${school} ${label}`};
+ const catX=370,itemX=760,nodeW=18;
+ const bandTop=46;
+ const bandGap=26;
+ const bandHeight=(height-bandTop*2-bandGap*(groups.length-1))/groups.length;
+ const drawText=(text,x,y,cls,anchor='start')=>{
+  const t=svgEl('text',{x,y,class:cls,'text-anchor':anchor});
+  t.textContent=text;
+  nodeLayer.appendChild(t);
+  return t;
+ };
+ const drawNode=(x,y,h,color,label,sub,anchor='start')=>{
+  const g=svgEl('g',{class:'sankey-node'});
+  g.appendChild(svgEl('rect',{x,y:y-h/2,width:nodeW,height:h,rx:7,fill:color}));
+  nodeLayer.appendChild(g);
+  drawText(label,x+(anchor==='end'?-10:nodeW+10),y-4,'sankey-label',anchor);
+  if(sub) drawText(sub,x+(anchor==='end'?-10:nodeW+10),y+17,'sankey-sub',anchor);
+ };
+ const drawPath=(x1,y1,x2,y2,width,color,title)=>{
+  const path=svgEl('path',{d:`M ${x1} ${y1} C ${x1+150} ${y1}, ${x2-150} ${y2}, ${x2} ${y2}`,stroke:color,'stroke-width':Math.max(2,width),class:'sankey-link'});
+  const tip=svgEl('title');
+  tip.textContent=title;
+  path.appendChild(tip);
+  linkLayer.appendChild(path);
+ };
+ drawNode(source.x,source.y,source.h,'#244d66',source.label,'Collaboration Summary');
+ groups.forEach((g,i)=>{
+  const y0=bandTop+i*(bandHeight+bandGap);
+  const catY=y0+bandHeight/2;
+  const total=g.items.reduce((sum,item)=>sum+(item.value||0),0)||1;
+  drawPath(source.x+nodeW,source.y,catX,catY,18,g.color,`${source.label} → ${g.label}`);
+  drawNode(catX,catY,Math.min(96,Math.max(54,g.items.length*9)),g.color,g.label,`${g.items.length} items`);
+  const usable=Math.min(bandHeight-34,g.items.length*34);
+  const startY=catY-usable/2+12;
+  g.items.forEach((item,j)=>{
+   const y=startY+j*(usable/Math.max(1,g.items.length-1||1));
+   const weight=Math.max(3,Math.min(18,(item.value/total)*58));
+   drawPath(catX+nodeW,catY,itemX,y,weight,`url(#collabGrad${i})`,`${g.label} → ${item.label}｜${item.detail}`);
+   drawNode(itemX,y,Math.max(16,weight+8),g.color,shortLabel(item.label),item.detail);
+  });
+ });
+ host.appendChild(svg);
+}
 function renderCollaboration(school){
  const collabSelect=document.getElementById('collabTypeSelect');
  const type=(collabSelect&&collabSelect.value)||'international';
@@ -751,24 +935,16 @@ function renderCollaboration(school){
  const label=COLLAB_TYPE_LABELS[type]||type;
  if(!data){
   collabKpis.innerHTML=`<div class="kpi"><div class="label">${label}</div><div class="value">—</div><div class="meta">尚未讀取 Collaboration 資料</div></div>`;
-  collabSubjectTable.innerHTML='<tbody><tr><td>尚無學科領域分布資料。</td></tr></tbody>';
-  collabKeyphraseTable.innerHTML='<tbody><tr><td>尚無 Top Keyphrases 資料。</td></tr></tbody>';
-  collabPartnerTable.innerHTML='<tbody><tr><td>尚無合作與來源摘要資料。</td></tr></tbody>';
+  const meta=document.getElementById('collabSankeyMeta');
+  if(meta) meta.textContent=`${school}｜${label}`;
+  const host=document.getElementById('collabSankey');
+  if(host) host.innerHTML='<div class="sankey-empty">尚未讀取 Collaboration 資料。</div>';
   return;
  }
  const s=data.summary||{};
  const kpis=[['Scholarly Output',s.output],['FWCI',s.fwci],['Citation Count',s.citations],['Citations per Publication',s.cpp]];
  collabKpis.innerHTML=kpis.map(([k,v])=>`<div class="kpi"><div class="label">${k}</div><div class="value">${fmt(v)}</div><div class="meta">${school}｜${label}｜2018-2025</div></div>`).join('');
- const subjects=data.subjects||[];
- collabSubjectTable.innerHTML='<thead><tr><th>Subject Area</th><th>Scholarly Output</th><th>FWCI</th></tr></thead><tbody>'+(subjects.length?subjects.map(r=>`<tr><td>${r.area}</td><td>${fmt(r.output)}</td><td>${fmt(r.fwci)}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無學科領域分布資料。</td></tr>')+'</tbody>';
- enableTableSort(collabSubjectTable);
- const keys=data.keyphrases||[];
- collabKeyphraseTable.innerHTML='<thead><tr><th>Keyphrase</th><th>Relevance</th><th>Growth %</th></tr></thead><tbody>'+(keys.length?keys.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無 Top Keyphrases 資料。</td></tr>')+'</tbody>';
- enableTableSort(collabKeyphraseTable);
- const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
- const rows=[['Institution',...p.institutions],['Country/Region',...p.countries],['Author',...p.authors],['Source',...p.journals]].flatMap(group=>group.slice(1).map(x=>[group[0],x[0],x[1]]));
- collabPartnerTable.innerHTML='<thead><tr><th>Type</th><th>Name</th><th>Total</th></tr></thead><tbody>'+(rows.length?rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${fmt(r[2])}</td></tr>`).join(''):'<tr><td colspan="3">此校尚無合作與來源摘要資料。</td></tr>')+'</tbody>';
- enableTableSort(collabPartnerTable);
+ renderCollabSankey(data,school,label);
 }function renderGeneralTable(year){
  const cols=['學校','Scopus發表數','Scopus每師平均','h5-index','FWCI','國際合著論文比 %','國際合著論文影響力','產學合著論文比 %','產學合著論文影響力','高被引論文占比 %','高被引論文FWCI','高品質期刊論文占比 %','高品質期刊論文FWCI'];
  const rows=DATA.universities.map(u=>record(DATA.general,u,year)||{'學校':u});
