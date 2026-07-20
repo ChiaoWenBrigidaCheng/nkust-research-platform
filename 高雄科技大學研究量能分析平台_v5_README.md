@@ -31,6 +31,7 @@
 ### THE / QS 學科分析
 - 保留主要學校、年度、學科領域與趨勢指標篩選。
 - THE/QS 頁面的 `主要學校`、`年度`、`學科領域` 會顯示在頁面最上方同一列；`趨勢指標` 保留於 KPI 後、圖表前。
+- THE/QS 的 `年度` 篩選與年度趨勢圖只顯示單一年份資料，會排除 `2018-2025` 這類整合期間選項。
 - THE/QS 會優先讀取 `00 Raw data/THE/` 與 `00 Raw data/QS/` 中的 SciVal raw Excel，從檔名取得學科領域，並從 `Metric Name` 轉出 Scopus 發表數、FWCI、國際合著與產學合著相關指標；若 raw 資料夾讀不到，才使用 `研究量能統計 2018-2025.xlsx` 內的 THE/QS sheets。
 - THE/QS 學校清單改為依各自資料集動態產生；QS 目前只保留 Excel QS 工作表中校名包含「科大」的 6 校資料。
 - 手機版會將上述三個主篩選器改為單欄排列，避免固定三欄在窄螢幕產生水平溢位。
@@ -65,6 +66,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰的純文字標題。
 
 ## 修改紀錄
+- THE/QS 年度篩選改為依各自資料集產生單一年份清單，排除 `2018-2025` 整合期間；THE/QS 年度趨勢圖 x 軸同步改用各自數字年份。
 - 合作分析摘要改為 SVG 桑基圖，將學科領域分布、Top Keyphrases 與合作/來源摘要整合為同一張視覺化圖表；保留國際合著/產學合著切換與四張 KPI 卡。
 - 放大合作研究結構桑基圖的預設高度、節點、流線與文字，並加入滑鼠移入時的聚焦放大高度；補強學校篩選變動時的合作圖同步更新。
 - 指標說明新增 Scopus 每師平均、Scholarly Output、Citation Count、Citations per Publication、International Collaboration、Top 10% Cited 與 Top 10% Journals，並加入 hover tooltip，讓使用者在 KPI、摘要卡與表格欄位上可直接查看定義。

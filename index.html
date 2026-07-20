@@ -621,7 +621,7 @@ function applyMetricTooltips(){
   if(!desc) return;
   el.classList.add('has-metric-tip');
   el.dataset.tooltip=desc;
-  el.title=desc;
+  el.removeAttribute('title');
   el.onmouseenter=event=>showMetricPopover(desc,event);
   el.onmousemove=moveMetricPopover;
   el.onmouseleave=hideMetricPopover;
@@ -690,11 +690,25 @@ function currentSchoolList(){
  if(page==='general') return DATA.universities;
  return availableSchools(page==='the'?DATA.the:DATA.qs);
 }
+function datasetYears(dataset){
+ return [...new Set((dataset||[]).map(r=>Number(r['年度'])).filter(Number.isFinite))].sort((a,b)=>a-b);
+}
+function currentYearList(){
+ if(page==='the') return datasetYears(DATA.the);
+ if(page==='qs') return datasetYears(DATA.qs);
+ return datasetYears(DATA.general).length?datasetYears(DATA.general):DATA.years.filter(y=>Number.isFinite(Number(y))).map(Number);
+}
 function updateSchoolOptions(){
  const schools=currentSchoolList();
  const current=schoolSelect.value;
  const selected=schools.includes(current)?current:(schools.includes('高科大')?'高科大':schools[0]);
  fillSelect(schoolSelect,schools,selected);
+}
+function updateYearOptions(){
+ const years=currentYearList();
+ const current=Number(yearSelect.value);
+ const selected=years.includes(current)?current:latestYearOption(years);
+ fillSelect(yearSelect,years,selected);
 }
 
 function addUpdatedLabels(){
@@ -725,7 +739,7 @@ async function init(){
  addUpdatedLabels();
  placeControls();
  updateSchoolOptions();
- fillSelect(yearSelect,DATA.years,latestYearOption(DATA.years));
+ updateYearOptions();
  fillSelect(sdgSchoolSelect,sdgSchoolOptions(),'高科大');
  fillCollabTypeSelect('international');
  updateSdgYearOptions();
@@ -741,6 +755,7 @@ function bind(){
    document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===page));
    placeControls();
    if(page==='general'||page==='the'||page==='qs') updateSchoolOptions();
+   if(page==='general'||page==='the'||page==='qs') updateYearOptions();
    if(page==='general'||page==='the'||page==='qs') updateMetricOptions();
    render();
  });
@@ -967,6 +982,7 @@ function renderCollaboration(school){
 function renderSubject(type){
  const ds=type==='the'?DATA.the:DATA.qs;
  const school=schoolSelect.value, year=Number(yearSelect.value), field=fieldSelect.value, metric=subjectMetricSelect.value;
+ const years=datasetYears(ds);
  const row=record(ds,school,year,field);
  const rankTitle=document.getElementById(type+'RankTitle');
  if(rankTitle) rankTitle.textContent=`${type.toUpperCase()} 當年度（${year}）比較`;
@@ -980,11 +996,11 @@ function renderSubject(type){
  const schools=availableSchools(ds);
  const sets=schools.map((u,i)=>({
   label:u,borderColor:schoolColor(u),backgroundColor:schoolColor(u),tension:.25,spanGaps:true,
-  data:DATA.years.map(y=>{const r=record(ds,u,y,field);return r&&typeof r[metric]==='number'?r[metric]:null})
+  data:years.map(y=>{const r=record(ds,u,y,field);return r&&typeof r[metric]==='number'?r[metric]:null})
  }));
  const trendId=type+'Trend',rankId=type+'Rank';
  destroy(trendId);
- charts[trendId]=new Chart(document.getElementById(type+'TrendChart'),{type:'line',data:{labels:DATA.years,datasets:sets},options:chartOpts(subjectMetrics[metric],true)});
+ charts[trendId]=new Chart(document.getElementById(type+'TrendChart'),{type:'line',data:{labels:years,datasets:sets},options:chartOpts(subjectMetrics[metric],true)});
  const rankMetric='Scopus發表數';
  const ranking=sortItems(schools.map((u,i)=>{const r=record(ds,u,year,field);return {u,v:r&&typeof r[rankMetric]==='number'?r[rankMetric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),document.getElementById(type+'RankSort').value,'v');
  destroy(rankId);
