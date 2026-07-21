@@ -150,9 +150,63 @@ header,main,.footer{position:relative;z-index:1}
 }
 </style>
 
+
+<style>
+/* Reduced background word density */
+.word-cloud .w25,.word-cloud .w26,.word-cloud .w27,.word-cloud .w28,
+.word-cloud .w29,.word-cloud .w30,.word-cloud .w31,.word-cloud .w32,
+.word-cloud .w33,.word-cloud .w34,.word-cloud .w35,.word-cloud .w36{display:none!important}
+
+/* Sankey detail footer and return button */
+.sankey-detail-footer{
+  flex:0 0 auto;
+  display:flex;
+  justify-content:center;
+  padding-top:18px;
+  margin-top:16px;
+  border-top:1px solid rgba(132,205,235,.18);
+}
+.sankey-detail .sankey-back-btn{
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:132px!important;
+  padding:11px 22px!important;
+  margin:0!important;
+  border-radius:10px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+.sankey-detail .sankey-back-btn:hover{transform:translateY(-1px)}
+
+/* More legible category calculation notes */
+.sankey-sub{font-size:13px!important;fill:rgba(255,255,255,.94)!important}
+.sankey-node-click .sankey-sub{font-weight:850}
+
+/* Clearer flow hierarchy */
+.sankey-link{
+  opacity:.72!important;
+  stroke:rgba(255,255,255,.16)!important;
+  stroke-width:.8px!important;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.18));
+}
+.sankey-flow-group:hover .sankey-link,
+.sankey-link:hover{
+  opacity:.98!important;
+  stroke:rgba(255,255,255,.48)!important;
+  stroke-width:1.2px!important;
+  filter:drop-shadow(0 0 12px rgba(98,214,239,.30));
+}
+.sankey-svg:has(.sankey-flow-group:hover) .sankey-flow-group:not(:hover){opacity:.22}
+</style>
+
 </head>
 <body>
-<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span>
+<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
 <span class="w37">research excellence</span>
 <span class="w38">institutional research</span>
 <span class="w39">academic impact</span>
@@ -207,7 +261,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值。請使用下方篩選器選擇要顯示的學校。</div><div id="trendSeriesFilters" class="series-filter" aria-label="六校年度趨勢篩選資料"></div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。將滑鼠移至圖中的節點或流帶可辨識可點擊項目；點擊後顯示 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total 等細部資料。">合作研究結構</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span>合作研究結構</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2 id="generalTableTitle">六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -1326,17 +1380,55 @@ function topCollabSummaries(data){
 }
 function collabSankeyGroups(data){
  const top=topCollabSummaries(data);
- const normalize=(rows,valueLabel)=> {
-  const max=Math.max(...rows.map(r=>r.value||0),1);
-  return rows.map(r=>({label:r.label,value:28+(r.value/max)*72,detail:r.detail||`${valueLabel} ${fmt(r.value)}`}));
- };
- const subjectList=(data.subjects||[]).filter(r=>r.area).map(r=>`${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`).join('\n');
- const keyphraseList=(data.keyphrases||[]).filter(r=>r[0]).slice(0,12).map(r=>`${r[0]}｜Relevance ${fmt(cleanNum(r[1]))}`).join('\n');
- const sourceList=top.sources.map(r=>r.detail).join('\n');
+ const normalize=(rows,valueLabel)=>rows.map(r=>({
+  label:r.label,
+  value:Math.max(0,Number(r.value)||0),
+  detail:r.detail||`${valueLabel} ${fmt(r.value)}`
+ }));
+ const subjectList=(data.subjects||[])
+  .filter(r=>r.area)
+  .slice()
+  .sort((a,b)=>(b.output||0)-(a.output||0))
+  .map(r=>`${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`)
+  .join('\n');
+ const keyphraseList=(data.keyphrases||[])
+  .filter(r=>r[0]&&typeof cleanNum(r[1])==='number')
+  .slice()
+  .sort((a,b)=>cleanNum(b[1])-cleanNum(a[1]))
+  .map(r=>`${r[0]}｜Relevance ${fmt(cleanNum(r[1]))}`)
+  .join('\n');
+ const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
+ const allSources=[
+  ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
+  ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
+  ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
+ ].filter(r=>r.label&&typeof r.value==='number')
+  .sort((a,b)=>b.value-a.value);
+ const sourceList=allSources
+  .map(r=>`${r.label}｜Subcategory ${r.type}｜Total ${fmt(r.value)}`)
+  .join('\n');
  const groupRows=[
-  {label:'Subject Area',color:'#62d6ef',items:normalize(top.subjects,'Output'),detail:`Subject Area 全部項目\n${subjectList}`},
-  {label:'Keyphrases',color:'#a894ff',items:normalize(top.keyphrases,'Relevance'),detail:`Keyphrases 項目\n${keyphraseList}`},
-  {label:'Collaboration Source',color:'#f3c969',items:normalize(top.sources,'Total'),detail:`Collaboration Source Top 5\n${sourceList}`}
+  {
+   label:'Subject Area',
+   color:'#62d6ef',
+   items:normalize(top.subjects,'Output'),
+   sub:'Top 5｜依 Output 排序',
+   detail:`Subject Area 全部項目\n${subjectList}`
+  },
+  {
+   label:'Keyphrases',
+   color:'#a894ff',
+   items:normalize(top.keyphrases,'Relevance'),
+   sub:'Top 5｜依 Relevance 排序',
+   detail:`Keyphrases 全部項目\n${keyphraseList}`
+  },
+  {
+   label:'Collaboration Source',
+   color:'#f3c969',
+   items:normalize(top.sources,'Total'),
+   sub:'Top 5｜依 Total 排序',
+   detail:`Collaboration Source 全部項目\n${sourceList}`
+  }
  ];
  return groupRows.filter(g=>g.items.length);
 }
@@ -1379,7 +1471,7 @@ function renderCollabSankey(data,school,label,period){
  };
  const detailPanel=document.createElement('div');
  detailPanel.className='sankey-detail';
- detailPanel.innerHTML='<button type="button" class="sankey-back-btn" aria-label="返回合作研究結構圖" title="返回">←</button><div class="drill-kicker">Drill-down View</div><h3></h3><div class="sankey-detail-body"></div>';
+ detailPanel.innerHTML='<div class="drill-kicker">Drill-down View</div><h3></h3><div class="sankey-detail-body"></div><div class="sankey-detail-footer"><button type="button" class="sankey-back-btn" aria-label="回上一頁">回上一頁</button></div>';
  const detailTitle=detailPanel.querySelector('h3');
  const detailBody=detailPanel.querySelector('.sankey-detail-body');
  const closeDetail=()=>{
@@ -1482,11 +1574,6 @@ function renderCollabSankey(data,school,label,period){
   }else{
    attachSankeyClick(g,detailTitleText||label,detailText);
   }
-  if(detailText){
-   const hoverTitle=svgEl('title');
-   hoverTitle.textContent=`${label}｜點擊查看細部資料`;
-   g.appendChild(hoverTitle);
-  }
   g.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:7,fill:color}));
   g.appendChild(svgEl('rect',{x:x-5,y:y-5,width:w+10,height:h+10,rx:10,class:'sankey-node-hit'}));
   parent.appendChild(g);
@@ -1498,11 +1585,6 @@ function renderCollabSankey(data,school,label,period){
   const c=Math.max(90,(x1-x0)*.44);
   const path=svgEl('path',{d:`M ${x0} ${y0a} C ${x0+c} ${y0a}, ${x1-c} ${y1a}, ${x1} ${y1a} L ${x1} ${y1b} C ${x1-c} ${y1b}, ${x0+c} ${y0b}, ${x0} ${y0b} Z`,fill:color,class:'sankey-link'});
   attachSankeyClick(path,title,detailText);
-  if(detailText){
-   const hoverTitle=svgEl('title');
-   hoverTitle.textContent=`${title}｜點擊查看細部資料`;
-   path.appendChild(hoverTitle);
-  }
   parent.appendChild(path);
  };
  const contextText=`${school}｜${label}`;
@@ -1514,18 +1596,23 @@ function renderCollabSankey(data,school,label,period){
   group.appendChild(groupLinks);
   group.appendChild(groupNodes);
   group.addEventListener('mouseenter',()=>group.parentNode.appendChild(group));
-  const total=g.items.reduce((sum,item)=>sum+(item.value||0),0)||1;
+  const weights=g.items.map(item=>Math.sqrt(Math.max(0,item.value||0)));
+  const totalWeight=weights.reduce((sum,value)=>sum+value,0)||1;
   const catH=groupSlot;
   const catY0=top+i*(groupSlot+gap), catY1=catY0+catH;
   const rootSegY0=catY0, rootSegY1=catY1;
   drawRibbon(groupLinks,rootX+rootW,rootSegY0,rootSegY1,catX,catY0,catY1,`url(#collabGrad${i})`,`${contextText} → ${g.label}`,g.detail);
-  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,`Top ${g.items.length}`,24,g.label,g.detail);
+  drawNode(groupNodes,catX,catY0,catW,catH,g.color,g.label,g.sub||`Top ${g.items.length}`,24,g.label,g.detail);
   let catOut=catY0;
   const itemAvailable=Math.max(20,catH-itemGap*(g.items.length-1));
-  const itemScale=itemAvailable/total;
+  const rawHeights=weights.map(weight=>itemAvailable*(weight/totalWeight));
+  const linkHeights=rawHeights.map(height=>Math.max(minItemH,height));
+  const adjustedTotal=linkHeights.reduce((sum,height)=>sum+height,0);
+  const shrink=adjustedTotal>itemAvailable?itemAvailable/adjustedTotal:1;
+  const finalHeights=linkHeights.map(height=>Math.max(12,height*shrink));
   let itemY=catY0;
   g.items.forEach((item,j)=>{
-   const linkH=Math.max(minItemH,item.value*itemScale);
+   const linkH=finalHeights[j];
    const catLinkY0=catOut, catLinkY1=catOut+linkH;
    const itemNodeY0=itemY, itemNodeY1=itemY+linkH;
    drawRibbon(groupLinks,catX+catW,catLinkY0,catLinkY1,itemX,itemNodeY0,itemNodeY1,`url(#collabGrad${i})`,`${g.label} → ${item.label}`,item.detail);

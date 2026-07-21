@@ -68,6 +68,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰且更粗重有力的純文字標題。
 
 ## 修改紀錄
+- 2026-07-21：背景漂浮文字再減少約三分之一；桑基圖細部資料的返回按鈕移至資訊下方並改名為「回上一頁」；移除合作研究結構標題與 SVG 節點的滑鼠操作說明；將 Subject Area、Keyphrases、Collaboration Source 的排序／計算依據直接置於中間分類區塊；點入分類後改為顯示完整項目清單；流帶寬度改採實際數值的平方根比例配置，並提高不透明度與邊界對比。
 - 2026-07-21：合作研究結構細部畫面的返回控制改為單一箭頭圖示；最後一欄目的地節點（如 Engineering、Biochar、Viet Nam）改為滑鼠移入顯示資訊，不再點擊開啟細部頁面。
 - 2026-07-21：減少背景漂浮文字數量，降低視覺干擾；修正「六校年度趨勢」滑鼠提示功能，改為依年度垂直範圍顯示所有目前開啟系列的數值，不需精準停留於資料點上。Tooltip 樣式同步套用平台深色底與 cyan 邊框，無資料系列顯示「無資料」。
 - 2026-07-21：修正合作研究結構圖的點擊機制，改採 SVG 事件委派，節點與流帶均可直接點擊開啟細部資料；同時將 Subject Area、Keyphrases、Collaboration Source 配色改為網站主色 cyan、purple、gold，細部畫面亦同步套用平台深色玻璃質感。
@@ -271,3 +272,19 @@
 - 最後一欄目的地節點，例如 Engineering、Biochar、Viet Nam，改採滑鼠移入顯示資訊。
 - Tooltip 會依節點顯示 Output、FWCI、Relevance 或 Total 等細部內容。
 - 最後一欄不再以點擊方式開啟細部頁面；中間分類節點及流帶仍可點擊查看細節。
+
+
+## 合作研究結構第二次介面修正
+- 背景漂浮文字較上一版再減少約三分之一。
+- 細部資料面板的返回控制移至所有資訊下方，按鈕文字為「回上一頁」。
+- 移除「合作研究結構」標題原有的滑鼠說明，以及節點／流帶的原生點擊提示。
+- 中間分類區塊直接顯示計算依據：
+  - Subject Area：Top 5，依 Output 排序。
+  - Keyphrases：Top 5，依 Relevance 排序。
+  - Collaboration Source：Top 5，依 Total 排序。
+- 點擊中間分類區塊後顯示完整清單：
+  - Subject Area 顯示全部 Subject Area、Output 與 FWCI。
+  - Keyphrases 顯示全部 Keyphrases 與 Relevance。
+  - Collaboration Source 顯示全部 Institution、Country/Region、Source 與 Total。
+- 流帶寬度以各分類內實際數值的平方根比例配置，避免極端值使小項目完全不可見，同時保留大小差異。
+- 提高流帶不透明度、加入細邊界及 hover 對比，使流向寬度更容易辨識。
