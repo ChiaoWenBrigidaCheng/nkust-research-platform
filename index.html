@@ -204,6 +204,97 @@ header,main,.footer{position:relative;z-index:1}
 .sankey-svg:has(.sankey-flow-group:hover) .sankey-flow-group:not(:hover){opacity:.22}
 </style>
 
+
+<style>
+.sankey-detail{
+  display:flex!important;
+  flex-direction:column!important;
+  max-height:82vh!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+.sankey-detail .drill-kicker,
+.sankey-detail h3{
+  flex:0 0 auto!important;
+}
+.sankey-detail-body{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding-right:8px!important;
+  overscroll-behavior:contain;
+}
+.sankey-detail-footer{
+  flex:0 0 auto!important;
+  position:sticky!important;
+  bottom:0!important;
+  z-index:3!important;
+  background:linear-gradient(180deg,rgba(4,13,22,0),rgba(4,13,22,.98) 30%)!important;
+  padding:22px 0 2px!important;
+  margin-top:0!important;
+}
+</style>
+
+
+<style>
+/* Definitive drill-down scrolling fix */
+.sankey-detail{
+  box-sizing:border-box!important;
+  left:10px!important;
+  top:10px!important;
+  width:calc(100% - 20px)!important;
+  height:calc(100% - 20px)!important;
+  max-height:calc(100% - 20px)!important;
+  min-height:0!important;
+  padding:26px 30px 20px!important;
+  overflow:hidden!important;
+}
+.sankey-detail-body{
+  display:grid!important;
+  flex:1 1 0!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:scroll!important;
+  overflow-x:hidden!important;
+  padding-right:14px!important;
+  padding-bottom:18px!important;
+  scrollbar-gutter:stable!important;
+  overscroll-behavior:contain!important;
+}
+.sankey-detail-body::-webkit-scrollbar{width:10px}
+.sankey-detail-body::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.045);
+  border-radius:999px;
+}
+.sankey-detail-body::-webkit-scrollbar-thumb{
+  background:rgba(98,214,239,.42);
+  border-radius:999px;
+  border:2px solid rgba(4,13,22,.85);
+}
+.sankey-detail-footer{
+  position:static!important;
+  flex:0 0 auto!important;
+  margin-top:12px!important;
+  padding:14px 0 0!important;
+  background:rgba(4,13,22,.96)!important;
+  border-top:1px solid rgba(132,205,235,.20)!important;
+}
+.sankey-detail .sankey-back-btn{
+  margin:0 auto!important;
+}
+@media(max-width:760px){
+  .sankey-detail{
+    left:6px!important;
+    top:6px!important;
+    width:calc(100% - 12px)!important;
+    height:calc(100% - 12px)!important;
+    max-height:calc(100% - 12px)!important;
+    padding:20px 16px 14px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
@@ -1412,22 +1503,22 @@ function collabSankeyGroups(data){
    label:'Subject Area',
    color:'#62d6ef',
    items:normalize(top.subjects,'Output'),
-   sub:'Top 5｜依 Output 排序',
-   detail:`Subject Area 全部項目\n${subjectList}`
+   sub:'外層 Top 5｜點擊查看全部',
+   detail:`Subject Area 全部項目（依 Output 排序）\n${subjectList}`
   },
   {
    label:'Keyphrases',
    color:'#a894ff',
    items:normalize(top.keyphrases,'Relevance'),
-   sub:'Top 5｜依 Relevance 排序',
-   detail:`Keyphrases 全部項目\n${keyphraseList}`
+   sub:'外層 Top 5｜點擊查看全部',
+   detail:`Keyphrases 全部項目（依 Relevance 排序）\n${keyphraseList}`
   },
   {
    label:'Collaboration Source',
    color:'#f3c969',
    items:normalize(top.sources,'Total'),
-   sub:'Top 5｜依 Total 排序',
-   detail:`Collaboration Source 全部項目\n${sourceList}`
+   sub:'外層 Top 5｜點擊查看全部',
+   detail:`Collaboration Source 全部項目（依 Total 排序）\n${sourceList}`
   }
  ];
  return groupRows.filter(g=>g.items.length);
