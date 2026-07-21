@@ -67,7 +67,7 @@ header,main,.footer{position:relative;z-index:1}
     <div class="grid wide">
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-note">桑基圖流帶寬度為各類 Top 5 內相對權重，用於呈現同類項目強弱；不同類別不可直接比較。原始數值請移到節點或流帶上查看。</div><div id="collabSankey" class="sankey-wrap"></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -906,7 +906,7 @@ function renderGeneral(){
    const data=trendYears.map(y=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null});
    return {
    label:u,borderColor:schoolColor(u),backgroundColor:schoolColor(u),tension:.25,spanGaps:true,
-   borderWidth:selected?5.8:2.4,pointRadius:selected?5.5:2.8,pointHoverRadius:selected?7.5:4.5,pointBackgroundColor:selected?'#f3c969':schoolColor(u),pointBorderColor:selected?'#f7fbff':schoolColor(u),pointBorderWidth:selected?1.6:0,order:selected?0:1,selectedGlow:selected,
+   borderWidth:selected?5.8:2.4,pointRadius:2.8,pointHoverRadius:4.5,pointBackgroundColor:schoolColor(u),pointBorderColor:schoolColor(u),pointBorderWidth:0,order:selected?0:1,selectedGlow:selected,
    data
    };
  });
@@ -996,21 +996,21 @@ function shortLabel(text,max=28){
  return value.length>max?value.slice(0,max-1)+'…':value;
 }
 function topCollabSummaries(data){
- const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.area,value:r.output,detail:`FWCI ${fmt(r.fwci)}`}));
- const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1])})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:''}));
+ const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.area,value:r.output,detail:`Subcategory ${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`}));
+ const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1])})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`Keyphrases ${r.label}｜Relevance ${fmt(r.value)}`}));
  const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
  const sources=[
   ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
   ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
   ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
- ].filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:r.type}));
+ ].filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`Subcategory ${r.type}｜Total ${fmt(r.value)}`}));
  return {subjects,keyphrases,sources};
 }
 function collabSankeyGroups(data){
  const top=topCollabSummaries(data);
  const normalize=(rows,valueLabel)=> {
   const max=Math.max(...rows.map(r=>r.value||0),1);
-  return rows.map(r=>({label:r.label,value:28+(r.value/max)*72,detail:`${valueLabel} ${fmt(r.value)}${r.detail?'｜'+r.detail:''}`}));
+  return rows.map(r=>({label:r.label,value:28+(r.value/max)*72,detail:r.detail||`${valueLabel} ${fmt(r.value)}`}));
  };
  const groupRows=[
   {label:'Top 5 學科領域',color:'#155D73',items:normalize(top.subjects,'Output')},
