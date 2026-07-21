@@ -34,6 +34,7 @@ header,main,.footer{position:relative;z-index:1}
 .general-compare-row{grid-template-columns:minmax(360px,.95fr) minmax(520px,1.35fr)}.panel-filter-row{gap:12px;align-items:end}.panel-filter-row .control{width:min(300px,100%)}@media(max-width:1000px){.general-compare-row{grid-template-columns:1fr}.panel-filter-row{justify-content:flex-start}.panel-filter-row .control{width:min(330px,100%)}}
 .sankey-wrap .sankey-svg{transition:opacity .28s ease,filter .28s ease,transform .28s ease}.sankey-wrap.drill-open .sankey-svg{opacity:.28;filter:blur(1.5px) saturate(.76);transform:scale(.985)}.sankey-wrap.drill-open:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(98,214,239,.12),rgba(2,10,17,.58));z-index:3;pointer-events:none}.sankey-detail{left:50%;right:auto;top:50%;width:min(760px,calc(100% - 48px));max-height:calc(100% - 64px);display:block;visibility:hidden;opacity:0;pointer-events:none;z-index:6;transform:translate(-50%,-43%) scale(.86);transition:opacity .26s ease,transform .32s cubic-bezier(.18,.9,.24,1.08),visibility .26s ease;padding:26px 28px 24px}.sankey-detail.open{visibility:visible;opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.sankey-detail button{position:static;width:auto;height:auto;margin:0 0 16px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:900;line-height:1.1}.sankey-detail h3{font-size:28px;margin:0 0 14px}.sankey-detail-body{font-size:17px;line-height:1.85;max-height:560px;border-top:1px solid rgba(132,205,235,.18);padding-top:14px}@media(max-width:1000px){.sankey-detail{left:50%;right:auto;top:50%;width:calc(100% - 36px);padding:22px}.sankey-detail h3{font-size:24px}.sankey-detail-body{font-size:15px;max-height:680px}}
 .sankey-wrap.drill-open .sankey-svg{opacity:.08;filter:blur(2.4px) saturate(.55);transform:translateX(-28px) scale(.94)}.sankey-detail{width:min(1080px,calc(100% - 54px));min-height:min(600px,calc(100% - 70px));max-height:calc(100% - 54px);display:flex;flex-direction:column;background:linear-gradient(145deg,rgba(10,26,42,.98),rgba(5,15,26,.96));border-color:rgba(132,205,235,.48)}.sankey-detail .drill-kicker{color:#7bddff;font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}.sankey-detail h3{font-size:32px;letter-spacing:.01em}.sankey-detail-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;overflow:auto}.sankey-detail-card{border:1px solid rgba(132,205,235,.22);border-radius:12px;background:linear-gradient(145deg,rgba(20,43,62,.72),rgba(7,20,34,.66));padding:13px 15px;color:#d8ebf7;font-size:15px;line-height:1.55}.sankey-detail-card strong{display:block;color:#fff;font-size:17px;margin-bottom:4px}.sankey-detail-card span{color:#9fb9ca;font-weight:700}.sankey-detail-card.full{grid-column:1/-1}@media(max-width:760px){.sankey-detail-body{grid-template-columns:1fr}.sankey-detail{width:calc(100% - 28px);min-height:calc(100% - 36px)}.sankey-detail h3{font-size:24px}}
+.sankey-wrap.drill-open .sankey-svg{opacity:0;filter:blur(4px) saturate(.45);transform:translateX(-80px) scale(.9);pointer-events:none}.sankey-wrap.drill-open:after{background:linear-gradient(110deg,rgba(2,10,17,.82),rgba(12,31,47,.66));backdrop-filter:blur(4px)}.sankey-detail{left:0;top:0;width:100%;height:100%;min-height:0;max-height:none;border:0;border-radius:14px;padding:34px 38px;background:linear-gradient(145deg,rgba(9,25,41,.99),rgba(3,12,22,.98));transform:translateX(10%) scale(.96);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}.sankey-detail.open{transform:translateX(0) scale(1)}.sankey-detail button{align-self:flex-start;background:rgba(98,214,239,.13);border-color:rgba(132,205,235,.38);box-shadow:0 10px 22px rgba(0,0,0,.24)}.sankey-detail-body{max-height:none;flex:1;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start}.sankey-detail-card{background:linear-gradient(145deg,rgba(21,48,70,.88),rgba(10,27,43,.78));border-color:rgba(132,205,235,.28)}@media(max-width:980px){.sankey-detail-body{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.sankey-detail{padding:24px 20px}.sankey-detail-body{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -543,7 +544,7 @@ let page='general';
 let charts={};
 if(window.Chart){
  Chart.register({id:'selectedLineGlow',beforeDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow){chart.ctx.save();chart.ctx.shadowColor=ds.borderColor||'#62d6ef';chart.ctx.shadowBlur=16;chart.ctx.shadowOffsetX=0;chart.ctx.shadowOffsetY=0;}},afterDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow) chart.ctx.restore();}});
- Chart.register({id:'referenceLines',afterDatasetsDraw(chart,args,opts){const refs=opts||{};const xScale=chart.scales&&chart.scales.x,yScale=chart.scales&&chart.scales.y;if(!xScale||!yScale) return;const {ctx,chartArea}=chart;ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=1.6;ctx.strokeStyle=refs.color||'rgba(255,255,255,.72)';ctx.fillStyle=refs.color||'rgba(255,255,255,.88)';ctx.font='700 12px Microsoft JhengHei, Noto Sans TC, Arial';if(typeof refs.x==='number'&&Number.isFinite(refs.x)){const x=xScale.getPixelForValue(refs.x);ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(refs.xLabel||'Reference X',Math.min(x+8,chartArea.right-118),chartArea.top+8);ctx.setLineDash([7,6]);}if(typeof refs.y==='number'&&Number.isFinite(refs.y)){const y=yScale.getPixelForValue(refs.y);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(refs.yLabel||'Reference Y',chartArea.right-8,Math.max(y-8,chartArea.top+14));}ctx.restore();}});
+ Chart.register({id:'referenceLines',afterDatasetsDraw(chart,args,opts){const refs=opts||{};const xScale=chart.scales&&chart.scales.x,yScale=chart.scales&&chart.scales.y;if(!xScale||!yScale) return;const {ctx,chartArea}=chart;const lineColor=refs.color||'rgba(255,255,255,.58)';const labelColor=refs.labelColor||'rgba(255,255,255,.48)';ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=1.5;ctx.strokeStyle=lineColor;ctx.fillStyle=labelColor;ctx.font='700 12px Microsoft JhengHei, Noto Sans TC, Arial';if(typeof refs.x==='number'&&Number.isFinite(refs.x)){const x=xScale.getPixelForValue(refs.x);ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(refs.xLabel||'Reference X',Math.min(x+8,chartArea.right-118),chartArea.top+8);ctx.setLineDash([7,6]);}if(typeof refs.y==='number'&&Number.isFinite(refs.y)){const y=yScale.getPixelForValue(refs.y);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(refs.yLabel||'Reference Y',chartArea.right-8,Math.max(y-8,chartArea.top+14));}ctx.restore();}});
  Chart.defaults.font.family='Microsoft JhengHei, Noto Sans TC, Arial, sans-serif';
  Chart.defaults.font.size=14;
  Chart.defaults.color='#b8d0df';
@@ -563,6 +564,12 @@ if(window.Chart){
      item.strokeStyle='#f7fbff';
      item.lineWidth=3;
      item.borderRadius=3;
+    }
+    if(ds&&ds.referenceAverage){
+     item.fillStyle='rgba(255,255,255,0)';
+     item.strokeStyle='rgba(255,255,255,.70)';
+     item.lineWidth=2;
+     item.borderRadius=1;
     }
    });
    return labels;
@@ -846,7 +853,7 @@ function initWordCloudMotion(){
    });
    return best;
  };
- const isForegroundTarget=target=>target&&target.closest&&target.closest('header,nav,main,.panel,.control,button,select,a,canvas,table');
+ const isBlockingTarget=target=>target&&target.closest&&target.closest('button,select,input,textarea,a,canvas,table,.metric-popover,.sankey-detail');
  measure();
  const renderMotion=()=>{
    currentX+=(targetX-currentX)*0.08;
@@ -894,9 +901,9 @@ function initWordCloudMotion(){
    queue();
  },{passive:true});
  window.addEventListener('pointerdown',event=>{
-   if(isForegroundTarget(event.target)) return;
    const hit=hitWord(event.clientX,event.clientY);
-   if(!hit) return;
+   if(!hit||isBlockingTarget(event.target)) return;
+   event.preventDefault();
    dragging={index:hit.index,startX:event.clientX,startY:event.clientY,baseX:dragOffsets[hit.index].x,baseY:dragOffsets[hit.index].y};
    hit.word.classList.add('word-lit');
    queue();
@@ -1001,7 +1008,7 @@ function renderGeneral(){
  });
  const averageData=annualAverageSeries(metric,trendYears);
  if(averageData.some(v=>typeof v==='number'&&Number.isFinite(v))){
-  datasets.push({label:'六校平均',borderColor:'#f3c969',backgroundColor:'#f3c969',borderDash:[8,6],tension:.25,spanGaps:true,borderWidth:3,pointRadius:0,pointHoverRadius:4,order:2,data:averageData});
+  datasets.push({label:'六校平均',borderColor:'rgba(255,255,255,.70)',backgroundColor:'rgba(255,255,255,0)',borderDash:[7,6],tension:.25,spanGaps:true,borderWidth:2.4,pointRadius:0,pointHoverRadius:3,pointStyle:'line',order:2,referenceAverage:true,data:averageData});
  }
  destroy('trend');
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
@@ -1028,7 +1035,7 @@ function renderGeneral(){
  const xBounds=scatterXValues.length?axisPad(scatterXValues):null;
  const yBounds=scatterYValues.length?axisPad(scatterYValues):null;
  charts.scatter=new Chart(scatterChart,{type:'bubble',data:{datasets:scat},
- options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} X=${fmt(scatterRef.x)}`,yLabel:`${scatterRef.label} Y=${fmt(scatterRef.y)}`,color:'rgba(243,201,105,.88)'}:{},tooltip:{callbacks:{
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} X`,yLabel:`${scatterRef.label} Y`,color:'rgba(255,255,255,.58)',labelColor:'rgba(255,255,255,.48)'}:{},tooltip:{callbacks:{
  label:(ctx)=>{const p=ctx.raw;return `${ctx.dataset.label}｜每師平均 ${Number(p.x).toFixed(2)}｜FWCI ${Number(p.y).toFixed(2)}｜Scopus 發表數 ${Number(p.publicationCount).toLocaleString()}`;}
  }}},
  scales:{x:{min:xBounds?xBounds.min:undefined,max:xBounds?xBounds.max:undefined,title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
@@ -1102,7 +1109,7 @@ function sankeyDetailHtml(body){
  if(!lines.length) return '<div class="sankey-detail-card full">此節點沒有可顯示的明細。</div>';
  const intro=lines.length>1?lines[0]:null;
  const items=intro?lines.slice(1):lines;
- const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>點選項目後顯示的 deeper data 明細</span></div>`:'';
+ const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>依目前篩選條件展開的明細資料</span></div>`:'';
  const cards=items.map(line=>{
   const parts=line.split('｜').map(x=>x.trim()).filter(Boolean);
   const title=parts.shift()||line;
@@ -1233,6 +1240,7 @@ function renderCollabSankey(data,school,label,period){
  drawNode(allNodes,rootX,top,rootW,area,'#1d6e8a',contextText,String(period),18,contextText,`${contextText}\n年度：${period}`);
  groups.forEach((g,i)=>{
   const group=svgEl('g',{class:'sankey-flow-group','data-group':g.label});
+  attachSankeyClick(group,g.label,g.detail);
   const groupLinks=svgEl('g');
   const groupNodes=svgEl('g');
   group.appendChild(groupLinks);
