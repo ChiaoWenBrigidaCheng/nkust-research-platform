@@ -43,10 +43,66 @@ header,main,.footer{position:relative;z-index:1}
 .word-cloud .w20{left:2vw;top:20%}.word-cloud .w21{right:2vw;top:42%}.word-cloud .w22{left:3vw;top:57%}.word-cloud .w23{right:3vw;top:66%}.word-cloud .w24{left:4vw;top:92%}.word-cloud .w25{left:2vw;top:34%}.word-cloud .w26{right:2vw;top:30%}.word-cloud .w29{left:4vw;top:75%}.word-cloud .w30{right:4vw;top:84%}.word-cloud .w33{left:2vw;top:49%}.word-cloud .w34{right:2vw;top:57%}.word-cloud .w35{left:7vw;top:86%}.word-cloud .w36{right:7vw;top:38%}
 @media(min-width:1100px){.word-cloud span{max-width:18vw;overflow:hidden;text-overflow:ellipsis}.word-cloud .hero{left:1vw}.word-cloud .w1{right:1vw}}
 
+
+/* Expanded persistent background word cloud */
+.word-cloud{position:fixed;inset:150px 0 18px 0;overflow:hidden;transform:translate3d(0,var(--sy,0px),0)}
+.word-cloud:before{background:linear-gradient(90deg,transparent 0 15%,rgba(7,15,25,.18) 24%,rgba(7,15,25,.84) 38%,rgba(7,15,25,.94) 50%,rgba(7,15,25,.84) 62%,rgba(7,15,25,.18) 76%,transparent 85%)}
+.word-cloud .w37{left:1.5vw;top:14%;font-size:clamp(12px,1.3vw,21px);color:#64d8ef;--dur:30s;--x:10px;--y:-7px;--op:.76}
+.word-cloud .w38{right:1.5vw;top:17%;font-size:clamp(12px,1.35vw,22px);color:#b69bff;--dur:33s;--x:-9px;--y:8px;--op:.76}
+.word-cloud .w39{left:2vw;top:28%;font-size:clamp(12px,1.25vw,20px);color:#ffbd68;--dur:27s;--op:.74}
+.word-cloud .w40{right:2vw;top:31%;font-size:clamp(12px,1.25vw,20px);color:#6ed7a5;--dur:31s;--op:.74}
+.word-cloud .w41{left:1.5vw;top:43%;font-size:clamp(12px,1.2vw,19px);color:#ff8d75;--dur:29s;--op:.72}
+.word-cloud .w42{right:1.5vw;top:46%;font-size:clamp(12px,1.2vw,19px);color:#7fd8ff;--dur:34s;--op:.72}
+.word-cloud .w43{left:2vw;top:59%;font-size:clamp(12px,1.3vw,20px);color:#a8e65c;--dur:32s;--op:.74}
+.word-cloud .w44{right:2vw;top:61%;font-size:clamp(12px,1.3vw,20px);color:#ef88ff;--dur:28s;--op:.74}
+.word-cloud .w45{left:1.5vw;top:73%;font-size:clamp(12px,1.2vw,19px);color:#62e0d0;--dur:35s;--op:.72}
+.word-cloud .w46{right:1.5vw;top:75%;font-size:clamp(12px,1.2vw,19px);color:#ffc960;--dur:30s;--op:.72}
+.word-cloud .w47{left:2vw;top:87%;font-size:clamp(12px,1.25vw,20px);color:#91a7ff;--dur:29s;--op:.74}
+.word-cloud .w48{right:2vw;top:88%;font-size:clamp(12px,1.25vw,20px);color:#ff8a68;--dur:33s;--op:.74}
+.word-cloud .w49{left:13vw;top:8%;font-size:clamp(11px,1.1vw,18px);color:#76dcb0;--dur:31s;--op:.65}
+.word-cloud .w50{right:13vw;top:10%;font-size:clamp(11px,1.1vw,18px);color:#9ddcff;--dur:34s;--op:.65}
+.word-cloud .w51{left:12vw;top:51%;font-size:clamp(11px,1.1vw,18px);color:#f2ce66;--dur:28s;--op:.64}
+.word-cloud .w52{right:12vw;top:54%;font-size:clamp(11px,1.1vw,18px);color:#cb99ff;--dur:32s;--op:.64}
+.word-cloud .w53{left:12vw;top:94%;font-size:clamp(11px,1.05vw,17px);color:#55d8c7;--dur:36s;--op:.64}
+.word-cloud .w54{right:12vw;top:95%;font-size:clamp(11px,1.05vw,17px);color:#ffad63;--dur:31s;--op:.64}
+.word-cloud .w55{left:24vw;top:18%;font-size:clamp(10px,1vw,16px);color:#9ce270;--dur:33s;--op:.52}
+.word-cloud .w56{right:24vw;top:82%;font-size:clamp(10px,1vw,16px);color:#83d5ff;--dur:30s;--op:.52}
+@media(max-width:900px){.word-cloud{inset:190px 0 14px 0}.word-cloud .w49,.word-cloud .w50,.word-cloud .w51,.word-cloud .w52,.word-cloud .w53,.word-cloud .w54,.word-cloud .w55,.word-cloud .w56{display:none}}
+@media(max-width:620px){.word-cloud .w39,.word-cloud .w40,.word-cloud .w43,.word-cloud .w44,.word-cloud .w47,.word-cloud .w48{display:none}}
+
+
+.series-filter-title{
+  margin:4px 0 8px;
+  color:#d9edf7;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+
 </style>
 </head>
 <body>
-<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span></div>
+<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span>
+<span class="w37">research excellence</span>
+<span class="w38">institutional research</span>
+<span class="w39">academic impact</span>
+<span class="w40">citation network</span>
+<span class="w41">industry partnership</span>
+<span class="w42">global collaboration</span>
+<span class="w43">research governance</span>
+<span class="w44">data intelligence</span>
+<span class="w45">scientific output</span>
+<span class="w46">benchmark analysis</span>
+<span class="w47">research strategy</span>
+<span class="w48">talent development</span>
+<span class="w49">interdisciplinary</span>
+<span class="w50">research portfolio</span>
+<span class="w51">academic reputation</span>
+<span class="w52">knowledge transfer</span>
+<span class="w53">innovation ecosystem</span>
+<span class="w54">international network</span>
+<span class="w55">sustainable research</span>
+<span class="w56">evidence-based policy</span></div>
 <header><h1>高雄科技大學研究量能分析平台</h1><p id="platformSubtitle">2018–2025 年研究量能、研究影響力與校際標竿分析</p></header>
 
 <nav>
@@ -72,17 +128,17 @@ header,main,.footer{position:relative;z-index:1}
 
   <section id="general" class="section active">
     <div class="grid summary-first">
-      <div class="panel"><h2>主要學校年度摘要</h2><div class="sub">與前一年度比較；缺值會顯示為「目前缺值」，不會當作 0 計算</div><div id="summaryBox"></div></div>
+      <div class="panel"><h2 id="generalSummaryTitle">主要學校年度摘要</h2><div class="sub">與前一年度比較；缺值會顯示為「目前缺值」，不會當作 0 計算</div><div id="summaryBox"></div></div>
     </div>
     <div class="grid summary-first">
-      <div class="panel"><h2>研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數；參考線優先使用台灣總體資料</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
+      <div class="panel"><h2 id="generalScatterTitle">研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數；參考線優先使用台灣總體資料</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
     </div>
     <div class="grid general-compare-row">
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
-      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值。請使用下方篩選器選擇要顯示的學校。</div><div id="trendSeriesFilters" class="series-filter" aria-label="六校年度趨勢顯示篩選"></div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
+      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值。請使用下方篩選器選擇要顯示的學校。</div><div id="trendSeriesFilters" class="series-filter" aria-label="六校年度趨勢篩選資料"></div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div id="collabDrillActions" class="sankey-drill-actions" aria-label="合作分析明細捷徑"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構桑基圖以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。各類別的流帶寬度採類別內相對尺度呈現，適合比較同類項目強弱；不同類別因指標單位不同，不直接比較寬度。點擊節點或流帶可查看 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total。">合作研究結構桑基圖</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
-    <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。將滑鼠移至圖中的節點或流帶可辨識可點擊項目；點擊後顯示 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total 等細部資料。">合作研究結構</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
+    <div class="panel"><h2 id="generalTableTitle">六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
   <section id="the" class="section">
@@ -93,7 +149,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2>THE 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化</div><div class="chart-wrap"><canvas id="theTrendChart"></canvas></div></div>
       <div class="panel"><h2 id="theRankTitle">THE 當年度比較</h2><div class="sub">選定學科領域之 Scopus 發表數排序</div><div class="sort-bar"><div class="control"><label>排序</label><select id="theRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="theRankChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>THE 學科資料表</h2><div class="table-wrap"><table id="theTable"></table></div></div>
+    <div class="panel"><h2 id="theTableTitle">THE 學科資料表</h2><div class="table-wrap"><table id="theTable"></table></div></div>
   </section>
 
   <section id="qs" class="section">
@@ -104,7 +160,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2>QS 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化</div><div class="chart-wrap"><canvas id="qsTrendChart"></canvas></div></div>
       <div class="panel"><h2 id="qsRankTitle">QS 當年度比較</h2><div class="sub">選定學科領域之 Scopus 發表數排序</div><div class="sort-bar"><div class="control"><label>排序</label><select id="qsRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="qsRankChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>QS 學科資料表</h2><div class="table-wrap"><table id="qsTable"></table></div></div>
+    <div class="panel"><h2 id="qsTableTitle">QS 學科資料表</h2><div class="table-wrap"><table id="qsTable"></table></div></div>
   </section>
 
 
@@ -892,8 +948,8 @@ function initWordCloudMotion(){
  };
  const queue=()=>{if(!raf) raf=requestAnimationFrame(renderMotion);};
  const syncScroll=()=>{
-   const limit=Math.min(window.innerHeight*.18,180);
-   targetScroll=Math.max(-limit,Math.min(limit,-window.scrollY*.08));
+   // Keep the background visible while scrolling; only apply a subtle cyclical parallax.
+   targetScroll=Math.sin(window.scrollY/620)*18;
    queue();
  };
  syncScroll();
@@ -1002,7 +1058,11 @@ function renderGeneral(){
  const trendYears=datasetYears(DATA.general);
  const row=record(DATA.general,school,year);
  const rankTitle=document.getElementById('generalRankTitle');
+ const summaryTitle=document.getElementById('generalSummaryTitle');
+ const scatterTitle=document.getElementById('generalScatterTitle');
  if(rankTitle) rankTitle.textContent=`當年度六校比較（${year}）`;
+ if(summaryTitle) summaryTitle.textContent=`主要學校年度摘要（${year}）`;
+ if(scatterTitle) scatterTitle.textContent=`研究產出 × 研究影響力（${year}）`;
  setNotice(!row?`${school} ${year} 年 General 資料尚未補齊。`:'');
 
 
@@ -1062,7 +1122,8 @@ function renderTrendSeriesFilters(datasets){
  if(!host) return;
  const rows=datasets||[];
  const visibleCount=rows.filter(ds=>!trendHiddenLabels.has(ds.label)).length;
- host.innerHTML=`<span class="series-filter-label">顯示系列</span><details class="series-filter-menu"><summary>已顯示 ${visibleCount} / ${rows.length} 個系列</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
+ const summaryText=visibleCount===rows.length?'全部顯示':`已選 ${visibleCount} 個系列`;
+ host.innerHTML=`<span class="series-filter-label">篩選資料</span><details class="series-filter-menu"><summary>${summaryText}</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
   const hidden=trendHiddenLabels.has(ds.label);
   const color=ds.referenceAverage?'rgba(255,255,255,.72)':ds.borderColor;
   return `<label class="series-filter-option ${hidden?'':'active'}" style="--series-color:${color}"><input type="checkbox" value="${escapeHtml(ds.label)}" ${hidden?'':'checked'}><span class="swatch"></span><span>${escapeHtml(ds.label)}</span></label>`;
@@ -1199,10 +1260,6 @@ function renderCollabSankey(data,school,label,period){
  }
  host.dataset.school=school;
  host.dataset.type=label;
- const drillActions=document.getElementById('collabDrillActions');
- if(drillActions){
-  drillActions.innerHTML=groups.map((g,i)=>`<button type="button" class="sankey-drill-btn" data-group-index="${i}">查看 ${escapeHtml(g.label)} 明細</button>`).join('');
- }
  const width=1280, height=760;
  const svg=svgEl('svg',{viewBox:`0 0 ${width} ${height}`,role:'img','aria-label':`${school} ${label} ${period} 合作研究結構桑基圖`,class:'sankey-svg'});
  const defs=svgEl('defs');
@@ -1270,6 +1327,11 @@ function renderCollabSankey(data,school,label,period){
  const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30,detailTitleText='',detailText='')=>{
   const g=svgEl('g',{class:'sankey-node'});
   attachSankeyClick(g,detailTitleText||label,detailText);
+  if(detailText){
+   const hoverTitle=svgEl('title');
+   hoverTitle.textContent=`${label}｜點擊查看細部資料`;
+   g.appendChild(hoverTitle);
+  }
   g.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:7,fill:color}));
   g.appendChild(svgEl('rect',{x:x-5,y:y-5,width:w+10,height:h+10,rx:10,class:'sankey-node-hit'}));
   parent.appendChild(g);
@@ -1281,6 +1343,11 @@ function renderCollabSankey(data,school,label,period){
   const c=Math.max(90,(x1-x0)*.44);
   const path=svgEl('path',{d:`M ${x0} ${y0a} C ${x0+c} ${y0a}, ${x1-c} ${y1a}, ${x1} ${y1a} L ${x1} ${y1b} C ${x1-c} ${y1b}, ${x0+c} ${y0b}, ${x0} ${y0b} Z`,fill:color,class:'sankey-link'});
   attachSankeyClick(path,title,detailText);
+  if(detailText){
+   const hoverTitle=svgEl('title');
+   hoverTitle.textContent=`${title}｜點擊查看細部資料`;
+   path.appendChild(hoverTitle);
+  }
   parent.appendChild(path);
  };
  const contextText=`${school}｜${label}`;
@@ -1317,15 +1384,6 @@ function renderCollabSankey(data,school,label,period){
  svg.appendChild(allNodes);
  host.appendChild(svg);
  host.appendChild(detailPanel);
- if(drillActions){
-  drillActions.querySelectorAll('[data-group-index]').forEach(btn=>{
-   btn.addEventListener('click',()=>{
-    const idx=Number(btn.dataset.groupIndex);
-    const group=groups[idx];
-    if(group) openSankeyDetail(btn,group.label,group.detail);
-   });
-  });
- }
 }
 function collabKpiRows(data,school,type,period){
  if(period&&period!=='2018-2025'){
@@ -1355,6 +1413,8 @@ function renderCollaboration(school,selectedYear){
  collabKpis.innerHTML=kpis.map(([k,v])=>`<div class="kpi"><div class="label">${k}</div><div class="value">${fmt(v)}</div><div class="meta">${school}｜${label}｜${period}</div></div>`).join('');
  renderCollabSankey(data,school,label,period);
 }function renderGeneralTable(year){
+ const tableTitle=document.getElementById('generalTableTitle');
+ if(tableTitle) tableTitle.textContent=`六校研究量能資料表（${year}）`;
  const cols=['學校','Scopus發表數','Scopus每師平均','h5-index','FWCI','國際合著論文比 %','國際合著論文影響力','產學合著論文比 %','產學合著論文影響力','高被引論文占比 %','高被引論文FWCI','高品質期刊論文占比 %','高品質期刊論文FWCI'];
  const rows=DATA.universities.map(u=>record(DATA.general,u,year)||{'學校':u});
  generalTable.innerHTML=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`+
@@ -1368,7 +1428,9 @@ function renderSubject(type){
  const years=datasetYears(ds);
  const row=record(ds,school,year,field);
  const rankTitle=document.getElementById(type+'RankTitle');
+ const tableTitle=document.getElementById(type+'TableTitle');
  if(rankTitle) rankTitle.textContent=`${type.toUpperCase()} 當年度（${year}）比較`;
+ if(tableTitle) tableTitle.textContent=`${type.toUpperCase()} 學科資料表（${year}）`;
  setNotice(!row?`${type.toUpperCase()}：${school} ${year} 年「${field}」資料尚未補齊。`:'');
 
  const kpis=[['Scopus 發表數','Scopus發表數'],['FWCI','FWCI'],['國際合著比','國際合著論文比'],['國際合作影響力','國際合著論文影響力'],
@@ -1495,3 +1557,7 @@ init();
 
 
 
+
+<!-- Updated interaction:
+     Trend filter label is now "篩選資料"; the closed default state reads "全部顯示".
+     Sankey details are accessed directly by clicking nodes or ribbons. -->
