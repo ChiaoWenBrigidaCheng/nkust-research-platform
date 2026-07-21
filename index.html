@@ -421,6 +421,18 @@ header,main,.footer{position:relative;z-index:1}
 }
 </style>
 
+
+<style>
+/* All school labels use interactive multi-select filters */
+.series-filter-menu[open] .series-filter-panel{z-index:40}
+@media(max-width:620px){
+  .series-filter-panel{
+    max-height:min(62vh,430px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
+</style>
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
@@ -472,7 +484,7 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2 id="generalSummaryTitle">主要學校年度摘要</h2><div class="sub">與前一年度比較；缺值會顯示為「目前缺值」，不會當作 0 計算</div><div id="summaryBox"></div></div>
     </div>
     <div class="grid summary-first">
-      <div class="panel"><h2 id="generalScatterTitle">研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數；參考線優先使用台灣總體資料</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
+      <div class="panel"><h2 id="generalScatterTitle">研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數；參考線優先使用台灣總體資料。請使用篩選器選擇要顯示的學校。</div><div id="scatterSchoolFilters" class="series-filter" aria-label="研究產出與研究影響力學校篩選器"></div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
     </div>
     <div class="grid general-compare-row">
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
@@ -493,7 +505,7 @@ header,main,.footer{position:relative;z-index:1}
     <div id="theKpis" class="kpis"></div>
     <div id="theControlsHost" class="subject-controls-host"></div>
     <div class="grid">
-      <div class="panel"><h2>THE 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化</div><div class="chart-wrap"><canvas id="theTrendChart"></canvas></div></div>
+      <div class="panel"><h2>THE 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化。請使用篩選器選擇要顯示的學校。</div><div id="theTrendSchoolFilters" class="series-filter" aria-label="THE學科年度趨勢學校篩選器"></div><div class="chart-wrap"><canvas id="theTrendChart"></canvas></div></div>
       <div class="panel"><h2 id="theRankTitle">THE 當年度比較</h2><div class="sub">選定學科領域之 Scopus 發表數排序</div><div class="sort-bar"><div class="control"><label>排序</label><select id="theRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="theRankChart"></canvas></div></div>
     </div>
     <div class="panel"><h2 id="theTableTitle">THE 學科資料表</h2><div class="table-wrap"><table id="theTable"></table></div></div>
@@ -504,7 +516,7 @@ header,main,.footer{position:relative;z-index:1}
     <div id="qsKpis" class="kpis"></div>
     <div id="qsControlsHost" class="subject-controls-host"></div>
     <div class="grid">
-      <div class="panel"><h2>QS 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化</div><div class="chart-wrap"><canvas id="qsTrendChart"></canvas></div></div>
+      <div class="panel"><h2>QS 學科年度趨勢</h2><div class="sub">六校於選定領域與指標的年度變化。請使用篩選器選擇要顯示的學校。</div><div id="qsTrendSchoolFilters" class="series-filter" aria-label="QS學科年度趨勢學校篩選器"></div><div class="chart-wrap"><canvas id="qsTrendChart"></canvas></div></div>
       <div class="panel"><h2 id="qsRankTitle">QS 當年度比較</h2><div class="sub">選定學科領域之 Scopus 發表數排序</div><div class="sort-bar"><div class="control"><label>排序</label><select id="qsRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="qsRankChart"></canvas></div></div>
     </div>
     <div class="panel"><h2 id="qsTableTitle">QS 學科資料表</h2><div class="table-wrap"><table id="qsTable"></table></div></div>
@@ -968,6 +980,7 @@ let DATA_LAST_UPDATED = formatFileUpdated(document.lastModified);
 let page='general';
 let charts={};
 const trendHiddenLabels=new Set();
+const schoolChartHidden={scatter:new Set(),theTrend:new Set(),qsTrend:new Set()};
 if(window.Chart){
  Chart.register({id:'selectedLineGlow',beforeDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow){chart.ctx.save();chart.ctx.shadowColor=ds.borderColor||'#62d6ef';chart.ctx.shadowBlur=16;chart.ctx.shadowOffsetX=0;chart.ctx.shadowOffsetY=0;}},afterDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow) chart.ctx.restore();}});
  Chart.register({id:'referenceLines',afterDatasetsDraw(chart,args,opts){const refs=opts||{};const xScale=chart.scales&&chart.scales.x,yScale=chart.scales&&chart.scales.y;if(!xScale||!yScale) return;const {ctx,chartArea}=chart;const lineColor=refs.color||'rgba(255,255,255,.58)';const labelColor=refs.labelColor||'rgba(255,255,255,.48)';ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=1.5;ctx.strokeStyle=lineColor;ctx.fillStyle=labelColor;ctx.font='700 12px Microsoft JhengHei, Noto Sans TC, Arial';if(typeof refs.x==='number'&&Number.isFinite(refs.x)){const x=xScale.getPixelForValue(refs.x);ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(refs.xLabel||'Reference X',Math.min(x+8,chartArea.right-118),chartArea.top+8);ctx.setLineDash([7,6]);}if(typeof refs.y==='number'&&Number.isFinite(refs.y)){const y=yScale.getPixelForValue(refs.y);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(refs.yLabel||'Reference Y',chartArea.right-8,Math.max(y-8,chartArea.top+14));}ctx.restore();}});
@@ -1489,18 +1502,69 @@ function renderGeneral(){
  const axisPad=(values,ratio=.1)=>{const min=Math.min(...values),max=Math.max(...values),range=max-min;return {min:Math.max(0,min-(range?range*ratio:Math.max(Math.abs(max)*.08,.2))),max:max+(range?range*ratio:Math.max(Math.abs(max)*.08,.2))};};
  const xBounds=scatterXValues.length?axisPad(scatterXValues):null;
  const yBounds=scatterYValues.length?axisPad(scatterYValues):null;
+ scat.forEach(ds=>{ds.hidden=schoolChartHidden.scatter.has(ds.label);});
  charts.scatter=new Chart(scatterChart,{type:'bubble',data:{datasets:scat},
- options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} ${fmt(scatterRef.x)}`,yLabel:`${scatterRef.label} ${fmt(scatterRef.y)}`,color:'rgba(255,255,255,.58)',labelColor:'rgba(255,255,255,.48)'}:{},tooltip:{callbacks:{
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} ${fmt(scatterRef.x)}`,yLabel:`${scatterRef.label} ${fmt(scatterRef.y)}`,color:'rgba(255,255,255,.58)',labelColor:'rgba(255,255,255,.48)'}:{},tooltip:{callbacks:{
  label:(ctx)=>{const p=ctx.raw;return `${ctx.dataset.label}｜每師平均 ${Number(p.x).toFixed(2)}｜FWCI ${Number(p.y).toFixed(2)}｜Scopus 發表數 ${Number(p.publicationCount).toLocaleString()}`;}
  }}},
  scales:{x:{min:xBounds?xBounds.min:undefined,max:xBounds?xBounds.max:undefined,title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
  y:{min:yBounds?yBounds.min:undefined,max:yBounds?yBounds.max:undefined,title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}}}}});
+ renderSchoolChartFilter('scatterSchoolFilters','scatter',scat);
 
  renderCollaboration(school,year);
  renderGeneralTable(year);
  const previousYear=Number.isFinite(Number(year))?Number(year)-1:null;
  renderSummary(row,previousYear!==null?record(DATA.general,school,previousYear):null,school,year);
 }
+
+function renderSchoolChartFilter(hostId,chartKey,datasets){
+ const host=document.getElementById(hostId);
+ if(!host) return;
+ const rows=(datasets||[]).filter(ds=>ds&&ds.label);
+ const hidden=schoolChartHidden[chartKey]||(schoolChartHidden[chartKey]=new Set());
+ const summaryText=()=>{
+  const visibleCount=rows.filter(ds=>!hidden.has(ds.label)).length;
+  return visibleCount===rows.length?'全部顯示':visibleCount===0?'全部隱藏':`已選 ${visibleCount} 所`;
+ };
+ host.innerHTML=`<span class="series-filter-label">篩選器</span><details class="series-filter-menu"><summary>${summaryText()}</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
+  const isHidden=hidden.has(ds.label);
+  const rawColor=Array.isArray(ds.backgroundColor)?ds.backgroundColor[0]:(ds.borderColor||ds.backgroundColor||'rgba(255,255,255,.72)');
+  return `<label class="series-filter-option ${isHidden?'':'active'}" style="--series-color:${rawColor}"><input type="checkbox" value="${escapeHtml(ds.label)}" ${isHidden?'':'checked'}><span class="swatch"></span><span>${escapeHtml(ds.label)}</span></label>`;
+ }).join('')}</div></div></details>`;
+ const summary=host.querySelector('summary');
+ const applyVisibility=()=>{
+  const chart=charts[chartKey];
+  if(chart){
+   chart.data.datasets.forEach(ds=>{ds.hidden=hidden.has(ds.label);});
+   chart.update();
+  }
+  host.querySelectorAll('.series-filter-option').forEach(option=>{
+   const input=option.querySelector('input');
+   option.classList.toggle('active',input.checked);
+  });
+  summary.textContent=summaryText();
+ };
+ host.querySelectorAll('input').forEach(input=>{
+  input.addEventListener('change',()=>{
+   if(input.checked) hidden.delete(input.value);
+   else hidden.add(input.value);
+   applyVisibility();
+  });
+ });
+ host.querySelector('[data-action="all"]').addEventListener('click',event=>{
+  event.preventDefault();
+  rows.forEach(ds=>hidden.delete(ds.label));
+  host.querySelectorAll('input').forEach(input=>input.checked=true);
+  applyVisibility();
+ });
+ host.querySelector('[data-action="none"]').addEventListener('click',event=>{
+  event.preventDefault();
+  rows.forEach(ds=>hidden.add(ds.label));
+  host.querySelectorAll('input').forEach(input=>input.checked=false);
+  applyVisibility();
+ });
+}
+
 function renderTrendSeriesFilters(datasets){
  const host=document.getElementById('trendSeriesFilters');
  if(!host) return;
@@ -1950,8 +2014,11 @@ function renderSubject(type){
   };
  });
  const trendId=type+'Trend',rankId=type+'Rank';
+ const hiddenSet=schoolChartHidden[trendId]||(schoolChartHidden[trendId]=new Set());
+ sets.forEach(ds=>{ds.hidden=hiddenSet.has(ds.label);});
  destroy(trendId);
- charts[trendId]=new Chart(document.getElementById(type+'TrendChart'),{type:'line',data:{labels:years,datasets:sets},options:chartOpts(subjectMetrics[metric],true)});
+ charts[trendId]=new Chart(document.getElementById(type+'TrendChart'),{type:'line',data:{labels:years,datasets:sets},options:chartOpts(subjectMetrics[metric],false)});
+ renderSchoolChartFilter(type+'TrendSchoolFilters',trendId,sets);
  const rankMetric='Scopus發表數';
  const ranking=sortItems(schools.map((u,i)=>{const r=record(ds,u,year,field);return {u,v:r&&typeof r[rankMetric]==='number'?r[rankMetric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),document.getElementById(type+'RankSort').value,'v');
  destroy(rankId);
