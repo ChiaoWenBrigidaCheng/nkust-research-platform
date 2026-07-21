@@ -524,6 +524,11 @@ const SCHOOL_COLORS = {
 const schoolColor = school => SCHOOL_COLORS[school] || '#7F93A5';
 const selectedStroke = (item,selected) => item===selected ? '#f7fbff' : 'rgba(255,255,255,0)';
 const selectedStrokeWidth = (item,selected,strong=3) => item===selected ? strong : 0;
+const currentLegendSchool = () => {
+ const sdgEl=document.getElementById('sdgSchoolSelect');
+ const schoolEl=document.getElementById('schoolSelect');
+ return page==='sdg'&&sdgEl&&sdgEl.value ? sdgEl.value : (schoolEl&&schoolEl.value ? schoolEl.value : '高科大');
+};
 function formatFileUpdated(value){
  const d=new Date(value);
  if(Number.isNaN(d.getTime())) return 'Auto';
@@ -543,6 +548,20 @@ if(window.Chart){
  }
  if(Chart.defaults.plugins&&Chart.defaults.plugins.legend&&Chart.defaults.plugins.legend.labels){
   Chart.defaults.plugins.legend.labels.font={size:14,weight:'600'};
+  const defaultGenerateLegendLabels=Chart.defaults.plugins.legend.labels.generateLabels;
+  Chart.defaults.plugins.legend.labels.generateLabels=(chart)=>{
+   const labels=defaultGenerateLegendLabels?defaultGenerateLegendLabels(chart):[];
+   const selected=currentLegendSchool();
+   labels.forEach(item=>{
+    const ds=chart.data&&chart.data.datasets?chart.data.datasets[item.datasetIndex]:null;
+    if((ds&&ds.selectedGlow)||item.text===selected||(ds&&ds.label===selected)){
+     item.strokeStyle='#f7fbff';
+     item.lineWidth=3;
+     item.borderRadius=3;
+    }
+   });
+   return labels;
+  };
  }
  if(Chart.defaults.scale&&Chart.defaults.scale.ticks) Chart.defaults.scale.ticks.font={size:14};
  if(Chart.defaults.scale&&Chart.defaults.scale.title) Chart.defaults.scale.title.font={size:14,weight:'700'};
