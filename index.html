@@ -118,6 +118,38 @@ header,main,.footer{position:relative;z-index:1}
 }
 </style>
 
+
+<style>
+#trendChart{cursor:crosshair}
+</style>
+
+
+<style>
+.sankey-back-btn{
+  width:42px!important;height:42px!important;min-width:42px!important;
+  padding:0!important;border-radius:50%!important;
+  display:inline-grid!important;place-items:center!important;
+  font-size:23px!important;font-weight:700!important;line-height:1!important;
+  cursor:pointer;
+}
+.sankey-back-btn:hover{transform:translateX(-2px)}
+.sankey-node-hover{cursor:help}
+.sankey-node-hover:hover > rect:not(.sankey-node-hit){
+  stroke:#f3c969;stroke-width:2.3px;
+  filter:drop-shadow(0 0 13px rgba(243,201,105,.34));
+}
+.sankey-hover-tooltip{
+  position:fixed;z-index:9999;max-width:320px;padding:12px 14px;
+  border:1px solid rgba(98,214,239,.46);border-radius:12px;
+  background:rgba(4,13,22,.97);color:#e9f7fb;
+  box-shadow:0 14px 36px rgba(0,0,0,.38);
+  pointer-events:none;font-size:13px;line-height:1.55;
+}
+.sankey-hover-tooltip strong{
+  display:block;margin-bottom:5px;color:#fff;font-size:14px;
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span>
@@ -1120,6 +1152,29 @@ function renderGeneral(){
  destroy('trend');
  const trendOptions=dynamicLineChartOpts(generalMetrics[metric],datasets);
  trendOptions.plugins.legend.display=false;
+ trendOptions.interaction={mode:'index',axis:'x',intersect:false};
+ trendOptions.hover={mode:'index',axis:'x',intersect:false};
+ trendOptions.plugins.tooltip={
+  enabled:true,
+  mode:'index',
+  intersect:false,
+  position:'nearest',
+  backgroundColor:'rgba(4,13,22,.96)',
+  titleColor:'#ffffff',
+  bodyColor:'#e7f5fb',
+  borderColor:'rgba(98,214,239,.48)',
+  borderWidth:1,
+  padding:12,
+  displayColors:true,
+  callbacks:{
+   title:(items)=>items&&items.length?`${items[0].label} 年`:'',
+   label:(ctx)=>{
+    const value=ctx.parsed&&typeof ctx.parsed.y==='number'?ctx.parsed.y:null;
+    if(value===null) return `${ctx.dataset.label}：無資料`;
+    return `${ctx.dataset.label}：${fmt(value)}`;
+   }
+  }
+ };
  renderTrendSeriesFilters(datasets);
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},options:trendOptions});
 
@@ -1324,7 +1379,7 @@ function renderCollabSankey(data,school,label,period){
  };
  const detailPanel=document.createElement('div');
  detailPanel.className='sankey-detail';
- detailPanel.innerHTML='<button type="button" aria-label="返回桑基圖">返回桑基圖</button><div class="drill-kicker">Drill-down View</div><h3></h3><div class="sankey-detail-body"></div>';
+ detailPanel.innerHTML='<button type="button" class="sankey-back-btn" aria-label="返回合作研究結構圖" title="返回">←</button><div class="drill-kicker">Drill-down View</div><h3></h3><div class="sankey-detail-body"></div>';
  const detailTitle=detailPanel.querySelector('h3');
  const detailBody=detailPanel.querySelector('.sankey-detail-body');
  const closeDetail=()=>{
@@ -1379,15 +1434,54 @@ function renderCollabSankey(data,school,label,period){
    event.stopPropagation();
   }
  },true);
+
+ const sankeyHoverTip=document.createElement('div');
+ sankeyHoverTip.className='sankey-hover-tooltip';
+ sankeyHoverTip.hidden=true;
+ document.body.appendChild(sankeyHoverTip);
+ const hideSankeyHover=()=>{sankeyHoverTip.hidden=true};
+ const showSankeyHover=(target,event)=>{
+  const title=target.dataset.hoverTitle||'細部資料';
+  const body=target.dataset.hoverBody||'';
+  sankeyHoverTip.innerHTML=`<strong>${escapeHtml(title)}</strong><div>${escapeHtml(body).replace(/\n/g,'<br>')}</div>`;
+  sankeyHoverTip.hidden=false;
+  const rect=sankeyHoverTip.getBoundingClientRect();
+  const pad=14;
+  let left=(event?.clientX??target.getBoundingClientRect().right)+16;
+  let top=(event?.clientY??target.getBoundingClientRect().top)+16;
+  if(left+rect.width>window.innerWidth-pad) left=Math.max(pad,(event?.clientX??target.getBoundingClientRect().left)-rect.width-16);
+  if(top+rect.height>window.innerHeight-pad) top=Math.max(pad,window.innerHeight-rect.height-pad);
+  sankeyHoverTip.style.left=`${left}px`;
+  sankeyHoverTip.style.top=`${top}px`;
+ };
+ svg.addEventListener('pointermove',event=>{
+  const target=event.target.closest?.('[data-hover-body]');
+  if(target) showSankeyHover(target,event);
+  else hideSankeyHover();
+ });
+ svg.addEventListener('pointerleave',hideSankeyHover);
+ svg.addEventListener('focusin',event=>{
+  const target=event.target.closest?.('[data-hover-body]');
+  if(target) showSankeyHover(target);
+ });
+ svg.addEventListener('focusout',hideSankeyHover);
+
  svg.addEventListener('keydown',event=>{
   if((event.key==='Enter'||event.key===' ')&&activateSankeyTarget(event.target)){
    event.preventDefault();
    event.stopPropagation();
   }
  },true);
- const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30,detailTitleText='',detailText='')=>{
-  const g=svgEl('g',{class:'sankey-node'});
-  attachSankeyClick(g,detailTitleText||label,detailText);
+ const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30,detailTitleText='',detailText='',interactionMode='click')=>{
+  const g=svgEl('g',{class:`sankey-node sankey-node-${interactionMode}`});
+  if(interactionMode==='hover'&&detailText){
+   g.dataset.hoverTitle=detailTitleText||label;
+   g.dataset.hoverBody=detailText;
+   g.setAttribute('tabindex','0');
+   g.setAttribute('aria-label',`${detailTitleText||label}，將滑鼠移至此處查看資訊`);
+  }else{
+   attachSankeyClick(g,detailTitleText||label,detailText);
+  }
   if(detailText){
    const hoverTitle=svgEl('title');
    hoverTitle.textContent=`${label}｜點擊查看細部資料`;
@@ -1435,7 +1529,7 @@ function renderCollabSankey(data,school,label,period){
    const catLinkY0=catOut, catLinkY1=catOut+linkH;
    const itemNodeY0=itemY, itemNodeY1=itemY+linkH;
    drawRibbon(groupLinks,catX+catW,catLinkY0,catLinkY1,itemX,itemNodeY0,itemNodeY1,`url(#collabGrad${i})`,`${g.label} → ${item.label}`,item.detail);
-   drawNode(groupNodes,itemX,itemNodeY0,itemW,linkH,g.color,item.label,'',35,item.label,item.detail);
+   drawNode(groupNodes,itemX,itemNodeY0,itemW,linkH,g.color,item.label,'',35,item.label,item.detail,'hover');
    catOut+=linkH;
    itemY+=linkH+itemGap;
   });
