@@ -38,7 +38,7 @@ header,main,.footer{position:relative;z-index:1}
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span></div>
-<header><h1>高雄科技大學研究量能分析平台</h1><p>2018–2025 年研究量能、研究影響力與校際標竿分析</p></header>
+<header><h1>高雄科技大學研究量能分析平台</h1><p id="platformSubtitle">2018–2025 年研究量能、研究影響力與校際標竿分析</p></header>
 
 <nav>
   <button class="nav-btn active" data-page="general">General 總體分析</button>
@@ -769,6 +769,12 @@ function currentSchoolList(){
 function datasetYears(dataset){
  return [...new Set((dataset||[]).map(r=>Number(r['年度'])).filter(Number.isFinite))].sort((a,b)=>a-b);
 }
+function updatePlatformSubtitle(){
+ const years=datasetYears(DATA.general);
+ const subtitle=document.getElementById('platformSubtitle');
+ if(!subtitle||!years.length) return;
+ subtitle.textContent=`${years[0]}–${years[years.length-1]} 年研究量能、研究影響力與校際標竿分析`;
+}
 function datasetYearOptions(dataset){
  return [...new Set((dataset||[]).map(r=>r['年度']).filter(v=>v!==null&&v!==undefined&&v!==''))].sort(compareYearOptions);
 }
@@ -823,13 +829,24 @@ function initWordCloudMotion(){
    const isHero=word.classList.contains('hero')||word.classList.contains('w1');
    return isHero?0.42:0.18+(i%6)*0.045;
  });
- let centers=[],pointerX=window.innerWidth/2,pointerY=window.innerHeight/2,pointerActive=false,targetX=0,targetY=0,currentX=0,currentY=0,targetScroll=0,currentScroll=0,raf=null;
+ const dragOffsets=words.map(()=>({x:0,y:0}));
+ let centers=[],pointerX=window.innerWidth/2,pointerY=window.innerHeight/2,pointerActive=false,targetX=0,targetY=0,currentX=0,currentY=0,targetScroll=0,currentScroll=0,dragging=null,raf=null;
  const measure=()=>{
    centers=words.map(word=>{
      const rect=word.getBoundingClientRect();
      return {x:rect.left+rect.width/2,y:rect.top+rect.height/2};
    });
  };
+ const hitWord=(x,y)=>{
+   let best=null;
+   words.forEach((word,i)=>{
+     const rect=word.getBoundingClientRect();
+     const pad=word.classList.contains('hero')||word.classList.contains('w1')?30:18;
+     if(x>=rect.left-pad&&x<=rect.right+pad&&y>=rect.top-pad&&y<=rect.bottom+pad) best={word,index:i};
+   });
+   return best;
+ };
+ const isForegroundTarget=target=>target&&target.closest&&target.closest('header,nav,main,.panel,.control,button,select,a,canvas,table');
  measure();
  const renderMotion=()=>{
    currentX+=(targetX-currentX)*0.08;
@@ -850,9 +867,9 @@ function initWordCloudMotion(){
      const rect=word.getBoundingClientRect();
      const pad=word.classList.contains('hero')||word.classList.contains('w1')?28:18;
      const touching=pointerActive&&pointerX>=rect.left-pad&&pointerX<=rect.right+pad&&pointerY>=rect.top-pad&&pointerY<=rect.bottom+pad;
-     word.classList.toggle('word-lit',touching);
-     word.style.setProperty('--mx',`${(currentX*d+followX).toFixed(2)}px`);
-     word.style.setProperty('--my',`${(currentY*d+followY).toFixed(2)}px`);
+     word.classList.toggle('word-lit',touching||!!(dragging&&dragging.index===i));
+     word.style.setProperty('--mx',`${(dragOffsets[i].x+currentX*d+followX).toFixed(2)}px`);
+     word.style.setProperty('--my',`${(dragOffsets[i].y+currentY*d+followY).toFixed(2)}px`);
    });
    if(Math.abs(targetX-currentX)>.05||Math.abs(targetY-currentY)>.05||Math.abs(targetScroll-currentScroll)>.05) raf=requestAnimationFrame(renderMotion);
    else raf=null;
@@ -868,10 +885,24 @@ function initWordCloudMotion(){
    pointerActive=true;
    pointerX=event.clientX;
    pointerY=event.clientY;
+   if(dragging){
+     dragOffsets[dragging.index].x=dragging.baseX+event.clientX-dragging.startX;
+     dragOffsets[dragging.index].y=dragging.baseY+event.clientY-dragging.startY;
+   }
    targetX=((event.clientX/window.innerWidth)-.5)*18;
    targetY=((event.clientY/window.innerHeight)-.5)*14;
    queue();
  },{passive:true});
+ window.addEventListener('pointerdown',event=>{
+   if(isForegroundTarget(event.target)) return;
+   const hit=hitWord(event.clientX,event.clientY);
+   if(!hit) return;
+   dragging={index:hit.index,startX:event.clientX,startY:event.clientY,baseX:dragOffsets[hit.index].x,baseY:dragOffsets[hit.index].y};
+   hit.word.classList.add('word-lit');
+   queue();
+ });
+ window.addEventListener('pointerup',()=>{dragging=null;measure();queue();},{passive:true});
+ window.addEventListener('pointercancel',()=>{dragging=null;measure();queue();},{passive:true});
  window.addEventListener('resize',measure,{passive:true});
  window.addEventListener('scroll',syncScroll,{passive:true});
  window.addEventListener('pointerleave',()=>{
@@ -881,6 +912,7 @@ function initWordCloudMotion(){
 async function init(){
  initWordCloudMotion();
  await loadExcelData();
+ updatePlatformSubtitle();
  if(EXCEL_LAST_MODIFIED.length) DATA_LAST_UPDATED=formatFileUpdated(Math.max(...EXCEL_LAST_MODIFIED));
  addUpdatedLabels();
  placeControls();
