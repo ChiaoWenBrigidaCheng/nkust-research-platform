@@ -33,6 +33,7 @@ header,main,.footer{position:relative;z-index:1}
 .sankey-link{cursor:pointer}.sankey-link.active{opacity:.88;filter:drop-shadow(0 0 14px rgba(98,214,239,.28))}
 .general-compare-row{grid-template-columns:minmax(360px,.95fr) minmax(520px,1.35fr)}.panel-filter-row{gap:12px;align-items:end}.panel-filter-row .control{width:min(300px,100%)}@media(max-width:1000px){.general-compare-row{grid-template-columns:1fr}.panel-filter-row{justify-content:flex-start}.panel-filter-row .control{width:min(330px,100%)}}
 .sankey-wrap .sankey-svg{transition:opacity .28s ease,filter .28s ease,transform .28s ease}.sankey-wrap.drill-open .sankey-svg{opacity:.28;filter:blur(1.5px) saturate(.76);transform:scale(.985)}.sankey-wrap.drill-open:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(98,214,239,.12),rgba(2,10,17,.58));z-index:3;pointer-events:none}.sankey-detail{left:50%;right:auto;top:50%;width:min(760px,calc(100% - 48px));max-height:calc(100% - 64px);display:block;visibility:hidden;opacity:0;pointer-events:none;z-index:6;transform:translate(-50%,-43%) scale(.86);transition:opacity .26s ease,transform .32s cubic-bezier(.18,.9,.24,1.08),visibility .26s ease;padding:26px 28px 24px}.sankey-detail.open{visibility:visible;opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.sankey-detail button{position:static;width:auto;height:auto;margin:0 0 16px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:900;line-height:1.1}.sankey-detail h3{font-size:28px;margin:0 0 14px}.sankey-detail-body{font-size:17px;line-height:1.85;max-height:560px;border-top:1px solid rgba(132,205,235,.18);padding-top:14px}@media(max-width:1000px){.sankey-detail{left:50%;right:auto;top:50%;width:calc(100% - 36px);padding:22px}.sankey-detail h3{font-size:24px}.sankey-detail-body{font-size:15px;max-height:680px}}
+.sankey-wrap.drill-open .sankey-svg{opacity:.08;filter:blur(2.4px) saturate(.55);transform:translateX(-28px) scale(.94)}.sankey-detail{width:min(1080px,calc(100% - 54px));min-height:min(600px,calc(100% - 70px));max-height:calc(100% - 54px);display:flex;flex-direction:column;background:linear-gradient(145deg,rgba(10,26,42,.98),rgba(5,15,26,.96));border-color:rgba(132,205,235,.48)}.sankey-detail .drill-kicker{color:#7bddff;font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}.sankey-detail h3{font-size:32px;letter-spacing:.01em}.sankey-detail-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;overflow:auto}.sankey-detail-card{border:1px solid rgba(132,205,235,.22);border-radius:12px;background:linear-gradient(145deg,rgba(20,43,62,.72),rgba(7,20,34,.66));padding:13px 15px;color:#d8ebf7;font-size:15px;line-height:1.55}.sankey-detail-card strong{display:block;color:#fff;font-size:17px;margin-bottom:4px}.sankey-detail-card span{color:#9fb9ca;font-weight:700}.sankey-detail-card.full{grid-column:1/-1}@media(max-width:760px){.sankey-detail-body{grid-template-columns:1fr}.sankey-detail{width:calc(100% - 28px);min-height:calc(100% - 36px)}.sankey-detail h3{font-size:24px}}
 </style>
 </head>
 <body>
@@ -1061,6 +1062,23 @@ function shortLabel(text,max=28){
  const value=String(text||'');
  return value.length>max?value.slice(0,max-1)+'…':value;
 }
+function escapeHtml(value){
+ return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function sankeyDetailHtml(body){
+ const lines=String(body||'').split('\n').map(x=>x.trim()).filter(Boolean);
+ if(!lines.length) return '<div class="sankey-detail-card full">此節點沒有可顯示的明細。</div>';
+ const intro=lines.length>1?lines[0]:null;
+ const items=intro?lines.slice(1):lines;
+ const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>點選項目後顯示的 deeper data 明細</span></div>`:'';
+ const cards=items.map(line=>{
+  const parts=line.split('｜').map(x=>x.trim()).filter(Boolean);
+  const title=parts.shift()||line;
+  const meta=parts.length?parts.join('｜'):'';
+  return `<div class="sankey-detail-card"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(meta||'明細資料')}</span></div>`;
+ }).join('');
+ return introCard+cards;
+}
 function topCollabSummaries(data){
  const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.area,value:r.output,detail:`${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`}));
  const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1])})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`${r.label}｜Relevance ${fmt(r.value)}`}));
@@ -1127,7 +1145,7 @@ function renderCollabSankey(data,school,label,period){
  };
  const detailPanel=document.createElement('div');
  detailPanel.className='sankey-detail';
- detailPanel.innerHTML='<button type="button" aria-label="返回桑基圖">返回桑基圖</button><h3></h3><div class="sankey-detail-body"></div>';
+ detailPanel.innerHTML='<button type="button" aria-label="返回桑基圖">返回桑基圖</button><div class="drill-kicker">Drill-down View</div><h3></h3><div class="sankey-detail-body"></div>';
  const detailTitle=detailPanel.querySelector('h3');
  const detailBody=detailPanel.querySelector('.sankey-detail-body');
  const closeDetail=()=>{
@@ -1145,7 +1163,7 @@ function renderCollabSankey(data,school,label,period){
   svg.querySelectorAll('.sankey-node.active,.sankey-link.active').forEach(node=>node.classList.remove('active'));
   el.classList.add('active');
   detailTitle.textContent=title||'合作分析資訊';
-  detailBody.textContent=body||'此節點沒有可顯示的明細。';
+  detailBody.innerHTML=sankeyDetailHtml(body);
   host.classList.add('drill-open');
   detailPanel.classList.add('open');
  };
