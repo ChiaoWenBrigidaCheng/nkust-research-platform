@@ -80,6 +80,44 @@ header,main,.footer{position:relative;z-index:1}
 }
 
 </style>
+
+<style>
+/* Sankey interaction fix: visible destinations are reliable click targets. */
+.sankey-node > rect:not(.sankey-node-hit),
+.sankey-node > text{pointer-events:none}
+.sankey-node-hit{fill:rgba(255,255,255,.001);pointer-events:all;cursor:pointer}
+.sankey-link{pointer-events:visiblePainted;cursor:pointer;opacity:.48;mix-blend-mode:normal}
+.sankey-link:hover{opacity:.88;filter:drop-shadow(0 0 13px rgba(98,214,239,.30))}
+.sankey-node:hover rect:not(.sankey-node-hit){
+  stroke:rgba(255,255,255,.92);
+  stroke-width:2.2px;
+  filter:drop-shadow(0 0 14px rgba(98,214,239,.24))
+}
+.sankey-node:focus{outline:none}
+.sankey-node:focus rect:not(.sankey-node-hit),
+.sankey-link:focus{
+  stroke:#f3c969;
+  stroke-width:2.4px;
+  filter:drop-shadow(0 0 15px rgba(243,201,105,.35))
+}
+.sankey-detail{
+  background:
+    radial-gradient(circle at 88% 10%,rgba(168,148,255,.13),transparent 30%),
+    radial-gradient(circle at 10% 90%,rgba(98,214,239,.12),transparent 34%),
+    linear-gradient(145deg,rgba(16,31,47,.995),rgba(5,15,26,.99))
+}
+.sankey-detail-card{
+  background:linear-gradient(145deg,rgba(22,43,62,.90),rgba(8,22,35,.84));
+  border-color:rgba(132,205,235,.26)
+}
+.sankey-detail .drill-kicker{color:#62d6ef}
+.sankey-detail button{
+  color:#eefaff;
+  background:linear-gradient(145deg,rgba(49,91,120,.92),rgba(15,39,58,.92));
+  border-color:rgba(98,214,239,.45)
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span><span class="w25">datasets</span><span class="w26">patents</span><span class="w27">grants</span><span class="w28">technology transfer</span><span class="w29">sustainability</span><span class="w30">AI models</span><span class="w31">evidence</span><span class="w32">research policy</span><span class="w33">h-index</span><span class="w34">open access</span><span class="w35">global rank</span><span class="w36">knowledge map</span>
@@ -1241,9 +1279,9 @@ function collabSankeyGroups(data){
  const keyphraseList=(data.keyphrases||[]).filter(r=>r[0]).slice(0,12).map(r=>`${r[0]}｜Relevance ${fmt(cleanNum(r[1]))}`).join('\n');
  const sourceList=top.sources.map(r=>r.detail).join('\n');
  const groupRows=[
-  {label:'Subject Area',color:'#f97316',items:normalize(top.subjects,'Output'),detail:`Subject Area 全部項目\n${subjectList}`},
-  {label:'Keyphrases',color:'#22c55e',items:normalize(top.keyphrases,'Relevance'),detail:`Keyphrases 項目\n${keyphraseList}`},
-  {label:'Collaboration Source',color:'#ef4444',items:normalize(top.sources,'Total'),detail:`Collaboration Source Top 5\n${sourceList}`}
+  {label:'Subject Area',color:'#62d6ef',items:normalize(top.subjects,'Output'),detail:`Subject Area 全部項目\n${subjectList}`},
+  {label:'Keyphrases',color:'#a894ff',items:normalize(top.keyphrases,'Relevance'),detail:`Keyphrases 項目\n${keyphraseList}`},
+  {label:'Collaboration Source',color:'#f3c969',items:normalize(top.sources,'Total'),detail:`Collaboration Source Top 5\n${sourceList}`}
  ];
  return groupRows.filter(g=>g.items.length);
 }
@@ -1309,21 +1347,44 @@ function renderCollabSankey(data,school,label,period){
   detailPanel.classList.add('open');
   requestAnimationFrame(()=>detailPanel.scrollIntoView({behavior:'smooth',block:'nearest'}));
  };
+ const sankeyTargets=new Map();
+ let sankeyTargetSeq=0;
  const attachSankeyClick=(el,title,body)=>{
   if(!body) return;
+  const key=`sankey-target-${++sankeyTargetSeq}`;
+  sankeyTargets.set(key,{el,title,body});
+  el.dataset.sankeyKey=key;
   el.setAttribute('tabindex','0');
   el.setAttribute('role','button');
-  el.addEventListener('click',event=>{
-   event.stopPropagation();
-   openSankeyDetail(el,title,body);
-  });
-  el.addEventListener('keydown',event=>{
-   if(event.key==='Enter'||event.key===' '){
-    event.preventDefault();
-    openSankeyDetail(el,title,body);
-   }
-  });
+  el.setAttribute('aria-label',`${title||'合作分析'}，點擊查看細部資料`);
  };
+ const activateSankeyTarget=target=>{
+  const clickable=target&&target.closest?target.closest('[data-sankey-key]'):null;
+  if(!clickable) return false;
+  const item=sankeyTargets.get(clickable.dataset.sankeyKey);
+  if(!item) return false;
+  openSankeyDetail(item.el,item.title,item.body);
+  return true;
+ };
+ svg.addEventListener('pointerup',event=>{
+  if(event.button!==undefined&&event.button!==0) return;
+  if(activateSankeyTarget(event.target)){
+   event.preventDefault();
+   event.stopPropagation();
+  }
+ },true);
+ svg.addEventListener('click',event=>{
+  if(activateSankeyTarget(event.target)){
+   event.preventDefault();
+   event.stopPropagation();
+  }
+ },true);
+ svg.addEventListener('keydown',event=>{
+  if((event.key==='Enter'||event.key===' ')&&activateSankeyTarget(event.target)){
+   event.preventDefault();
+   event.stopPropagation();
+  }
+ },true);
  const drawNode=(parent,x,y,w,h,color,label,sub,maxChars=30,detailTitleText='',detailText='')=>{
   const g=svgEl('g',{class:'sankey-node'});
   attachSankeyClick(g,detailTitleText||label,detailText);
@@ -1351,10 +1412,9 @@ function renderCollabSankey(data,school,label,period){
   parent.appendChild(path);
  };
  const contextText=`${school}｜${label}`;
- drawNode(allNodes,rootX,top,rootW,area,'#1d6e8a',contextText,String(period),18,contextText,`${contextText}\n年度：${period}`);
+ drawNode(allNodes,rootX,top,rootW,area,'#315b78',contextText,String(period),18,contextText,`${contextText}\n年度：${period}`);
  groups.forEach((g,i)=>{
   const group=svgEl('g',{class:'sankey-flow-group','data-group':g.label});
-  attachSankeyClick(group,g.label,g.detail);
   const groupLinks=svgEl('g');
   const groupNodes=svgEl('g');
   group.appendChild(groupLinks);
