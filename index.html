@@ -71,7 +71,7 @@ header,main,.footer{position:relative;z-index:1}
     </div>
     <div class="grid general-compare-row">
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
-      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
+      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值；可點擊圖例顯示或隱藏系列</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
     <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構桑基圖以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。各類別的流帶寬度採類別內相對尺度呈現，適合比較同類項目強弱；不同類別因指標單位不同，不直接比較寬度。點擊節點或流帶可查看 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total。">合作研究結構桑基圖</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
@@ -542,6 +542,7 @@ function formatFileUpdated(value){
 let DATA_LAST_UPDATED = formatFileUpdated(document.lastModified);
 let page='general';
 let charts={};
+const trendHiddenLabels=new Set();
 if(window.Chart){
  Chart.register({id:'selectedLineGlow',beforeDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow){chart.ctx.save();chart.ctx.shadowColor=ds.borderColor||'#62d6ef';chart.ctx.shadowBlur=16;chart.ctx.shadowOffsetX=0;chart.ctx.shadowOffsetY=0;}},afterDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow) chart.ctx.restore();}});
  Chart.register({id:'referenceLines',afterDatasetsDraw(chart,args,opts){const refs=opts||{};const xScale=chart.scales&&chart.scales.x,yScale=chart.scales&&chart.scales.y;if(!xScale||!yScale) return;const {ctx,chartArea}=chart;const lineColor=refs.color||'rgba(255,255,255,.58)';const labelColor=refs.labelColor||'rgba(255,255,255,.48)';ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=1.5;ctx.strokeStyle=lineColor;ctx.fillStyle=labelColor;ctx.font='700 12px Microsoft JhengHei, Noto Sans TC, Arial';if(typeof refs.x==='number'&&Number.isFinite(refs.x)){const x=xScale.getPixelForValue(refs.x);ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(refs.xLabel||'Reference X',Math.min(x+8,chartArea.right-118),chartArea.top+8);ctx.setLineDash([7,6]);}if(typeof refs.y==='number'&&Number.isFinite(refs.y)){const y=yScale.getPixelForValue(refs.y);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(refs.yLabel||'Reference Y',chartArea.right-8,Math.max(y-8,chartArea.top+14));}ctx.restore();}});
@@ -1002,17 +1003,18 @@ function renderGeneral(){
    const data=trendYears.map(y=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null});
    return {
    label:u,borderColor:schoolColor(u),backgroundColor:schoolColor(u),tension:.25,spanGaps:true,
-   borderWidth:selected?5.8:2.4,pointRadius:2.8,pointHoverRadius:4.5,pointBackgroundColor:schoolColor(u),pointBorderColor:schoolColor(u),pointBorderWidth:0,order:selected?0:1,selectedGlow:selected,
+   borderWidth:selected?5.8:2.4,pointRadius:2.8,pointHoverRadius:4.5,pointBackgroundColor:schoolColor(u),pointBorderColor:schoolColor(u),pointBorderWidth:0,order:selected?0:1,selectedGlow:selected,hidden:trendHiddenLabels.has(u),
    data
    };
  });
  const averageData=annualAverageSeries(metric,trendYears);
  if(averageData.some(v=>typeof v==='number'&&Number.isFinite(v))){
-  datasets.push({label:'六校平均',borderColor:'rgba(255,255,255,.70)',backgroundColor:'rgba(255,255,255,0)',borderDash:[7,6],tension:.25,spanGaps:true,borderWidth:2.4,pointRadius:0,pointHoverRadius:3,pointStyle:'line',order:2,referenceAverage:true,data:averageData});
+  datasets.push({label:'六校平均',borderColor:'rgba(255,255,255,.70)',backgroundColor:'rgba(255,255,255,0)',borderDash:[7,6],tension:.25,spanGaps:true,borderWidth:2.4,pointRadius:0,pointHoverRadius:3,pointStyle:'line',order:2,referenceAverage:true,hidden:trendHiddenLabels.has('六校平均'),data:averageData});
  }
  destroy('trend');
- charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
- options:dynamicLineChartOpts(generalMetrics[metric],datasets)});
+ const trendOptions=dynamicLineChartOpts(generalMetrics[metric],datasets);
+ trendOptions.plugins.legend.onClick=toggleTrendSeries;
+ charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},options:trendOptions});
 
  const rank=sortItems(DATA.universities.map((u,i)=>{const r=record(DATA.general,u,year);return {u,v:r&&typeof r[metric]==='number'?r[metric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),generalRankSort.value,'v');
  destroy('rank');
@@ -1035,7 +1037,7 @@ function renderGeneral(){
  const xBounds=scatterXValues.length?axisPad(scatterXValues):null;
  const yBounds=scatterYValues.length?axisPad(scatterYValues):null;
  charts.scatter=new Chart(scatterChart,{type:'bubble',data:{datasets:scat},
- options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} X`,yLabel:`${scatterRef.label} Y`,color:'rgba(255,255,255,.58)',labelColor:'rgba(255,255,255,.48)'}:{},tooltip:{callbacks:{
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} ${fmt(scatterRef.x)}`,yLabel:`${scatterRef.label} ${fmt(scatterRef.y)}`,color:'rgba(255,255,255,.58)',labelColor:'rgba(255,255,255,.48)'}:{},tooltip:{callbacks:{
  label:(ctx)=>{const p=ctx.raw;return `${ctx.dataset.label}｜每師平均 ${Number(p.x).toFixed(2)}｜FWCI ${Number(p.y).toFixed(2)}｜Scopus 發表數 ${Number(p.publicationCount).toLocaleString()}`;}
  }}},
  scales:{x:{min:xBounds?xBounds.min:undefined,max:xBounds?xBounds.max:undefined,title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
@@ -1410,14 +1412,34 @@ function renderSdgTables(data,selected){
 }
 function dynamicLineChartOpts(title,datasets){
  const opts=chartOpts(title,true,false);
- const values=(datasets||[]).flatMap(ds=>ds.data||[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
- if(values.length){
-  const min=Math.min(...values),max=Math.max(...values),range=max-min;
-  const pad=range>0?range*.12:Math.max(Math.abs(max)*.08,1);
-  opts.scales.y.min=min-pad>0?min-pad:0;
-  opts.scales.y.max=max+pad;
- }
+ syncLineAxisBounds(opts,(datasets||[]).flatMap(ds=>ds&&!ds.hidden?ds.data||[]:[]));
  return opts;
+}
+function syncLineAxisBounds(opts,values){
+ const nums=(values||[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
+ if(!opts.scales) opts.scales={};
+ if(!opts.scales.y) opts.scales.y={};
+ if(!nums.length){
+  delete opts.scales.y.min;
+  delete opts.scales.y.max;
+  return;
+ }
+ const min=Math.min(...nums),max=Math.max(...nums),range=max-min;
+ const pad=range>0?range*.12:Math.max(Math.abs(max)*.08,1);
+ opts.scales.y.min=min-pad>0?min-pad:0;
+ opts.scales.y.max=max+pad;
+}
+function toggleTrendSeries(event,legendItem,legend){
+ const chart=legend.chart;
+ const index=legendItem.datasetIndex;
+ const ds=chart.data.datasets[index];
+ if(!ds) return;
+ const visible=chart.isDatasetVisible(index);
+ chart.setDatasetVisibility(index,!visible);
+ if(visible) trendHiddenLabels.add(ds.label);
+ else trendHiddenLabels.delete(ds.label);
+ syncLineAxisBounds(chart.options,chart.data.datasets.flatMap((dataset,i)=>i===index?!visible?dataset.data||[]:[]:chart.isDatasetVisible(i)?dataset.data||[]:[]));
+ chart.update();
 }
 function chartOpts(title,legend=true,horizontal=false){
  return {responsive:true,maintainAspectRatio:false,indexAxis:horizontal?'y':'x',
