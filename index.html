@@ -65,11 +65,11 @@ header,main,.footer{position:relative;z-index:1}
       <div class="panel"><h2>主要學校年度摘要</h2><div class="sub">與前一年度比較；缺值會顯示為「目前缺值」，不會當作 0 計算</div><div id="summaryBox"></div></div>
     </div>
     <div class="grid summary-first">
-      <div class="panel"><h2>研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
+      <div class="panel"><h2>研究產出 × 研究影響力</h2><div class="sub">橫軸：Scopus 每師平均；縱軸：FWCI；圓點大小代表 Scopus 發表數；參考線優先使用台灣總體資料</div><div class="chart-wrap"><canvas id="scatterChart"></canvas></div></div>
     </div>
     <div class="grid general-compare-row">
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
-      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
+      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
     <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構桑基圖以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。各類別的流帶寬度採類別內相對尺度呈現，適合比較同類項目強弱；不同類別因指標單位不同，不直接比較寬度。點擊節點或流帶可查看 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total。">合作研究結構桑基圖</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
@@ -222,7 +222,7 @@ function sameYearOption(a,b){
 }
 function normalizeSchoolName(value,duplicateIndex=0){
  const s=String(value||'').trim();
- const direct={'高科大':'高科大','臺科大':'臺科大','台科大':'臺科大','北科大':'北科大','雲科大':'雲科大','屏科大':'屏科大','虎科大':'虎科大','�_��j':'北科大','���j':'虎科大','�̬�j':'屏科大','�O��j':'臺科大'};
+ const direct={'高科大':'高科大','臺科大':'臺科大','台科大':'臺科大','北科大':'北科大','雲科大':'雲科大','屏科大':'屏科大','虎科大':'虎科大','Taiwan':'Taiwan','台灣':'Taiwan','臺灣':'Taiwan','台灣總體':'Taiwan','臺灣總體':'Taiwan','全國':'Taiwan','全國總體':'Taiwan','�_��j':'北科大','���j':'虎科大','�̬�j':'屏科大','�O��j':'臺科大'};
  if(direct[s]) return direct[s];
  if(s==='����j') return duplicateIndex===2?'雲科大':'高科大';
  if(s==='�x�W') return null;
@@ -246,6 +246,7 @@ function schoolSequenceMapper(rows){
 }
 function parseResearchWorkbook(wb){
  const preferred=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
+ const generalAllowed=[...preferred,'Taiwan'];
  const parseRows=(sheet,keys)=>{
   const ws=wb.Sheets[sheet];
   if(!ws) return [];
@@ -253,7 +254,8 @@ function parseResearchWorkbook(wb){
   const mapSchool=schoolSequenceMapper(rows);
   return rows.map(r=>{
    const school=mapSchool(r[0]);
-   if(!school||!preferred.includes(school)) return null;
+   const allowed=sheet==='General'?generalAllowed:preferred;
+   if(!school||!allowed.includes(school)) return null;
    const item={'學校':school,'年度':cleanYear(r[1])};
    keys.forEach(([key,idx])=>item[key]=cleanNum(r[idx]));
    return item;
@@ -540,6 +542,7 @@ let page='general';
 let charts={};
 if(window.Chart){
  Chart.register({id:'selectedLineGlow',beforeDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow){chart.ctx.save();chart.ctx.shadowColor=ds.borderColor||'#62d6ef';chart.ctx.shadowBlur=16;chart.ctx.shadowOffsetX=0;chart.ctx.shadowOffsetY=0;}},afterDatasetDraw(chart,args){const ds=chart.data.datasets[args.index];if(ds&&ds.selectedGlow) chart.ctx.restore();}});
+ Chart.register({id:'referenceLines',afterDatasetsDraw(chart,args,opts){const refs=opts||{};const xScale=chart.scales&&chart.scales.x,yScale=chart.scales&&chart.scales.y;if(!xScale||!yScale) return;const {ctx,chartArea}=chart;ctx.save();ctx.setLineDash([7,6]);ctx.lineWidth=1.6;ctx.strokeStyle=refs.color||'rgba(255,255,255,.72)';ctx.fillStyle=refs.color||'rgba(255,255,255,.88)';ctx.font='700 12px Microsoft JhengHei, Noto Sans TC, Arial';if(typeof refs.x==='number'&&Number.isFinite(refs.x)){const x=xScale.getPixelForValue(refs.x);ctx.beginPath();ctx.moveTo(x,chartArea.top);ctx.lineTo(x,chartArea.bottom);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='left';ctx.textBaseline='top';ctx.fillText(refs.xLabel||'Reference X',Math.min(x+8,chartArea.right-118),chartArea.top+8);ctx.setLineDash([7,6]);}if(typeof refs.y==='number'&&Number.isFinite(refs.y)){const y=yScale.getPixelForValue(refs.y);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.setLineDash([]);ctx.textAlign='right';ctx.textBaseline='bottom';ctx.fillText(refs.yLabel||'Reference Y',chartArea.right-8,Math.max(y-8,chartArea.top+14));}ctx.restore();}});
  Chart.defaults.font.family='Microsoft JhengHei, Noto Sans TC, Arial, sans-serif';
  Chart.defaults.font.size=14;
  Chart.defaults.color='#b8d0df';
@@ -596,6 +599,20 @@ function fmt(v,d=2){
  if(v===null||v===undefined||v==='') return '—';
  if(typeof v==='number') return Number.isInteger(v)?v.toLocaleString():v.toLocaleString(undefined,{maximumFractionDigits:d});
  return v;
+}
+function numericAverage(values){
+ const nums=values.filter(v=>typeof v==='number'&&Number.isFinite(v));
+ return nums.length?nums.reduce((sum,v)=>sum+v,0)/nums.length:null;
+}
+function generalScatterReference(year){
+ const taiwanRow=DATA.general.find(r=>r['學校']==='Taiwan'&&sameYearOption(r['年度'],year)&&typeof r['Scopus每師平均']==='number'&&typeof r['FWCI']==='number');
+ if(taiwanRow) return {x:taiwanRow['Scopus每師平均'],y:taiwanRow['FWCI'],label:'台灣總體參考'};
+ const rows=DATA.universities.map(u=>record(DATA.general,u,year)).filter(r=>r&&typeof r['Scopus每師平均']==='number'&&typeof r['FWCI']==='number');
+ if(!rows.length) return null;
+ return {x:numericAverage(rows.map(r=>r['Scopus每師平均'])),y:numericAverage(rows.map(r=>r['FWCI'])),label:'六校平均參考'};
+}
+function annualAverageSeries(metric,years){
+ return years.map(y=>numericAverage(DATA.universities.map(u=>{const r=record(DATA.general,u,y);return r&&typeof r[metric]==='number'?r[metric]:null;})));
 }
 function normMetricName(value){
  return String(value||'').replace(/[%％()（）\s]/g,'').replace(/[|｜:：]/g,'').toLowerCase();
@@ -949,6 +966,10 @@ function renderGeneral(){
    data
    };
  });
+ const averageData=annualAverageSeries(metric,trendYears);
+ if(averageData.some(v=>typeof v==='number'&&Number.isFinite(v))){
+  datasets.push({label:'六校平均',borderColor:'#f3c969',backgroundColor:'#f3c969',borderDash:[8,6],tension:.25,spanGaps:true,borderWidth:3,pointRadius:0,pointHoverRadius:4,order:2,data:averageData});
+ }
  destroy('trend');
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},
  options:dynamicLineChartOpts(generalMetrics[metric],datasets)});
@@ -958,6 +979,7 @@ function renderGeneral(){
  charts.rank=new Chart(rankChart,{type:'bar',data:{labels:rank.map(x=>x.u),datasets:[{data:rank.map(x=>x.v),backgroundColor:rank.map(x=>x.c),borderColor:rank.map(x=>selectedStroke(x.u,school)),borderWidth:rank.map(x=>selectedStrokeWidth(x.u,school,3)),hoverBorderWidth:rank.map(x=>selectedStrokeWidth(x.u,school,4)),borderRadius:6}]},
  options:chartOpts(generalMetrics[metric],false,false)});
 
+ const scatterRef=generalScatterReference(year);
  const scat=DATA.universities.map((u,i)=>{
    const r=record(DATA.general,u,year);
    if(!r||typeof r['Scopus每師平均']!=='number'||typeof r['FWCI']!=='number') return null;
@@ -967,12 +989,17 @@ function renderGeneral(){
            backgroundColor:schoolColor(u),borderColor:selected?selectedStroke(u,school):schoolColor(u),borderWidth:selected?4:1.4,hoverBorderWidth:selected?5:2,order:selected?0:1};
  }).filter(Boolean);
  destroy('scatter');
+ const scatterXValues=scat.map(ds=>ds.data[0].x).concat(scatterRef?[scatterRef.x]:[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
+ const scatterYValues=scat.map(ds=>ds.data[0].y).concat(scatterRef?[scatterRef.y]:[]).filter(v=>typeof v==='number'&&Number.isFinite(v));
+ const axisPad=(values,ratio=.1)=>{const min=Math.min(...values),max=Math.max(...values),range=max-min;return {min:Math.max(0,min-(range?range*ratio:Math.max(Math.abs(max)*.08,.2))),max:max+(range?range*ratio:Math.max(Math.abs(max)*.08,.2))};};
+ const xBounds=scatterXValues.length?axisPad(scatterXValues):null;
+ const yBounds=scatterYValues.length?axisPad(scatterYValues):null;
  charts.scatter=new Chart(scatterChart,{type:'bubble',data:{datasets:scat},
- options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},tooltip:{callbacks:{
+ options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#b8d0df'}},referenceLines:scatterRef?{x:scatterRef.x,y:scatterRef.y,xLabel:`${scatterRef.label} X=${fmt(scatterRef.x)}`,yLabel:`${scatterRef.label} Y=${fmt(scatterRef.y)}`,color:'rgba(243,201,105,.88)'}:{},tooltip:{callbacks:{
  label:(ctx)=>{const p=ctx.raw;return `${ctx.dataset.label}｜每師平均 ${Number(p.x).toFixed(2)}｜FWCI ${Number(p.y).toFixed(2)}｜Scopus 發表數 ${Number(p.publicationCount).toLocaleString()}`;}
  }}},
- scales:{x:{title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
- y:{title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}}}}});
+ scales:{x:{min:xBounds?xBounds.min:undefined,max:xBounds?xBounds.max:undefined,title:{display:true,text:'Scopus 每師平均',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}},
+ y:{min:yBounds?yBounds.min:undefined,max:yBounds?yBounds.max:undefined,title:{display:true,text:'FWCI',color:'#a8c0d2'},ticks:{color:'#a8c0d2',callback:v=>Number(v).toFixed(2)},grid:{color:'rgba(132,205,235,.14)'}}}}});
 
  renderCollaboration(school,year);
  renderGeneralTable(year);
