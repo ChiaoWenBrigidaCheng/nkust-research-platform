@@ -397,6 +397,30 @@ header,main,.footer{position:relative;z-index:1}
 }
 </style>
 
+
+<style>
+/* Trend filter: keep menu open while users make multiple selections */
+@media(max-width:620px){
+  .series-filter{
+    align-items:stretch;
+  }
+  .series-filter-label{
+    width:100%;
+  }
+  .series-filter-menu,
+  .series-filter-menu summary{
+    width:100%;
+    min-width:0;
+  }
+  .series-filter-panel{
+    width:min(100%,360px);
+    max-height:min(62vh,430px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
@@ -731,10 +755,17 @@ function parseSdgData(pubWb,summaryWb){
  const metric=name=>{const r=summaryRows.find(x=>String(x[0]||'').trim()===name);return r?cleanNum(r[1]):null;};
  const subjectRows=rowsBySheet('Publications by Subject Area');
  const subjectHeader=findHeaderIndex(subjectRows,'Subject Area');
- const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({area:r[0],output:cleanNum(r[2]),citations:cleanNum(r[3]),fwci:cleanNum(r[6])})).sort((a,b)=>(b.output||0)-(a.output||0)):SDG_DATA.subjects.slice().sort((a,b)=>(b.output||0)-(a.output||0));
+ const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({
+ area:r[0],
+ subcategory:String(r[1]??'').trim(),
+ label:(String(r[1]??'').trim()&&String(r[1]).trim()!=='-')?`${r[0]} — ${r[1]}`:String(r[0]),
+ output:cleanNum(r[2]),
+ citations:cleanNum(r[3]),
+ fwci:cleanNum(r[6])
+})).sort((a,b)=>(b.output||0)-(a.output||0)):SDG_DATA.subjects.slice().sort((a,b)=>(b.output||0)-(a.output||0));
  const keyRows=rowsBySheet('Keyphrase analysis');
  const keyHeader=findHeaderIndex(keyRows,'Keyphrase');
- const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).slice(0,24).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):SDG_DATA.keyphrases;
+ const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):SDG_DATA.keyphrases;
  const partners={
   institutions:parseMatrix(rowsBySheet('Top 5 Institutions by Schol...'),'Institutions').filter(x=>!String(x[0]).includes('National Kaohsiung')),
   countries:parseMatrix(rowsBySheet('Top 5 Countries or Regions by .'),'Countries/Regions').filter(x=>x[0]!=='Taiwan'),
@@ -749,10 +780,17 @@ function parseCollaborationWorkbook(wb,school){
  const metric=name=>{const r=summaryRows.find(x=>String(x[0]||'').replace('\ufeff','').trim()===name);return r?cleanNum(r[1]):null;};
  const subjectRows=rowsBySheet('Publications by Subject Area');
  const subjectHeader=findHeaderIndex(subjectRows,'Subject Area');
- const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({area:r[0],output:cleanNum(r[2]),citations:cleanNum(r[3]),fwci:cleanNum(r[6])})).sort((a,b)=>(b.output||0)-(a.output||0)):[];
+ const subjects=subjectHeader>=0?subjectRows.slice(subjectHeader+1).filter(r=>r[0]&&cleanNum(r[2])!==null&&!String(r[0]).includes('Elsevier')).map(r=>({
+ area:r[0],
+ subcategory:String(r[1]??'').trim(),
+ label:(String(r[1]??'').trim()&&String(r[1]).trim()!=='-')?`${r[0]} — ${r[1]}`:String(r[0]),
+ output:cleanNum(r[2]),
+ citations:cleanNum(r[3]),
+ fwci:cleanNum(r[6])
+})).sort((a,b)=>(b.output||0)-(a.output||0)):[];
  const keyRows=rowsBySheet('Keyphrase analysis');
  const keyHeader=findHeaderIndex(keyRows,'Keyphrase');
- const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).slice(0,12).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):[];
+ const keyphrases=keyHeader>=0?keyRows.slice(keyHeader+1).filter(r=>r[0]&&!String(r[0]).includes('Elsevier')).map(r=>[r[0],cleanNum(r[1]),cleanNum(r[2])]):[];
  const self=SELF_INSTITUTIONS[school]||'';
  const partners={
   institutions:parseMatrix(rowsBySheet('Top 5 Institutions by Schol...'),'Institutions').filter(x=>!self||!String(x[0]).includes(self)),
@@ -1467,32 +1505,53 @@ function renderTrendSeriesFilters(datasets){
  const host=document.getElementById('trendSeriesFilters');
  if(!host) return;
  const rows=datasets||[];
- const visibleCount=rows.filter(ds=>!trendHiddenLabels.has(ds.label)).length;
- const summaryText=visibleCount===rows.length?'全部顯示':`已選 ${visibleCount} 個系列`;
- host.innerHTML=`<span class="series-filter-label">篩選資料</span><details class="series-filter-menu"><summary>${summaryText}</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
+ const summaryText=()=>{
+  const visibleCount=rows.filter(ds=>!trendHiddenLabels.has(ds.label)).length;
+  return visibleCount===rows.length?'全部顯示':visibleCount===0?'全部隱藏':`已選 ${visibleCount} 個系列`;
+ };
+ host.innerHTML=`<span class="series-filter-label">篩選器</span><details class="series-filter-menu"><summary>${summaryText()}</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
   const hidden=trendHiddenLabels.has(ds.label);
   const color=ds.referenceAverage?'rgba(255,255,255,.72)':ds.borderColor;
   return `<label class="series-filter-option ${hidden?'':'active'}" style="--series-color:${color}"><input type="checkbox" value="${escapeHtml(ds.label)}" ${hidden?'':'checked'}><span class="swatch"></span><span>${escapeHtml(ds.label)}</span></label>`;
  }).join('')}</div></div></details>`;
  const menu=host.querySelector('.series-filter-menu');
+ const summary=menu.querySelector('summary');
+
+ const applyVisibility=()=>{
+  if(charts.trend){
+   charts.trend.data.datasets.forEach(ds=>{
+    ds.hidden=trendHiddenLabels.has(ds.label);
+   });
+   charts.trend.update();
+  }
+  host.querySelectorAll('.series-filter-option').forEach(option=>{
+   const input=option.querySelector('input');
+   option.classList.toggle('active',input.checked);
+  });
+  summary.textContent=summaryText();
+ };
+
  host.querySelectorAll('input').forEach(input=>{
   input.addEventListener('change',()=>{
    if(input.checked) trendHiddenLabels.delete(input.value);
    else trendHiddenLabels.add(input.value);
-   renderGeneral();
+   applyVisibility();
   });
  });
- host.querySelector('[data-action="all"]').addEventListener('click',()=>{
+
+ host.querySelector('[data-action="all"]').addEventListener('click',event=>{
+  event.preventDefault();
   rows.forEach(ds=>trendHiddenLabels.delete(ds.label));
-  renderGeneral();
+  host.querySelectorAll('input').forEach(input=>input.checked=true);
+  applyVisibility();
  });
- host.querySelector('[data-action="none"]').addEventListener('click',()=>{
+
+ host.querySelector('[data-action="none"]').addEventListener('click',event=>{
+  event.preventDefault();
   rows.forEach(ds=>trendHiddenLabels.add(ds.label));
-  renderGeneral();
+  host.querySelectorAll('input').forEach(input=>input.checked=false);
+  applyVisibility();
  });
- document.addEventListener('click',function closeSeriesFilter(event){
-  if(menu&&!menu.contains(event.target)) menu.removeAttribute('open');
- },{once:true,capture:true});
 }
 function summarySparkline(school,key,selectedYear){
  const selectedNum=Number(selectedYear);
@@ -1567,12 +1626,15 @@ function sankeyDetailHtml(body){
  return introCard+cards;
 }
 function topCollabSummaries(data){
- const subjects=(data.subjects||[]).filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.area,value:r.output,detail:`${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`}));
+ const mainSubjects=(data.subjects||[]).filter(r=>!r.subcategory||r.subcategory==='-');
+ const subjectPool=mainSubjects.length?mainSubjects:(data.subjects||[]);
+ const subjects=subjectPool.filter(r=>typeof r.output==='number'&&r.output>0).slice().sort((a,b)=>b.output-a.output).slice(0,5).map(r=>({label:r.label||r.area,value:r.output,detail:`${r.label||r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`}));
  const keyphrases=(data.keyphrases||[]).map(r=>({label:r[0],value:cleanNum(r[1])})).filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`${r.label}｜Relevance ${fmt(r.value)}`}));
  const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
  const sources=[
   ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
   ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
+  ...(p.authors||[]).map(x=>({type:'Author',label:x[0],value:cleanNum(x[1])})),
   ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
  ].filter(r=>typeof r.value==='number'&&r.value>0).sort((a,b)=>b.value-a.value).slice(0,5).map(r=>({label:r.label,value:r.value,detail:`${r.label}｜Subcategory ${r.type}｜Total ${fmt(r.value)}`}));
  return {subjects,keyphrases,sources};
@@ -1588,7 +1650,7 @@ function collabSankeyGroups(data){
   .filter(r=>r.area)
   .slice()
   .sort((a,b)=>(b.output||0)-(a.output||0))
-  .map(r=>`${r.area}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`)
+  .map(r=>`${r.label||r.area}｜${(!r.subcategory||r.subcategory==='-')?'Main Subject Area':'Subcategory'}｜Output ${fmt(r.output)}｜FWCI ${fmt(r.fwci)}`)
   .join('\n');
  const keyphraseList=(data.keyphrases||[])
   .filter(r=>r[0]&&typeof cleanNum(r[1])==='number')
@@ -1600,6 +1662,7 @@ function collabSankeyGroups(data){
  const allSources=[
   ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
   ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
+  ...(p.authors||[]).map(x=>({type:'Author',label:x[0],value:cleanNum(x[1])})),
   ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
  ].filter(r=>r.label&&typeof r.value==='number')
   .sort((a,b)=>b.value-a.value);
@@ -1626,7 +1689,7 @@ function collabSankeyGroups(data){
    color:'#5DBB63',
    items:normalize(top.sources,'Total'),
    sub:'外層 Top 5｜點擊查看全部',
-   detail:`Collaboration Source 全部項目（依 Total 排序）\n${sourceList}`
+   detail:`Collaboration Source 全部可用項目（Institution／Country／Author／Source，依 Total 排序）\n${sourceList}`
   }
  ];
  return groupRows.filter(g=>g.items.length);
