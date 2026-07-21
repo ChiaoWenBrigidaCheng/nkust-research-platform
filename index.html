@@ -371,6 +371,32 @@ header,main,.footer{position:relative;z-index:1}
 }
 </style>
 
+
+<style>
+/* Mobile: let the back button scroll with the content instead of staying sticky */
+@media (max-width:768px){
+  .sankey-detail-footer{
+    position:static !important;
+    bottom:auto !important;
+    background:transparent !important;
+    padding-top:12px !important;
+    margin-top:12px !important;
+    border-top:none !important;
+    box-shadow:none !important;
+  }
+  .sankey-detail .sankey-back-btn{
+    position:static !important;
+    width:100% !important;
+    max-width:260px !important;
+    display:block !important;
+    margin:0 auto 10px auto !important;
+  }
+  .sankey-detail-body{
+    padding-bottom:8px !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
