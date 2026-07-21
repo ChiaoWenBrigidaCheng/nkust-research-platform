@@ -32,9 +32,17 @@ header,main,.footer{position:relative;z-index:1}
 .word-cloud span{animation:wordDrift var(--dur,28s) ease-in-out infinite alternate;transition:opacity .16s ease,text-shadow .16s ease,filter .16s ease}.word-cloud span.word-lit{opacity:1;filter:brightness(1.28);text-shadow:0 0 26px currentColor,0 0 54px currentColor,0 0 86px rgba(255,255,255,.42)}
 .sankey-link{cursor:pointer}.sankey-link.active{opacity:.88;filter:drop-shadow(0 0 14px rgba(98,214,239,.28))}
 .general-compare-row{grid-template-columns:minmax(360px,.95fr) minmax(520px,1.35fr)}.panel-filter-row{gap:12px;align-items:end}.panel-filter-row .control{width:min(300px,100%)}@media(max-width:1000px){.general-compare-row{grid-template-columns:1fr}.panel-filter-row{justify-content:flex-start}.panel-filter-row .control{width:min(330px,100%)}}
+.series-filter{position:relative;margin:4px 0 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.series-filter-label{color:#b9cedd;font-size:14px;font-weight:800}.series-filter-menu{position:relative}.series-filter-menu summary{list-style:none;display:inline-flex;align-items:center;gap:9px;min-width:245px;padding:11px 14px;border:1px solid rgba(132,205,235,.34);border-radius:10px;background:linear-gradient(145deg,rgba(18,39,57,.92),rgba(7,20,33,.90));color:#eef9ff;font-size:14px;font-weight:900;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08)}.series-filter-menu summary::-webkit-details-marker{display:none}.series-filter-menu summary:after{content:"▾";margin-left:auto;color:#7bddff;transition:transform .18s}.series-filter-menu[open] summary:after{transform:rotate(180deg)}.series-filter-panel{position:absolute;left:0;top:calc(100% + 8px);z-index:20;width:min(360px,82vw);padding:12px;border:1px solid rgba(132,205,235,.34);border-radius:12px;background:rgba(5,17,29,.98);box-shadow:0 20px 42px rgba(0,0,0,.46)}.series-filter-actions{display:flex;gap:8px;margin-bottom:10px}.series-filter-actions button{border:1px solid rgba(132,205,235,.28);border-radius:8px;background:rgba(21,47,67,.78);color:#dff6ff;padding:7px 10px;font-size:12px;font-weight:800;cursor:pointer}.series-filter-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.series-filter-option{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid rgba(132,205,235,.16);border-radius:9px;background:rgba(10,27,42,.72);color:#b8cddd;font-size:13px;font-weight:800;cursor:pointer}.series-filter-option input{accent-color:#62d6ef}.series-filter-option .swatch{width:18px;height:4px;border-radius:999px;background:var(--series-color,#62d6ef);box-shadow:0 0 9px color-mix(in srgb,var(--series-color,#62d6ef) 60%,transparent)}.series-filter-option.active{color:#f4fbff;border-color:rgba(132,205,235,.42);background:rgba(22,49,69,.86)}@media(max-width:620px){.series-filter-options{grid-template-columns:1fr}.series-filter-menu summary{min-width:min(100%,280px)}}
 .sankey-wrap .sankey-svg{transition:opacity .28s ease,filter .28s ease,transform .28s ease}.sankey-wrap.drill-open .sankey-svg{opacity:.28;filter:blur(1.5px) saturate(.76);transform:scale(.985)}.sankey-wrap.drill-open:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(98,214,239,.12),rgba(2,10,17,.58));z-index:3;pointer-events:none}.sankey-detail{left:50%;right:auto;top:50%;width:min(760px,calc(100% - 48px));max-height:calc(100% - 64px);display:block;visibility:hidden;opacity:0;pointer-events:none;z-index:6;transform:translate(-50%,-43%) scale(.86);transition:opacity .26s ease,transform .32s cubic-bezier(.18,.9,.24,1.08),visibility .26s ease;padding:26px 28px 24px}.sankey-detail.open{visibility:visible;opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.sankey-detail button{position:static;width:auto;height:auto;margin:0 0 16px;padding:9px 14px;border-radius:999px;font-size:14px;font-weight:900;line-height:1.1}.sankey-detail h3{font-size:28px;margin:0 0 14px}.sankey-detail-body{font-size:17px;line-height:1.85;max-height:560px;border-top:1px solid rgba(132,205,235,.18);padding-top:14px}@media(max-width:1000px){.sankey-detail{left:50%;right:auto;top:50%;width:calc(100% - 36px);padding:22px}.sankey-detail h3{font-size:24px}.sankey-detail-body{font-size:15px;max-height:680px}}
 .sankey-wrap.drill-open .sankey-svg{opacity:.08;filter:blur(2.4px) saturate(.55);transform:translateX(-28px) scale(.94)}.sankey-detail{width:min(1080px,calc(100% - 54px));min-height:min(600px,calc(100% - 70px));max-height:calc(100% - 54px);display:flex;flex-direction:column;background:linear-gradient(145deg,rgba(10,26,42,.98),rgba(5,15,26,.96));border-color:rgba(132,205,235,.48)}.sankey-detail .drill-kicker{color:#7bddff;font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px}.sankey-detail h3{font-size:32px;letter-spacing:.01em}.sankey-detail-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-content:start;overflow:auto}.sankey-detail-card{border:1px solid rgba(132,205,235,.22);border-radius:12px;background:linear-gradient(145deg,rgba(20,43,62,.72),rgba(7,20,34,.66));padding:13px 15px;color:#d8ebf7;font-size:15px;line-height:1.55}.sankey-detail-card strong{display:block;color:#fff;font-size:17px;margin-bottom:4px}.sankey-detail-card span{color:#9fb9ca;font-weight:700}.sankey-detail-card.full{grid-column:1/-1}@media(max-width:760px){.sankey-detail-body{grid-template-columns:1fr}.sankey-detail{width:calc(100% - 28px);min-height:calc(100% - 36px)}.sankey-detail h3{font-size:24px}}
 .sankey-wrap.drill-open .sankey-svg{opacity:0;filter:blur(4px) saturate(.45);transform:translateX(-80px) scale(.9);pointer-events:none}.sankey-wrap.drill-open:after{background:linear-gradient(110deg,rgba(2,10,17,.82),rgba(12,31,47,.66));backdrop-filter:blur(4px)}.sankey-detail{left:0;top:0;width:100%;height:100%;min-height:0;max-height:none;border:0;border-radius:14px;padding:34px 38px;background:linear-gradient(145deg,rgba(9,25,41,.99),rgba(3,12,22,.98));transform:translateX(10%) scale(.96);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}.sankey-detail.open{transform:translateX(0) scale(1)}.sankey-detail button{align-self:flex-start;background:rgba(98,214,239,.13);border-color:rgba(132,205,235,.38);box-shadow:0 10px 22px rgba(0,0,0,.24)}.sankey-detail-body{max-height:none;flex:1;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start}.sankey-detail-card{background:linear-gradient(145deg,rgba(21,48,70,.88),rgba(10,27,43,.78));border-color:rgba(132,205,235,.28)}@media(max-width:980px){.sankey-detail-body{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.sankey-detail{padding:24px 20px}.sankey-detail-body{grid-template-columns:1fr}}
+.sankey-drill-actions{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 13px}.sankey-drill-btn{border:1px solid rgba(132,205,235,.30);border-radius:999px;background:rgba(16,39,57,.84);color:#dff6ff;padding:9px 13px;font-size:13px;font-weight:900;cursor:pointer;transition:.16s}.sankey-drill-btn:hover{transform:translateY(-1px);border-color:rgba(137,219,255,.62);background:rgba(27,58,78,.94)}.sankey-node-hit{fill:transparent;pointer-events:all;cursor:pointer}.sankey-link{pointer-events:all}
+
+/* Keep the central analytics corridor clear; research words stay on the side rails. */
+.word-cloud:before{background:linear-gradient(90deg,transparent 0 18%,rgba(7,15,25,.22) 28%,rgba(7,15,25,.88) 39%,rgba(7,15,25,.94) 50%,rgba(7,15,25,.88) 61%,rgba(7,15,25,.22) 72%,transparent 82%)}
+.word-cloud .w20{left:2vw;top:20%}.word-cloud .w21{right:2vw;top:42%}.word-cloud .w22{left:3vw;top:57%}.word-cloud .w23{right:3vw;top:66%}.word-cloud .w24{left:4vw;top:92%}.word-cloud .w25{left:2vw;top:34%}.word-cloud .w26{right:2vw;top:30%}.word-cloud .w29{left:4vw;top:75%}.word-cloud .w30{right:4vw;top:84%}.word-cloud .w33{left:2vw;top:49%}.word-cloud .w34{right:2vw;top:57%}.word-cloud .w35{left:7vw;top:86%}.word-cloud .w36{right:7vw;top:38%}
+@media(min-width:1100px){.word-cloud span{max-width:18vw;overflow:hidden;text-overflow:ellipsis}.word-cloud .hero{left:1vw}.word-cloud .w1{right:1vw}}
+
 </style>
 </head>
 <body>
@@ -71,9 +79,9 @@ header,main,.footer{position:relative;z-index:1}
     </div>
     <div class="grid general-compare-row">
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
-      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值；可點擊圖例顯示或隱藏系列</div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
+      <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值。請使用下方篩選器選擇要顯示的學校。</div><div id="trendSeriesFilters" class="series-filter" aria-label="六校年度趨勢顯示篩選"></div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構桑基圖以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。各類別的流帶寬度採類別內相對尺度呈現，適合比較同類項目強弱；不同類別因指標單位不同，不直接比較寬度。點擊節點或流帶可查看 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total。">合作研究結構桑基圖</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div id="collabDrillActions" class="sankey-drill-actions" aria-label="合作分析明細捷徑"></div><div class="sankey-title"><span class="has-metric-tip" data-tooltip="合作研究結構桑基圖以目前篩選的主要學校、年度與合作類型為左側情境，流向 Subject Area、Keyphrases、Collaboration Source 三類，再連到各類 Top 5 項目。各類別的流帶寬度採類別內相對尺度呈現，適合比較同類項目強弱；不同類別因指標單位不同，不直接比較寬度。點擊節點或流帶可查看 Subcategory、Output、FWCI、Keyphrases Relevance 或合作來源 Total。">合作研究結構桑基圖</span><span>Context → Category → Top 5</span></div><div id="collabSankey" class="sankey-wrap"></div></div>
     <div class="panel"><h2>六校研究量能資料表</h2><div class="sort-bar"><div class="control"><label>資料年度</label><select id="generalTableYearSelect"></select></div></div><div class="table-wrap"><table id="generalTable"></table></div></div>
   </section>
 
@@ -1013,7 +1021,8 @@ function renderGeneral(){
  }
  destroy('trend');
  const trendOptions=dynamicLineChartOpts(generalMetrics[metric],datasets);
- trendOptions.plugins.legend.onClick=toggleTrendSeries;
+ trendOptions.plugins.legend.display=false;
+ renderTrendSeriesFilters(datasets);
  charts.trend=new Chart(trendChart,{type:'line',data:{labels:trendYears,datasets},options:trendOptions});
 
  const rank=sortItems(DATA.universities.map((u,i)=>{const r=record(DATA.general,u,year);return {u,v:r&&typeof r[metric]==='number'?r[metric]:null,c:schoolColor(u)}}).filter(x=>x.v!==null),generalRankSort.value,'v');
@@ -1047,6 +1056,36 @@ function renderGeneral(){
  renderGeneralTable(year);
  const previousYear=Number.isFinite(Number(year))?Number(year)-1:null;
  renderSummary(row,previousYear!==null?record(DATA.general,school,previousYear):null,school,year);
+}
+function renderTrendSeriesFilters(datasets){
+ const host=document.getElementById('trendSeriesFilters');
+ if(!host) return;
+ const rows=datasets||[];
+ const visibleCount=rows.filter(ds=>!trendHiddenLabels.has(ds.label)).length;
+ host.innerHTML=`<span class="series-filter-label">顯示系列</span><details class="series-filter-menu"><summary>已顯示 ${visibleCount} / ${rows.length} 個系列</summary><div class="series-filter-panel"><div class="series-filter-actions"><button type="button" data-action="all">全部顯示</button><button type="button" data-action="none">全部隱藏</button></div><div class="series-filter-options">${rows.map(ds=>{
+  const hidden=trendHiddenLabels.has(ds.label);
+  const color=ds.referenceAverage?'rgba(255,255,255,.72)':ds.borderColor;
+  return `<label class="series-filter-option ${hidden?'':'active'}" style="--series-color:${color}"><input type="checkbox" value="${escapeHtml(ds.label)}" ${hidden?'':'checked'}><span class="swatch"></span><span>${escapeHtml(ds.label)}</span></label>`;
+ }).join('')}</div></div></details>`;
+ const menu=host.querySelector('.series-filter-menu');
+ host.querySelectorAll('input').forEach(input=>{
+  input.addEventListener('change',()=>{
+   if(input.checked) trendHiddenLabels.delete(input.value);
+   else trendHiddenLabels.add(input.value);
+   renderGeneral();
+  });
+ });
+ host.querySelector('[data-action="all"]').addEventListener('click',()=>{
+  rows.forEach(ds=>trendHiddenLabels.delete(ds.label));
+  renderGeneral();
+ });
+ host.querySelector('[data-action="none"]').addEventListener('click',()=>{
+  rows.forEach(ds=>trendHiddenLabels.add(ds.label));
+  renderGeneral();
+ });
+ document.addEventListener('click',function closeSeriesFilter(event){
+  if(menu&&!menu.contains(event.target)) menu.removeAttribute('open');
+ },{once:true,capture:true});
 }
 function summarySparkline(school,key,selectedYear){
  const selectedNum=Number(selectedYear);
@@ -1160,6 +1199,10 @@ function renderCollabSankey(data,school,label,period){
  }
  host.dataset.school=school;
  host.dataset.type=label;
+ const drillActions=document.getElementById('collabDrillActions');
+ if(drillActions){
+  drillActions.innerHTML=groups.map((g,i)=>`<button type="button" class="sankey-drill-btn" data-group-index="${i}">查看 ${escapeHtml(g.label)} 明細</button>`).join('');
+ }
  const width=1280, height=760;
  const svg=svgEl('svg',{viewBox:`0 0 ${width} ${height}`,role:'img','aria-label':`${school} ${label} ${period} 合作研究結構桑基圖`,class:'sankey-svg'});
  const defs=svgEl('defs');
@@ -1202,11 +1245,12 @@ function renderCollabSankey(data,school,label,period){
  const openSankeyDetail=(el,title,body)=>{
   hideMetricPopover();
   svg.querySelectorAll('.sankey-node.active,.sankey-link.active').forEach(node=>node.classList.remove('active'));
-  el.classList.add('active');
+  if(el&&el.classList) el.classList.add('active');
   detailTitle.textContent=title||'合作分析資訊';
   detailBody.innerHTML=sankeyDetailHtml(body);
   host.classList.add('drill-open');
   detailPanel.classList.add('open');
+  requestAnimationFrame(()=>detailPanel.scrollIntoView({behavior:'smooth',block:'nearest'}));
  };
  const attachSankeyClick=(el,title,body)=>{
   if(!body) return;
@@ -1227,6 +1271,7 @@ function renderCollabSankey(data,school,label,period){
   const g=svgEl('g',{class:'sankey-node'});
   attachSankeyClick(g,detailTitleText||label,detailText);
   g.appendChild(svgEl('rect',{x,y,width:w,height:h,rx:7,fill:color}));
+  g.appendChild(svgEl('rect',{x:x-5,y:y-5,width:w+10,height:h+10,rx:10,class:'sankey-node-hit'}));
   parent.appendChild(g);
   const labelY=sub&&h>48?y+h/2-10:y+h/2;
   drawText(g,shortLabel(label,maxChars),x+14,labelY,'sankey-label');
@@ -1272,6 +1317,15 @@ function renderCollabSankey(data,school,label,period){
  svg.appendChild(allNodes);
  host.appendChild(svg);
  host.appendChild(detailPanel);
+ if(drillActions){
+  drillActions.querySelectorAll('[data-group-index]').forEach(btn=>{
+   btn.addEventListener('click',()=>{
+    const idx=Number(btn.dataset.groupIndex);
+    const group=groups[idx];
+    if(group) openSankeyDetail(btn,group.label,group.detail);
+   });
+  });
+ }
 }
 function collabKpiRows(data,school,type,period){
  if(period&&period!=='2018-2025'){
@@ -1428,18 +1482,6 @@ function syncLineAxisBounds(opts,values){
  const pad=range>0?range*.12:Math.max(Math.abs(max)*.08,1);
  opts.scales.y.min=min-pad>0?min-pad:0;
  opts.scales.y.max=max+pad;
-}
-function toggleTrendSeries(event,legendItem,legend){
- const chart=legend.chart;
- const index=legendItem.datasetIndex;
- const ds=chart.data.datasets[index];
- if(!ds) return;
- const visible=chart.isDatasetVisible(index);
- chart.setDatasetVisibility(index,!visible);
- if(visible) trendHiddenLabels.add(ds.label);
- else trendHiddenLabels.delete(ds.label);
- syncLineAxisBounds(chart.options,chart.data.datasets.flatMap((dataset,i)=>i===index?!visible?dataset.data||[]:[]:chart.isDatasetVisible(i)?dataset.data||[]:[]));
- chart.update();
 }
 function chartOpts(title,legend=true,horizontal=false){
  return {responsive:true,maintainAspectRatio:false,indexAxis:horizontal?'y':'x',
