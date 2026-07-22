@@ -298,10 +298,10 @@
   - Subject Area：Top 5，依 Output 排序。
   - Keyphrases：Top 5，依 Relevance 排序。
   - Collaboration Source：Top 5，依 Total 排序。
-- 點擊中間分類區塊後顯示完整清單：
+- 點擊中間分類區塊後顯示分類清單：
   - Subject Area 顯示全部 Subject Area、Output 與 FWCI。
   - Keyphrases 顯示全部 Keyphrases 與 Relevance。
-  - Collaboration Source 顯示全部 Institution、Country/Region、Source 與 Total。
+  - Collaboration Source 將 Institution、Country / Region、Author、Source 分類後，各自依 Total 排序並僅顯示 Top 5。
 - 流帶寬度以各分類內實際數值的平方根比例配置，避免極端值使小項目完全不可見，同時保留大小差異。
 - 提高流帶不透明度、加入細邊界及 hover 對比，使流向寬度更容易辨識。
 
@@ -311,7 +311,7 @@
   - Subject Area：依 Output 排名前五名。
   - Keyphrases：依 Relevance 排名前五名。
   - Collaboration Source：依 Total 排名前五名。
-- 點擊中間的 Subject Area、Keyphrases 或 Collaboration Source 區塊後，顯示該分類的全部項目。
+- 點擊 Subject Area 或 Keyphrases 後顯示該分類的完整項目；點擊 Collaboration Source 後，各分類僅顯示依 Total 排序的 Top 5。
 - 細部資料視窗採固定標題與底部操作區，中間完整清單可獨立上下捲動。
 - 「回上一頁」固定顯示於細部資訊下方，不會再被網站頁尾遮住。
 
@@ -437,7 +437,7 @@
   - Author
   - Source
 - 四類資料不再混合比較。
-- 每一分類僅在分類內依 `Total` 由高至低排序。
+- 每一分類僅在分類內依 `Total` 由高至低排序，並只列出 Top 5。
 - 電腦版分類內容採多欄卡片排列；手機版自動改為單欄，方便捲動閱讀。
 
 ## 主標題與背景修正
@@ -458,8 +458,14 @@
 - 文字改為偏暖白色，與深藍、深紅及土黃色更協調。
 
 ## Collaboration Source 資料範圍說明
-- 展開頁面不再以「全部資料」暗示完整母體。
+- 展開頁面明確標示各分類僅列出 Top 5。
 - 顯示內容依目前篩選條件與 SciVal 匯出資料整理。
-- Institution、Country / Region、Author、Source 各分類依 `Total` 由高至低排序。
-- 實際顯示項目依 Excel／SciVal 匯出內容而定，並不代表所有合作對象。
+- Institution、Country / Region、Author、Source 各分類依 `Total` 由高至低排序，並僅顯示前五名。
+- 說明文字改為：「以下內容依據目前篩選條件及 SciVal 匯出資料整理，各分類依 Total 由高至低排序，僅列出 Top 5。」
 - 資料來源標示為 `Elsevier SciVal Collaboration Module`。
+
+
+## 2026-07-22 更新：Collaboration Source 僅列 Top 5
+- 更新展開頁面說明文字，明確標示各分類僅列出 Top 5。
+- Institution、Country / Region、Author、Source 各分類先依 `Total` 由高至低排序，再限制顯示前五筆。
+- 避免畫面說明與實際呈現筆數不一致。

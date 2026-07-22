@@ -2079,6 +2079,7 @@ function collabSankeyGroups(data){
   const rows=section.rows
    .filter(r=>r.label&&typeof r.value==='number')
    .sort((a,b)=>b.value-a.value)
+   .slice(0,5)
    .map(r=>`${r.label}｜Total ${fmt(r.value)}`)
    .join('\n');
   return rows?`## ${section.title}\n${rows}`:'';
@@ -2103,7 +2104,7 @@ function collabSankeyGroups(data){
    color:'#A18443',
    items:normalize(top.sources,'Total'),
    sub:'外層 Top 5｜點擊查看全部',
-   detail:`Collaboration Source 分類明細\n以下內容依據目前篩選條件及 SciVal 匯出資料整理，各分類依 Total 由高至低排序；實際顯示項目依匯出資料內容而定，並不代表所有合作對象。資料來源：Elsevier SciVal Collaboration Module。\n${sourceList}`
+   detail:`Collaboration Source 分類明細\n以下內容依據目前篩選條件及 SciVal 匯出資料整理，各分類依 Total 由高至低排序，僅列出 Top 5。資料來源：Elsevier SciVal Collaboration Module。\n${sourceList}`
   }
  ];
  return groupRows.filter(g=>g.items.length);
