@@ -433,29 +433,209 @@ header,main,.footer{position:relative;z-index:1}
   }
 }
 </style>
+
+<style>
+/* Final homepage background-word simplification */
+.word-cloud{
+  opacity:.58;
+}
+.word-cloud span{
+  max-width:none!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+}
+.word-cloud .hero{
+  left:1.5vw!important;
+  top:72%!important;
+  font-size:clamp(72px,8.2vw,138px)!important;
+  --op:.48!important;
+}
+.word-cloud .w1{
+  right:1.5vw!important;
+  top:46%!important;
+  font-size:clamp(54px,6.2vw,104px)!important;
+  --op:.50!important;
+}
+.word-cloud .w2{
+  left:4vw!important;
+  top:21%!important;
+  font-size:clamp(30px,3.3vw,58px)!important;
+  --op:.52!important;
+}
+.word-cloud .w3{
+  right:5vw!important;
+  top:24%!important;
+  font-size:clamp(30px,3.2vw,56px)!important;
+  --op:.52!important;
+}
+.word-cloud .w4{
+  left:8vw!important;
+  top:42%!important;
+  font-size:clamp(26px,2.8vw,48px)!important;
+  --op:.48!important;
+}
+.word-cloud .w5{
+  right:10vw!important;
+  top:35%!important;
+  font-size:clamp(26px,2.8vw,48px)!important;
+  --op:.48!important;
+}
+.word-cloud .w8{
+  left:3vw!important;
+  top:55%!important;
+  font-size:clamp(22px,2.35vw,40px)!important;
+  --op:.46!important;
+}
+.word-cloud .w9{
+  right:3vw!important;
+  top:62%!important;
+  font-size:clamp(22px,2.35vw,40px)!important;
+  --op:.46!important;
+}
+.word-cloud .w12{
+  left:20vw!important;
+  top:29%!important;
+  font-size:clamp(20px,2vw,34px)!important;
+  --op:.44!important;
+}
+.word-cloud .w13{
+  right:21vw!important;
+  top:32%!important;
+  font-size:clamp(20px,2vw,34px)!important;
+  --op:.44!important;
+}
+.word-cloud .w37{
+  left:2vw!important;
+  top:12%!important;
+  font-size:clamp(20px,2.1vw,36px)!important;
+  --op:.44!important;
+}
+.word-cloud .w38{
+  right:2vw!important;
+  top:15%!important;
+  font-size:clamp(20px,2.1vw,36px)!important;
+  --op:.44!important;
+}
+.word-cloud .w42{
+  right:2vw!important;
+  top:76%!important;
+  font-size:clamp(19px,1.9vw,32px)!important;
+  --op:.42!important;
+}
+.word-cloud .w47{
+  left:2vw!important;
+  top:88%!important;
+  font-size:clamp(19px,1.9vw,32px)!important;
+  --op:.42!important;
+}
+@media(max-width:900px){
+  .word-cloud{opacity:.46}
+  .word-cloud .hero{font-size:72px!important;top:75%!important}
+  .word-cloud .w1{font-size:58px!important;top:52%!important}
+  .word-cloud .w2,.word-cloud .w3{font-size:32px!important}
+  .word-cloud .w4,.word-cloud .w5{font-size:28px!important}
+  .word-cloud .w37,.word-cloud .w38,.word-cloud .w42,.word-cloud .w47{display:none!important}
+}
+@media(max-width:620px){
+  .word-cloud{opacity:.38}
+  .word-cloud .hero{font-size:54px!important}
+  .word-cloud .w1{font-size:46px!important}
+  .word-cloud .w2,.word-cloud .w3{font-size:25px!important}
+  .word-cloud .w4,.word-cloud .w5{font-size:22px!important}
+  .word-cloud .w12,.word-cloud .w13{display:none!important}
+}
+</style>
+
+
+<style>
+/* Final title styling: solid white, bold, matching the ranking site */
+.site-header h1,
+header h1,
+.hero-title,
+.main-title{
+  color:#f7f9fc !important;
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  background-clip:initial !important;
+  -webkit-text-fill-color:#f7f9fc !important;
+  text-shadow:0 2px 0 rgba(0,0,0,.18),0 8px 18px rgba(0,0,0,.16) !important;
+  font-weight:900 !important;
+  letter-spacing:.015em !important;
+  line-height:1.08 !important;
+}
+@media(max-width:900px){
+  .site-header h1,
+  header h1,
+  .hero-title,
+  .main-title{
+    font-size:clamp(34px,7vw,64px) !important;
+    text-align:center !important;
+  }
+}
+</style>
+
+
+<style>
+/* Mobile: all large action buttons stay in document flow and never cover content */
+@media(max-width:768px){
+  .sankey-detail-footer,
+  .detail-footer,
+  .mobile-action-footer,
+  .sticky-actions{
+    position:static !important;
+    inset:auto !important;
+    top:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    left:auto !important;
+    transform:none !important;
+    z-index:auto !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+
+  .sankey-back-btn,
+  .detail-back-btn,
+  .mobile-action-btn,
+  .sticky-actions button{
+    position:static !important;
+    inset:auto !important;
+    transform:none !important;
+    display:block !important;
+    width:100% !important;
+    max-width:260px !important;
+    margin:12px auto 10px !important;
+  }
+
+  .sankey-detail,
+  .sankey-detail-body,
+  .detail-panel,
+  .detail-content{
+    overflow:visible !important;
+    max-height:none !important;
+    height:auto !important;
+  }
+}
+</style>
+
 </head>
 <body>
-<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true"><span class="hero">research</span><span class="w1">impact</span><span class="w2">citations</span><span class="w3">analytics</span><span class="w4">Scopus</span><span class="w5">FWCI</span><span class="w6">THE</span><span class="w7">QS</span><span class="w8">collaboration</span><span class="w9">publications</span><span class="w10">ranking</span><span class="w11">industry</span><span class="w12">innovation</span><span class="w13">benchmarking</span><span class="w14">research output</span><span class="w15">journal quality</span><span class="w16">field weighted</span><span class="w17">university</span><span class="w18">citation index</span><span class="w19">research capacity</span><span class="w20">engineering</span><span class="w21">ocean science</span><span class="w22">faculty</span><span class="w23">knowledge</span><span class="w24">performance</span>
+<div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true">
+<span class="hero">research</span>
+<span class="w1">impact</span>
+<span class="w2">citations</span>
+<span class="w3">analytics</span>
+<span class="w4">Scopus</span>
+<span class="w5">FWCI</span>
+<span class="w8">collaboration</span>
+<span class="w9">publications</span>
+<span class="w12">innovation</span>
+<span class="w13">benchmarking</span>
 <span class="w37">research excellence</span>
 <span class="w38">institutional research</span>
-<span class="w39">academic impact</span>
-<span class="w40">citation network</span>
-<span class="w41">industry partnership</span>
 <span class="w42">global collaboration</span>
-<span class="w43">research governance</span>
-<span class="w44">data intelligence</span>
-<span class="w45">scientific output</span>
-<span class="w46">benchmark analysis</span>
 <span class="w47">research strategy</span>
-<span class="w48">talent development</span>
-<span class="w49">interdisciplinary</span>
-<span class="w50">research portfolio</span>
-<span class="w51">academic reputation</span>
-<span class="w52">knowledge transfer</span>
-<span class="w53">innovation ecosystem</span>
-<span class="w54">international network</span>
-<span class="w55">sustainable research</span>
-<span class="w56">evidence-based policy</span></div>
+</div>
 <header><h1>高雄科技大學研究量能分析平台</h1><p id="platformSubtitle">2018–2025 年研究量能、研究影響力與校際標竿分析</p></header>
 
 <nav>

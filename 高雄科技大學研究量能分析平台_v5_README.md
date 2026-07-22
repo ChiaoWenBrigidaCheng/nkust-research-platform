@@ -68,6 +68,8 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰且更粗重有力的純文字標題。
 
 ## 修改紀錄
+- 2026-07-22：調整首頁主標題與手機版操作。首頁主標題改為實心白色粗體字，取消漸層文字效果，並保留既有深色背景色系。手機版再次強制取消大型操作按鈕的 fixed/sticky 定位，按鈕改為跟隨內容正常捲動，避免遮擋畫面。
+- 2026-07-22：精簡首頁左右兩側背景文字。背景關鍵字由原本約 40 個以上縮減為 14 個核心詞彙，並放大主要文字、增加留白與降低整體視覺密度。保留 Research、Impact、Citations、Analytics、Scopus、FWCI、Collaboration、Publications、Innovation、Benchmarking、Research Excellence、Institutional Research、Global Collaboration 與 Research Strategy。平板與手機版會再隱藏部分次要詞彙，避免小螢幕過度擁擠。
 - 2026-07-21：將所有多校圖表的學校圖例統一改為可實際操作的多選篩選器。研究產出 × 研究影響力、THE 學科年度趨勢及 QS 學科年度趨勢均移除原生圖例；使用者可自由勾選或取消任意學校，連續操作時選單不會自動關閉，並可使用全部顯示或全部隱藏。圖表會即時更新，切換年度、指標或學科後也會保留篩選狀態。
 - 2026-07-21：修正桑基圖三個中間分類的展開內容。Subject Area 現在保留主領域與 Subcategory，不再因只讀取第一欄而出現重複名稱或遺漏次領域；外層 Top 5 僅使用主領域，點擊後則顯示全部主領域與次領域。Keyphrases 取消原先 12/24 筆的程式截斷，改為讀取 Excel 中全部關鍵詞。Collaboration Source 加入 Authors，展開後顯示 Excel 可提供的 Institution、Country/Region、Author 與 Source 全部項目。
 - 2026-07-21：調整「六校年度趨勢」學校篩選器。介面標示由「篩選資料」簡化為「篩選器」；勾選或取消單一學校時，選單不再自動關閉，使用者可連續自由勾選多所學校。圖表會即時更新，且不重新建立整個頁面。「全部顯示／全部隱藏」亦保留選單開啟狀態；手機版篩選清單增加可捲動高度。
@@ -387,3 +389,34 @@
 - 提供「全部顯示」及「全部隱藏」。
 - 圖表依選取結果即時更新。
 - 切換年度、指標或學科時保留學校篩選狀態。
+
+## 首頁背景文字精簡
+- 背景關鍵字縮減為 14 個核心詞彙。
+- 最大主視覺文字：
+  - Research
+  - Impact
+- 次層文字：
+  - Citations
+  - Analytics
+  - Scopus
+  - FWCI
+- 補充文字：
+  - Collaboration
+  - Publications
+  - Innovation
+  - Benchmarking
+  - Research Excellence
+  - Institutional Research
+  - Global Collaboration
+  - Research Strategy
+- 放大主要字級並增加左右留白，使背景更簡潔。
+- 降低整體背景文字透明度，避免干擾標題、導覽列與資料卡片。
+- 平板與手機版會自動隱藏部分較長的背景詞彙，以維持版面清楚。
+
+## 標題與手機版操作最終調整
+- 主標題改為實心白色粗體。
+- 取消標題漸層與文字裁切效果。
+- 背景維持原本深色系，不新增漸層。
+- 手機版大型按鈕取消 fixed 與 sticky 定位。
+- 按鈕改為位於內容流程中，會隨頁面正常捲動。
+- 避免按鈕長時間停留在畫面上方或下方而遮擋內容。
