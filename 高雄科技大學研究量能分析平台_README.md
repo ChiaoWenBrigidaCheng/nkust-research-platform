@@ -68,6 +68,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰且更粗重有力的純文字標題。
 
 ## 修改紀錄
+- 2026-07-22：移除 Collaboration Source 展開畫面中無實際內容支撐的「明細資料」預設字樣。當資料列僅為說明文字、未提供第二層欄位時，不再自動顯示「明細資料」，避免使用者誤以為仍有可繼續展開的資料；Institution、Country / Region、Author 與 Source 的既有內容維持不變。
 - 2026-07-22：補充 Collaboration Source 展開內容的資料範圍說明。新增註記指出頁面係依目前篩選條件與 SciVal 匯出資料整理，各分類依 Total 排序；實際顯示項目依匯出資料內容而定，並不代表所有合作對象，同時標示資料來源為 Elsevier SciVal Collaboration Module。
 - 2026-07-22：調整桑基圖配色為較沉穩的學術風格。Subject Area 改為深藍色、Keyphrases 改為深紅色、Collaboration Source 改為土黃色。同時降低流帶透明度、移除高彩度光暈與 screen 混色，並淡化節點描邊，使整體配色更融合、不刺眼。
 - 2026-07-22：修正上一版未完全套用的主標題與背景樣式。主標題直接指定為實心白色超粗體，使用較接近排名網站的字型比例，並移除所有文字陰影、漸層裁切與濾鏡。頁面背景改為單一深藍色 #0B1825，同時移除 body 與 body:before 的 radial-gradient、linear-gradient 及網格漸層。

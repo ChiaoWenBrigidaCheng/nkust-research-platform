@@ -2000,7 +2000,7 @@ function sankeyDetailHtml(body){
  if(!lines.length) return '<div class="sankey-detail-card full">此節點沒有可顯示的明細。</div>';
 
  const intro=lines[0]&&!lines[0].startsWith('## ')?lines.shift():null;
- const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>依目前篩選條件展開的明細資料</span></div>`:'';
+ const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>依目前篩選條件展開</span></div>`:'';
 
  let html=introCard;
  let openSection=false;
@@ -2017,7 +2017,7 @@ function sankeyDetailHtml(body){
   const parts=line.split('｜').map(x=>x.trim()).filter(Boolean);
   const title=parts.shift()||line;
   const meta=parts.length?parts.join('｜'):'';
-  html+=`<div class="sankey-detail-card"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(meta||'明細資料')}</span></div>`;
+  html+=`<div class="sankey-detail-card"><strong>${escapeHtml(title)}</strong>${meta?`<span>${escapeHtml(meta)}</span>`:''}</div>`;
  });
 
  if(openSection) html+='</div></section>';
