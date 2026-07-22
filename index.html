@@ -618,6 +618,54 @@ header h1,
 }
 </style>
 
+
+<style>
+.collab-type-badge{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  margin-top:7px;
+  padding:5px 10px;
+  border-radius:999px;
+  border:1px solid rgba(93,187,99,.42);
+  background:rgba(93,187,99,.14);
+  color:#dfffe3;
+  font-size:13px;
+  font-weight:850;
+  line-height:1;
+}
+.sankey-title>div{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.sankey-detail-section{
+  grid-column:1/-1;
+  margin-top:6px;
+}
+.sankey-detail-section h4{
+  margin:4px 0 10px;
+  padding:8px 10px;
+  border-left:4px solid #5DBB63;
+  border-radius:0 8px 8px 0;
+  background:rgba(93,187,99,.11);
+  color:#eaffec;
+  font-size:16px;
+  font-weight:900;
+}
+.sankey-detail-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+@media(max-width:900px){
+  .sankey-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .sankey-detail-grid{grid-template-columns:1fr}
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true">
@@ -670,7 +718,7 @@ header h1,
       <div class="panel"><h2 id="generalRankTitle">當年度六校比較</h2><div class="sub">依選定指標排序</div><div class="sort-bar panel-filter-row"><div class="control"><label>趨勢指標</label><select id="generalMetricSelect"></select></div><div class="control"><label>排序</label><select id="generalRankSort"><option value="desc">由多到少</option><option value="asc">由少到多</option><option value="school">依學校順序</option></select></div></div><div class="chart-wrap small"><canvas id="rankChart"></canvas></div></div>
       <div class="panel"><h2>六校年度趨勢</h2><div class="sub">選定指標之 2018–2025 年變化；虛線為六校平均值。請使用下方篩選器選擇要顯示的學校。</div><div id="trendSeriesFilters" class="series-filter" aria-label="六校年度趨勢篩選資料"></div><div class="chart-wrap wide"><canvas id="trendChart"></canvas></div></div>
     </div>
-    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div><span id="collabSankeyMeta" class="collab-context"></span></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><span>合作研究結構</span><span>Context → Category → Top 5</span></div>
+    <div class="panel"><h2>合作分析摘要</h2><div class="metric-row collab-filter-row"><div class="control"><label>合作類型</label><select id="collabTypeSelect"></select></div></div><div id="collabKpis" class="kpis collab-kpis"></div><div class="sankey-title"><div><span>合作研究結構</span><span id="collabTypeBadge" class="collab-type-badge"></span></div><span>Context → Category → Top 5</span></div>
 <div class="sankey-method-note">
  <strong>連結線寬度：</strong>中間分類至右側 Top 5 的流帶，依各分類內的實際指標值按比例計算：
  Subject Area 使用 Output、Keyphrases 使用 Relevance、Collaboration Source 使用 Total。
@@ -1858,16 +1906,30 @@ function escapeHtml(value){
 function sankeyDetailHtml(body){
  const lines=String(body||'').split('\n').map(x=>x.trim()).filter(Boolean);
  if(!lines.length) return '<div class="sankey-detail-card full">此節點沒有可顯示的明細。</div>';
- const intro=lines.length>1?lines[0]:null;
- const items=intro?lines.slice(1):lines;
+
+ const intro=lines[0]&&!lines[0].startsWith('## ')?lines.shift():null;
  const introCard=intro?`<div class="sankey-detail-card full"><strong>${escapeHtml(intro)}</strong><span>依目前篩選條件展開的明細資料</span></div>`:'';
- const cards=items.map(line=>{
+
+ let html=introCard;
+ let openSection=false;
+
+ lines.forEach(line=>{
+  if(line.startsWith('## ')){
+   if(openSection) html+='</div>';
+   const heading=line.slice(3).trim();
+   html+=`<section class="sankey-detail-section"><h4>${escapeHtml(heading)}</h4><div class="sankey-detail-grid">`;
+   openSection=true;
+   return;
+  }
+
   const parts=line.split('｜').map(x=>x.trim()).filter(Boolean);
   const title=parts.shift()||line;
   const meta=parts.length?parts.join('｜'):'';
-  return `<div class="sankey-detail-card"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(meta||'明細資料')}</span></div>`;
- }).join('');
- return introCard+cards;
+  html+=`<div class="sankey-detail-card"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(meta||'明細資料')}</span></div>`;
+ });
+
+ if(openSection) html+='</div></section>';
+ return html;
 }
 function topCollabSummaries(data){
  const mainSubjects=(data.subjects||[]).filter(r=>!r.subcategory||r.subcategory==='-');
@@ -1903,16 +1965,32 @@ function collabSankeyGroups(data){
   .map(r=>`${r[0]}｜Relevance ${fmt(cleanNum(r[1]))}`)
   .join('\n');
  const p=data.partners||{institutions:[],countries:[],authors:[],journals:[]};
- const allSources=[
-  ...(p.institutions||[]).map(x=>({type:'Institution',label:x[0],value:cleanNum(x[1])})),
-  ...(p.countries||[]).map(x=>({type:'Country/Region',label:x[0],value:cleanNum(x[1])})),
-  ...(p.authors||[]).map(x=>({type:'Author',label:x[0],value:cleanNum(x[1])})),
-  ...(p.journals||[]).map(x=>({type:'Source',label:x[0],value:cleanNum(x[1])}))
- ].filter(r=>r.label&&typeof r.value==='number')
-  .sort((a,b)=>b.value-a.value);
- const sourceList=allSources
-  .map(r=>`${r.label}｜Subcategory ${r.type}｜Total ${fmt(r.value)}`)
-  .join('\n');
+ const sourceSections=[
+  {
+   title:'Institution',
+   rows:(p.institutions||[]).map(x=>({label:x[0],value:cleanNum(x[1])}))
+  },
+  {
+   title:'Country / Region',
+   rows:(p.countries||[]).map(x=>({label:x[0],value:cleanNum(x[1])}))
+  },
+  {
+   title:'Author',
+   rows:(p.authors||[]).map(x=>({label:x[0],value:cleanNum(x[1])}))
+  },
+  {
+   title:'Source',
+   rows:(p.journals||[]).map(x=>({label:x[0],value:cleanNum(x[1])}))
+  }
+ ];
+ const sourceList=sourceSections.map(section=>{
+  const rows=section.rows
+   .filter(r=>r.label&&typeof r.value==='number')
+   .sort((a,b)=>b.value-a.value)
+   .map(r=>`${r.label}｜Total ${fmt(r.value)}`)
+   .join('\n');
+  return rows?`## ${section.title}\n${rows}`:'';
+ }).filter(Boolean).join('\n');
  const groupRows=[
   {
    label:'Subject Area',
@@ -1933,15 +2011,15 @@ function collabSankeyGroups(data){
    color:'#5DBB63',
    items:normalize(top.sources,'Total'),
    sub:'外層 Top 5｜點擊查看全部',
-   detail:`Collaboration Source 全部可用項目（Institution／Country／Author／Source，依 Total 排序）\n${sourceList}`
+   detail:`Collaboration Source 分類明細（各分類依 Total 排序）\n${sourceList}`
   }
  ];
  return groupRows.filter(g=>g.items.length);
 }
 function renderCollabSankey(data,school,label,period){
  const host=document.getElementById('collabSankey');
- const meta=document.getElementById('collabSankeyMeta');
- if(meta) meta.textContent=`${school}｜${label}｜${period}`;
+ const typeBadge=document.getElementById('collabTypeBadge');
+ if(typeBadge) typeBadge.textContent=label;
  if(!host) return;
  host.innerHTML='';
  const groups=collabSankeyGroups(data);
