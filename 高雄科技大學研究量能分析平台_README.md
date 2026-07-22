@@ -461,7 +461,7 @@
 - 展開頁面明確標示各分類僅列出 Top 5。
 - 顯示內容依目前篩選條件與 SciVal 匯出資料整理。
 - Institution、Country / Region、Author、Source 各分類依 `Total` 由高至低排序，並僅顯示前五名。
-- 說明文字改為：「以下內容依據目前篩選條件及 SciVal 匯出資料整理，各分類依 Total 由高至低排序，僅列出 Top 5。」
+- 說明文字改為：「以下內容依據目前篩選條件及 SciVal 匯出資料整理，各分類依 Total 由高至低排序，僅列出 Top 5（若不足 5 筆則全部列出）。」
 - 資料來源標示為 `Elsevier SciVal Collaboration Module`。
 
 
