@@ -726,6 +726,38 @@ header h1{
 }
 </style>
 
+
+<style>
+/* Muted academic Sankey palette */
+.sankey-link{
+  opacity:.50 !important;
+  mix-blend-mode:normal !important;
+  stroke:rgba(255,255,255,.06) !important;
+  stroke-width:.6px !important;
+}
+.sankey-flow-group:hover .sankey-link{
+  opacity:.72 !important;
+  filter:none !important;
+  stroke:rgba(255,255,255,.12) !important;
+}
+.sankey-node rect:not(.sankey-node-hit){
+  stroke:rgba(255,255,255,.14) !important;
+  stroke-width:1px !important;
+  filter:none !important;
+}
+.sankey-node:hover rect:not(.sankey-node-hit),
+.sankey-node:focus rect:not(.sankey-node-hit){
+  stroke:rgba(255,255,255,.34) !important;
+  stroke-width:1.4px !important;
+}
+.sankey-label{
+  fill:#f6f1e8 !important;
+}
+.sankey-sub{
+  fill:rgba(246,241,232,.82) !important;
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true">
@@ -2054,21 +2086,21 @@ function collabSankeyGroups(data){
  const groupRows=[
   {
    label:'Subject Area',
-   color:'#62d6ef',
+   color:'#496A86',
    items:normalize(top.subjects,'Output'),
    sub:'外層 Top 5｜點擊查看全部',
    detail:`Subject Area 全部項目（依 Output 排序）\n${subjectList}`
   },
   {
    label:'Keyphrases',
-   color:'#a894ff',
+   color:'#7A4148',
    items:normalize(top.keyphrases,'Relevance'),
    sub:'外層 Top 5｜點擊查看全部',
    detail:`Keyphrases 全部項目（依 Relevance 排序）\n${keyphraseList}`
   },
   {
    label:'Collaboration Source',
-   color:'#5DBB63',
+   color:'#A18443',
    items:normalize(top.sources,'Total'),
    sub:'外層 Top 5｜點擊查看全部',
    detail:`Collaboration Source 分類明細（各分類依 Total 排序）\n${sourceList}`
@@ -2094,8 +2126,8 @@ function renderCollabSankey(data,school,label,period){
  const defs=svgEl('defs');
  groups.forEach((g,i)=>{
   const grad=svgEl('linearGradient',{id:`collabGrad${i}`,x1:'0%',x2:'100%',y1:'0%',y2:'0%'});
-  grad.appendChild(svgEl('stop',{offset:'0%','stop-color':g.color,'stop-opacity':'.62'}));
-  grad.appendChild(svgEl('stop',{offset:'100%','stop-color':g.color,'stop-opacity':'.82'}));
+  grad.appendChild(svgEl('stop',{offset:'0%','stop-color':g.color,'stop-opacity':'.38'}));
+  grad.appendChild(svgEl('stop',{offset:'100%','stop-color':g.color,'stop-opacity':'.58'}));
   defs.appendChild(grad);
  });
  svg.appendChild(defs);
