@@ -68,6 +68,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰且更粗重有力的純文字標題。
 
 ## 修改紀錄
+- 2026-07-22：補充 Collaboration Source 展開內容的資料範圍說明。新增註記指出頁面係依目前篩選條件與 SciVal 匯出資料整理，各分類依 Total 排序；實際顯示項目依匯出資料內容而定，並不代表所有合作對象，同時標示資料來源為 Elsevier SciVal Collaboration Module。
 - 2026-07-22：調整桑基圖配色為較沉穩的學術風格。Subject Area 改為深藍色、Keyphrases 改為深紅色、Collaboration Source 改為土黃色。同時降低流帶透明度、移除高彩度光暈與 screen 混色，並淡化節點描邊，使整體配色更融合、不刺眼。
 - 2026-07-22：修正上一版未完全套用的主標題與背景樣式。主標題直接指定為實心白色超粗體，使用較接近排名網站的字型比例，並移除所有文字陰影、漸層裁切與濾鏡。頁面背景改為單一深藍色 #0B1825，同時移除 body 與 body:before 的 radial-gradient、linear-gradient 及網格漸層。
 - 2026-07-22：改善合作研究結構資訊架構。移除合作類型篩選器旁原本顯示的「學校／合作類型／期間」資訊標籤，僅在桑基圖標題上方保留目前合作類型（國際合著或產學合著）供辨識。Collaboration Source 點擊後不再將 Institution、Country/Region、Author 與 Source 混合排序，改為四個獨立分類區塊，各分類內再依 Total 由高至低排序。
@@ -454,3 +455,10 @@
 - 移除原本的高亮光暈與 screen 混色效果。
 - 節點描邊改為低對比白色，Hover 時僅稍微提高亮度。
 - 文字改為偏暖白色，與深藍、深紅及土黃色更協調。
+
+## Collaboration Source 資料範圍說明
+- 展開頁面不再以「全部資料」暗示完整母體。
+- 顯示內容依目前篩選條件與 SciVal 匯出資料整理。
+- Institution、Country / Region、Author、Source 各分類依 `Total` 由高至低排序。
+- 實際顯示項目依 Excel／SciVal 匯出內容而定，並不代表所有合作對象。
+- 資料來源標示為 `Elsevier SciVal Collaboration Module`。
