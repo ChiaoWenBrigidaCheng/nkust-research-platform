@@ -68,6 +68,7 @@
 - 主標題已移除陰影與 3D 疊影，改為乾淨清晰且更粗重有力的純文字標題。
 
 ## 修改紀錄
+- 2026-07-22：修正上一版未完全套用的主標題與背景樣式。主標題直接指定為實心白色超粗體，使用較接近排名網站的字型比例，並移除所有文字陰影、漸層裁切與濾鏡。頁面背景改為單一深藍色 #0B1825，同時移除 body 與 body:before 的 radial-gradient、linear-gradient 及網格漸層。
 - 2026-07-22：改善合作研究結構資訊架構。移除合作類型篩選器旁原本顯示的「學校／合作類型／期間」資訊標籤，僅在桑基圖標題上方保留目前合作類型（國際合著或產學合著）供辨識。Collaboration Source 點擊後不再將 Institution、Country/Region、Author 與 Source 混合排序，改為四個獨立分類區塊，各分類內再依 Total 由高至低排序。
 - 2026-07-22：調整首頁主標題與手機版操作。首頁主標題改為實心白色粗體字，取消漸層文字效果，並保留既有深色背景色系。手機版再次強制取消大型操作按鈕的 fixed/sticky 定位，按鈕改為跟隨內容正常捲動，避免遮擋畫面。
 - 2026-07-22：精簡首頁左右兩側背景文字。背景關鍵字由原本約 40 個以上縮減為 14 個核心詞彙，並放大主要文字、增加留白與降低整體視覺密度。保留 Research、Impact、Citations、Analytics、Scopus、FWCI、Collaboration、Publications、Innovation、Benchmarking、Research Excellence、Institutional Research、Global Collaboration 與 Research Strategy。平板與手機版會再隱藏部分次要詞彙，避免小螢幕過度擁擠。
@@ -435,3 +436,11 @@
 - 四類資料不再混合比較。
 - 每一分類僅在分類內依 `Total` 由高至低排序。
 - 電腦版分類內容採多欄卡片排列；手機版自動改為單欄，方便捲動閱讀。
+
+## 主標題與背景修正
+- 主標題改為實心白色超粗體。
+- 使用接近排名網站的粗體中文標題比例。
+- 移除標題文字漸層、陰影、濾鏡與裁切效果。
+- 全站背景統一為單一深藍色 `#0B1825`。
+- 移除原本的 radial gradient、linear gradient 與背景網格漸層。
+- 手機版與桌面版皆使用相同的純色背景。

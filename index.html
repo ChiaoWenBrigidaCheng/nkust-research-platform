@@ -666,6 +666,66 @@ header h1,
 }
 </style>
 
+
+<style>
+/* Final correction: solid background and ranking-site title style */
+html,
+body{
+  background:#0b1825 !important;
+  background-image:none !important;
+}
+
+body:before,
+body::before,
+body:after,
+body::after{
+  background:none !important;
+  background-image:none !important;
+}
+
+/* Preserve the dark navy palette without any gradient overlays */
+header,
+main,
+.page-shell,
+.app-shell{
+  background:transparent !important;
+  background-image:none !important;
+}
+
+/* Main title: bold solid-white typography matching the ranking website */
+header h1{
+  margin:0 !important;
+  color:#ffffff !important;
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:border-box !important;
+  background-clip:border-box !important;
+  -webkit-text-fill-color:#ffffff !important;
+  font-family:"Arial Black","Noto Sans TC","Microsoft JhengHei",sans-serif !important;
+  font-size:clamp(48px,5.2vw,82px) !important;
+  font-weight:1000 !important;
+  letter-spacing:.01em !important;
+  line-height:1.05 !important;
+  text-shadow:none !important;
+  filter:none !important;
+  transform:none !important;
+}
+
+@media(max-width:900px){
+  header h1{
+    font-size:clamp(38px,8vw,64px) !important;
+    line-height:1.12 !important;
+  }
+}
+
+@media(max-width:620px){
+  header h1{
+    font-size:clamp(31px,9vw,48px) !important;
+    letter-spacing:0 !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="word-cloud notranslate" translate="no" lang="en" aria-hidden="true">
