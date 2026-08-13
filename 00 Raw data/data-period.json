@@ -1,4 +1,4 @@
 {
   "period": "2017-2025",
-  "fallbackPeriods": [2018-2025]
+  "fallbackPeriods": ["2018-2025"]
 }

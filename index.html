@@ -1073,6 +1073,46 @@ function schoolSequenceMapper(rows){
   return normalizeSchoolName(raw,duplicateGroups);
  };
 }
+function formatWorkbookUpdateValue(value){
+ if(value===null||value===undefined||value==='') return '';
+ if(value instanceof Date&&!Number.isNaN(value.getTime())) return value.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
+ if(typeof value==='number'&&Number.isFinite(value)){
+  if(value>20000&&value<80000&&window.XLSX&&XLSX.SSF) return XLSX.SSF.format('yyyy/mm/dd',value);
+  return String(value);
+ }
+ return String(value).replace(/\s+/g,' ').trim();
+}
+function parseWorkbookUpdatedLabel(wb){
+ const preferredSheets=['資料說明','Scource','Source','資料來源','Data Description','Export Details'];
+ const sheetNames=[...preferredSheets.filter(name=>wb.Sheets[name]),...wb.SheetNames.filter(name=>!preferredSheets.includes(name))];
+ const isUpdateLabel=value=>{
+  const text=String(value||'').replace(/\s+/g,' ').trim().toLowerCase();
+  return text&&(text.includes('updated')||text.includes('update')||text.includes('更新'));
+ };
+ const isUsefulValue=value=>{
+  const text=formatWorkbookUpdateValue(value);
+  return text&&!isUpdateLabel(text)&&!['-', '—'].includes(text);
+ };
+ for(const sheet of sheetNames){
+  const ws=wb.Sheets[sheet];
+  if(!ws) continue;
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,blankrows:false});
+  for(let r=0;r<rows.length;r++){
+   for(let c=0;c<(rows[r]||[]).length;c++){
+    if(!isUpdateLabel(rows[r][c])) continue;
+    const candidates=[
+     rows[r][c+1],
+     rows[r+1]&&rows[r+1][c],
+     rows[r+1]&&rows[r+1][c+1],
+     rows[r][c+2]
+    ];
+    const found=candidates.find(isUsefulValue);
+    if(found!==undefined) return formatWorkbookUpdateValue(found);
+   }
+  }
+ }
+ return '';
+}
 function parseResearchWorkbook(wb){
  const preferred=['高科大','臺科大','北科大','雲科大','屏科大','虎科大'];
  const generalAllowed=[...preferred,'Taiwan'];
@@ -1098,7 +1138,7 @@ function parseResearchWorkbook(wb){
  const qs=parseSubject('QS').filter(r=>String(r['學校']).includes('科大'));
  const years=[...new Set([...general,...the,...qs].map(r=>r['年度']).filter(Boolean))].sort(compareYearOptions);
  const universities=preferred.filter(u=>general.some(r=>r['學校']===u));
- return {universities,years,general,the,qs};
+ return {universities,years,general,the,qs,updatedLabel:parseWorkbookUpdatedLabel(wb)};
 }
 function refreshDataYears(){
  DATA.years=[...new Set([...(DATA.general||[]),...(DATA.the||[]),...(DATA.qs||[])].map(r=>r['年度']).filter(Boolean))].sort(compareYearOptions);
@@ -1308,7 +1348,13 @@ async function fetchResearchData(files){
   try{
    const wb=await fetchWorkbook(file);
    const parsed=parseResearchWorkbook(wb);
-   if(parsed.general.length) return parsed;
+   if(parsed.general.length){
+    if(parsed.updatedLabel){
+     DATA_LAST_UPDATED=parsed.updatedLabel;
+     DATA_LAST_UPDATED_FROM_WORKBOOK=true;
+    }
+    return parsed;
+   }
    lastError=new Error(`${file} is not a General/THE/QS workbook`);
   }catch(err){lastError=err;}
  }
@@ -1382,6 +1428,7 @@ function formatFileUpdated(value){
  return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
 }
 let DATA_LAST_UPDATED = formatFileUpdated(document.lastModified);
+let DATA_LAST_UPDATED_FROM_WORKBOOK=false;
 let page='general';
 let charts={};
 const trendHiddenLabels=new Set();
@@ -1775,7 +1822,7 @@ async function init(){
  initWordCloudMotion();
  await loadExcelData();
  updatePlatformSubtitle();
- if(EXCEL_LAST_MODIFIED.length) DATA_LAST_UPDATED=formatFileUpdated(Math.max(...EXCEL_LAST_MODIFIED));
+ if(!DATA_LAST_UPDATED_FROM_WORKBOOK&&EXCEL_LAST_MODIFIED.length) DATA_LAST_UPDATED=formatFileUpdated(Math.max(...EXCEL_LAST_MODIFIED));
  addUpdatedLabels();
  placeControls();
  updateSchoolOptions();
