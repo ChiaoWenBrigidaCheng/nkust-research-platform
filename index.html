@@ -1089,6 +1089,15 @@ function parseWorkbookUpdatedLabel(wb){
   const text=String(value||'').replace(/\s+/g,' ').trim().toLowerCase();
   return text&&(text.includes('updated')||text.includes('update')||text.includes('更新'));
  };
+ const isDateLikeValue=value=>{
+  const text=formatWorkbookUpdateValue(value);
+  if(!text||isUpdateLabel(text)||['-', '—'].includes(text)) return false;
+  if(value instanceof Date&&!Number.isNaN(value.getTime())) return true;
+  if(typeof value==='number'&&Number.isFinite(value)&&value>20000&&value<80000) return true;
+  const lower=text.toLowerCase();
+  return /\b(19|20)\d{2}\s*[./-]\s*\d{1,2}(?:\s*[./-]\s*\d{1,2})?\b/.test(text)
+   || /\b\d{1,2}\s+(jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|sept|september|oct|october|nov|november|dec|december)\s+(19|20)\d{2}\b/.test(lower);
+ };
  const isUsefulValue=value=>{
   const text=formatWorkbookUpdateValue(value);
   return text&&!isUpdateLabel(text)&&!['-', '—'].includes(text);
@@ -1106,7 +1115,19 @@ function parseWorkbookUpdatedLabel(wb){
      rows[r+1]&&rows[r+1][c+1],
      rows[r][c+2]
     ];
-    const found=candidates.find(isUsefulValue);
+    const nearby=[];
+    for(let rr=r;rr<=Math.min(rows.length-1,r+4);rr++){
+     for(let cc=Math.max(0,c-1);cc<=c+4;cc++){
+      if(rr===r&&cc===c) continue;
+      nearby.push(rows[rr]&&rows[rr][cc]);
+     }
+    }
+    const foundDate=nearby.find(isDateLikeValue);
+    if(foundDate!==undefined) return formatWorkbookUpdateValue(foundDate);
+    const found=candidates.find(value=>{
+     const text=formatWorkbookUpdateValue(value);
+     return isUsefulValue(value)&&!['指標','指標說明','metric name','metric','description'].includes(text.toLowerCase());
+    });
     if(found!==undefined) return formatWorkbookUpdateValue(found);
    }
   }
