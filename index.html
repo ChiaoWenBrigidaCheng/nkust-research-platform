@@ -1083,11 +1083,13 @@ function formatWorkbookUpdateValue(value){
  }
  return String(value).replace(/\s+/g,' ').trim();
 }
-function parseWorkbookUpdatedLabel(wb){
+function parseWorkbookUpdatedLabel(wb,options={}){
  const preferredSheets=['資料說明','Scource','Source','資料來源','Data Description','Export Details'];
  const sheetNames=[...preferredSheets.filter(name=>wb.Sheets[name]),...wb.SheetNames.filter(name=>!preferredSheets.includes(name))];
+ const exactDateLastUpdated=!!options.exactDateLastUpdated;
  const isUpdateLabel=value=>{
   const text=String(value||'').replace(/\s+/g,' ').trim().toLowerCase();
+  if(exactDateLastUpdated) return text==='date last updated';
   return text&&(text.includes('updated')||text.includes('update')||text.includes('更新'));
  };
  const isDateLikeValue=value=>{
@@ -1391,7 +1393,7 @@ async function loadExcelData(){
  }catch(err){console.warn('Using embedded research data:',err.message);}
  try{
   const metricsWb=await fetchWorkbook(EXCEL_FILES.generalMetrics);
-  const metricsUpdated=parseWorkbookUpdatedLabel(metricsWb);
+  const metricsUpdated=parseWorkbookUpdatedLabel(metricsWb,{exactDateLastUpdated:true});
   if(metricsUpdated){
    DATA_LAST_UPDATED=metricsUpdated;
    DATA_LAST_UPDATED_FROM_WORKBOOK=true;
@@ -1406,6 +1408,11 @@ async function loadExcelData(){
  }catch(err){console.warn('Using workbook subject data:',err.message);}
  try{
   const summaryWb=await fetchWorkbook(EXCEL_FILES.sdgSummaryMulti);
+  const summaryUpdated=parseWorkbookUpdatedLabel(summaryWb,{exactDateLastUpdated:true});
+  if(summaryUpdated){
+   DATA_LAST_UPDATED=summaryUpdated;
+   DATA_LAST_UPDATED_FROM_WORKBOOK=true;
+  }
   const summaryBySchool=parseMultiSdgSummary(summaryWb);
   SDG_BY_SCHOOL={};
   Object.entries(summaryBySchool).forEach(([school,bundle])=>{
