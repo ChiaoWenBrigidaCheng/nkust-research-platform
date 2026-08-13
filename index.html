@@ -79,6 +79,39 @@ header,main,.footer{position:relative;z-index:1}
   letter-spacing:.02em;
 }
 
+/* Data tables: keep the sticky first column above scrolled cells. */
+.table-wrap table:not(.indicator-table){
+  min-width:1120px;
+  border-collapse:separate;
+  border-spacing:0;
+}
+.table-wrap table:not(.indicator-table) th:first-child,
+.table-wrap table:not(.indicator-table) td:first-child{
+  min-width:104px;
+  width:104px;
+  max-width:104px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  background:#0d1d2c;
+  z-index:3;
+  box-shadow:1px 0 0 rgba(132,205,235,.24),8px 0 16px rgba(0,0,0,.18);
+}
+.table-wrap table:not(.indicator-table) thead th:first-child{
+  z-index:6;
+  background:#153047;
+}
+.table-wrap table:not(.indicator-table) tbody tr:hover td:first-child{
+  background:#142f42;
+}
+.table-wrap table:not(.indicator-table) tbody tr.highlight td:first-child{
+  z-index:4;
+  background:#625832;
+  color:#fff4cc;
+}
+.table-wrap table:not(.indicator-table) tbody tr.highlight:hover td:first-child{
+  background:#6d6238;
+}
+
 </style>
 
 <style>
