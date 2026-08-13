@@ -989,6 +989,7 @@ function rebuildDataFilePaths(){
    `${RAW_DATA_DIR}研究量能統計 ${period}.xlsx`,
    `研究量能統計 ${period}.xlsx`
   ])),
+  generalMetrics:dataPaths(RAW_DATA_DIR+'General_Metrics .xlsx','General_Metrics .xlsx'),
   sdgSummaryMulti:dataPaths(RAW_DATA_DIR+'SDG/Summary_SDG.xlsx','SDG/Summary_SDG.xlsx')
  };
  THE_RAW_FILES=[
@@ -1095,7 +1096,8 @@ function parseWorkbookUpdatedLabel(wb){
   if(value instanceof Date&&!Number.isNaN(value.getTime())) return true;
   if(typeof value==='number'&&Number.isFinite(value)&&value>20000&&value<80000) return true;
   const lower=text.toLowerCase();
-  return /\b(19|20)\d{2}\s*[./-]\s*\d{1,2}(?:\s*[./-]\s*\d{1,2})?\b/.test(text)
+  return /\b(19|20)\d{2}\s*[./]\s*\d{1,2}(?:\s*[./]\s*\d{1,2})?\b/.test(text)
+   || /\b(19|20)\d{2}\s*-\s*\d{1,2}\s*-\s*\d{1,2}\b/.test(text)
    || /\b\d{1,2}\s+(jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|sept|september|oct|october|nov|november|dec|december)\s+(19|20)\d{2}\b/.test(lower);
  };
  const isUsefulValue=value=>{
@@ -1387,6 +1389,14 @@ async function loadExcelData(){
  try{
   DATA=await fetchResearchData(EXCEL_FILES.research);
  }catch(err){console.warn('Using embedded research data:',err.message);}
+ try{
+  const metricsWb=await fetchWorkbook(EXCEL_FILES.generalMetrics);
+  const metricsUpdated=parseWorkbookUpdatedLabel(metricsWb);
+  if(metricsUpdated){
+   DATA_LAST_UPDATED=metricsUpdated;
+   DATA_LAST_UPDATED_FROM_WORKBOOK=true;
+  }
+ }catch(err){console.warn('General metrics update date unavailable:',err.message);}
  try{
   const rawThe=await fetchSubjectRawData(THE_RAW_FILES);
   if(rawThe.length) DATA.the=rawThe;
